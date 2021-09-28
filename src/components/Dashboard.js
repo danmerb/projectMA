@@ -7,6 +7,7 @@ import {
   MedicineBoxOutlined
 } from "@ant-design/icons";
 import AuthContext from "../context/auth-context";
+import Calendar from "./Calendar"
 import "../app.css";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -80,7 +81,7 @@ class Dashboard extends React.Component {
               <Button type="primary" onClick={logout}>Cerrar Sesion</Button>
             </Header>
             <Content className="content-layout">
-              
+              <Calendar />
             </Content>
             <Footer style={{ textAlign: "center" }}>
               Med Aid - DJCOK
