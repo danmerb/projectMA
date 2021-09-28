@@ -7,24 +7,18 @@ Controller.sendMail = (req, res, next) =>{
    const correoDestinario = req.body.email;
 
     const msg = {
-     // to: "", // Change to your recipient
-      from: "00097017@uca.edu.sv", // Change to your verified sender
-      subject: "Sending with SendGrid is Really Fun :D",
+      "to": String(correoDestinario), // Change to your recipient
+      "from": "00097017@uca.edu.sv", // Change to your verified sender
+      //"subject": "Sending with SendGrid is Really Fun :D",
      // text: "and easy to do anywhere, even with Node.js",
       //html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-      "personalizations":[
-        {
-           "to":[
-              {
-                 "email":String(correoDestinario)
-              }
-           ],
-           "dynamic_template_data":{
-              "name":"Sample Name"
-            }
-        }
-     ],
-      template_id:"d-ce7527e14a1d41c79394b1a7b4000411",
+      "dynamicTemplateData":{
+         "nombrePaciente":"Pasty",
+         "nombreDoctor":"Lopez Guevara",
+         "hora":"3pm",
+         "lugar":"Hospital del diagnostico"
+      },
+      "template_id":"d-8f284cbd5d3442c2acb3fdf94ab1ec01",
     };
 
    sgMail.send(msg)
