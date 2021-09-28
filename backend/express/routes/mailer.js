@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const MailController = require("../controller/mailController")
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send(process.env.SENDGRID_API_KEY);
-});
+router.post('/send', MailController.sendMail);
 
 module.exports = router;
