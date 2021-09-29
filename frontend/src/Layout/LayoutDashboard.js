@@ -21,8 +21,9 @@ const LayoutDashboard = ({exact, path, ...props}) => {
                 const cp =
                 (<Dashboard path={routeProps.match.path} cb={redireccionar}>
                     <Switch>
-                        <Route exact path={`${routeProps.match.path}/`} component={Calendario}  />
+                        <Route exact path={`${routeProps.match.path}/`}  />
                         <Route exact path={`${routeProps.match.path}/expediente`} component={PictureWall}/>
+                        <Route exact path={`${routeProps.match.path}/calendario`} component={Calendario}/>
                     </Switch>
                 </Dashboard>)
                 return cp

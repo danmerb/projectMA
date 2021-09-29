@@ -67,7 +67,7 @@ class Dashboard extends React.Component {
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="sub2" icon={<CalendarOutlined />} title="Citas Medicas">
-                <Menu.Item key="6">Paciente 1</Menu.Item>
+                <Menu.Item key="6" onClick={()=>this.props.cb(`${this.props.path}/calendario`)}>Paciente 1</Menu.Item>
                 <Menu.Item key="8">Paciente 2</Menu.Item>
               </SubMenu>
               <Menu.Item key="9" icon={<FileOutlined />}>
