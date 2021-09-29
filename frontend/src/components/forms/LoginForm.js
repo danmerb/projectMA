@@ -22,7 +22,7 @@ const LoginForm = () => {
             valores.password
           );
           console.log(autenticacion)
-          history.push("/");
+          history.push("/home");
         } catch (e) {
           console.log(e);
         }

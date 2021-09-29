@@ -22,7 +22,7 @@ const RegisterForm = () => {
             valores.correo,
             valores.password
           );
-          history.push("/");
+          history.push("/home");
         //  funciones.resetForm({ nombre: "", correo: "", password: "" });
         } catch (e) {
           console.log(e);

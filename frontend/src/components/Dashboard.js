@@ -7,7 +7,6 @@ import {
   MedicineBoxOutlined
 } from "@ant-design/icons";
 import AuthContext from "../context/auth-context";
-import Calendar from "./Calendar"
 import "../app.css";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -43,8 +42,8 @@ class Dashboard extends React.Component {
               inlineIndent={24}
               defaultOpenKeys={["sub1", "sub2"]}
             >
-              <Menu.Item key="0" icon={<MedicineBoxOutlined />}>
-                MED AID
+              <Menu.Item key="0" icon={<MedicineBoxOutlined />} onClick={()=>this.props.cb(`${this.props.path}/`)}>
+                MED AID HOME
               </Menu.Item>
               <Menu.Item
                 key="1"
@@ -57,13 +56,13 @@ class Dashboard extends React.Component {
                 Bienvenido Dr. {currentUser.displayName}
               </Menu.Item>
               <SubMenu key="sub1" icon={<WalletFilled />} title="Expedientes">
-                <Menu.Item key="3" danger>
-                  Expediente 1
+                <Menu.Item key="3" onClick={()=>this.props.cb(`${this.props.path}/expediente`)}>
+                  Crear Expediente
                 </Menu.Item>
                 <Menu.Item key="4" disabled>
                   Expediente 2
                 </Menu.Item>
-                <Menu.Item key="5">
+                <Menu.Item key="5" danger>
                   Expediente 3
                 </Menu.Item>
               </SubMenu>
@@ -81,7 +80,7 @@ class Dashboard extends React.Component {
               <Button type="primary" onClick={logout}>Cerrar Sesion</Button>
             </Header>
             <Content className="content-layout">
-              <Calendar />
+              {this.props.children}
             </Content>
             <Footer style={{ textAlign: "center" }}>
               Med Aid - DJCOK
