@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Formik } from "formik";
 import AuthContext from "../../context/auth-context";
-import { Form, Input, Button, Checkbox } from "antd";
-import {  LockOutlined, MailOutlined } from "@ant-design/icons";
+import { Form, Input, Button } from "antd";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
+import "../../style/login.css"
 
 const LoginForm = () => {
   const AuthCtx = useContext(AuthContext);
@@ -14,24 +15,24 @@ const LoginForm = () => {
         correo: "",
         password: "",
       }}
-      onSubmit={async (valores, funciones) => {
-        
+      onSubmit={async (valores) => {
         try {
-          const autenticacion = await AuthCtx.login(
+          await AuthCtx.login(
             valores.correo,
             valores.password
           );
-          console.log(autenticacion)
+          console.log("GO TO HOME")
           history.push("/home");
         } catch (e) {
           console.log(e);
         }
       }}
-      restablecerContra = {async(valores)=>{
-        try{
+      restablecerContra={async (valores) => {
+        console.log(valores)
+        try {
           const contraRes = await AuthCtx.resetPassword(valores.correo)
           console.log(contraRes)
-        }catch(e){
+        } catch (e) {
           console.log(e)
         }
       }}
@@ -45,7 +46,10 @@ const LoginForm = () => {
         touched,
         restablecerContra
       }) => (
-        <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop:'15em'}}>
+        <div className="container">
+
+          <div className="imgLogo" />
+
           <Form
             name="normal_login"
             className="login-form"
@@ -59,42 +63,43 @@ const LoginForm = () => {
               rules={[
                 {
                   required: true,
-                  message: "Se necesita correo electronico!",
+                  message: "Campo requerido",
                 },
               ]}
             >
               <Input
                 prefix={<MailOutlined className="site-form-item-icon" />}
-                placeholder="Correo electronico"
+                type="email"
+                placeholder="CORREO ELECTRÓNICO"
                 id="correo"
                 name="correo"
                 value={values.correo}
                 onChange={handleChange}
+                className="transparentInput"
+                autoComplete="off"
               />
             </Form.Item>
+
             <Form.Item
               name="password"
               rules={[
                 {
                   required: true,
-                  message: "Se requiere contraseña",
+                  message: "Campo requerido",
                 },
               ]}
             >
               <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
-                placeholder="Contraseña"
+                placeholder="CONTRASEÑA"
                 id="password"
                 name="password"
                 value={values.password}
                 onChange={handleChange}
+                className="transparentInput"
+                autoComplete="off"
               />
-            </Form.Item>
-            <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
             </Form.Item>
 
             <Form.Item>
@@ -103,19 +108,11 @@ const LoginForm = () => {
                 htmlType="submit"
                 className="login-form-button"
               >
-                Iniciar sesion
+                INICIAR SESIÓN
               </Button>
-              <div>
-                No esta registrado?
-                <Button type="dashed" onClick={()=>history.push("/register")}>
-                  Registrarse ahora
-                </Button>
-              </div>
-              <div>
-                Contraseña olvidada?
-                <Button type="dashed" onClick={restablecerContra}>
-                  Reiniciarla
-                </Button>
+
+              <div onClick={restablecerContra} className="reset-password">
+                ¿Olvidaste la contraseña?
               </div>
             </Form.Item>
           </Form>
