@@ -6,9 +6,8 @@ import Dashboard from '../components/Dashboard'
 import { Switch, useHistory } from 'react-router-dom'
 import Calendario  from '../components/Calendar'
 import PictureWall from '../components/PictureWall'
-import Notification from '../components/Notification'
 
-const   LayoutDashboard = ({exact, path, ...props}) => {
+const LayoutDashboard = ({exact, path, ...props}) => {
     const AuthCTX = useContext(AuthContext)
     const history = useHistory();
 
@@ -25,7 +24,6 @@ const   LayoutDashboard = ({exact, path, ...props}) => {
                         <Route exact path={`${routeProps.match.path}/`}  />
                         <Route exact path={`${routeProps.match.path}/expediente`} component={PictureWall}/>
                         <Route exact path={`${routeProps.match.path}/calendario`} component={Calendario}/>
-                        <Route exact path={`${routeProps.match.path}/noti`} component={Notification} />
                     </Switch>
                 </Dashboard>)
                 return cp
