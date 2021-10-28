@@ -8,12 +8,12 @@ Controller.sendMail = (req, res, next) =>{
 
     const msg = {
       "to": String(correoDestinario), // Change to your recipient
-      "from": "00097017@uca.edu.sv", // Change to your verified sender
+      "from": "no-reply@em7397.med-aid.software", // Change to your verified sender
       //"subject": "Sending with SendGrid is Really Fun :D",
      // text: "and easy to do anywhere, even with Node.js",
       //html: "<strong>and easy to do anywhere, even with Node.js</strong>",
       "dynamicTemplateData":{
-         "nombrePaciente":"Pasty",
+         "nombrePaciente":"Diego Lopez",
          "nombreDoctor":"Lopez Guevara",
          "hora":"3pm",
          "lugar":"Hospital del diagnostico"
