@@ -21,6 +21,7 @@ const LoginForm = () => {
             valores.correo,
             valores.password
           );
+          console.log("GO TO HOME")
           history.push("/home");
         } catch (e) {
           console.log(e);
