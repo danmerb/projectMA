@@ -46,7 +46,7 @@ const LoginForm = () => {
         touched,
         restablecerContra
       }) => (
-        <div className="container">
+        <div className="containerLogin">
 
           <div className="imgLogo" />
 
