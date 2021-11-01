@@ -4,7 +4,9 @@ import {
   WalletFilled,
   FileOutlined,
   CalendarOutlined,
-  MedicineBoxOutlined
+  MedicineBoxOutlined,
+  HeartTwoTone,
+  CopyrightOutlined
 } from "@ant-design/icons";
 import AuthContext from "../context/auth-context";
 import "../app.css";
@@ -31,8 +33,8 @@ class Dashboard extends React.Component {
             collapsible
             collapsed={collapsed}
             onCollapse={this.onCollapse}
-            width={400}
-            collapsedWidth={200}
+            width={200}
+            collapsedWidth={75}
           >
             <div className="logo" />
             <Menu
@@ -53,7 +55,7 @@ class Dashboard extends React.Component {
                   />
                 }
               >
-                Bienvenido Dr. {currentUser.displayName}
+                Dr. {currentUser.displayName}
               </Menu.Item>
               <SubMenu key="sub1" icon={<WalletFilled />} title="Expedientes">
                 <Menu.Item key="3" onClick={()=>this.props.cb(`${this.props.path}/expediente`)}>
@@ -83,7 +85,7 @@ class Dashboard extends React.Component {
               {this.props.children}
             </Content>
             <Footer style={{ textAlign: "center" }}>
-              Med Aid - DJCOK
+              Med Aid - Hecho con <HeartTwoTone twoToneColor="#eb2f96" style={{ display: "inline-block", verticalAlign: "initial" , fontSize: "16px"}} /> por DJCOK <CopyrightOutlined style={{ display: "inline-block", verticalAlign: "1px" }}/>
             </Footer>
           </Layout>
         </Layout>)

@@ -2,7 +2,7 @@ import React from "react";
 import { Views, Navigate } from "react-big-calendar";
 import { Button, Typography, Row, Modal, Space, Select, Tooltip } from "antd";
 import { LeftOutlined, RightOutlined, CalendarOutlined, PlusCircleTwoTone } from "@ant-design/icons";
-import Draggable from 'react-draggable';
+import CalendarForm from "./CalendarForm"
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import 'antd/dist/antd.css';
@@ -16,12 +16,8 @@ class CustomToolbar extends React.Component {
         super(props);
         this.state = {
             visible: false,
-            disabled: true,
-            bounds: { left: 0, top: 0, bottom: 0, right: 0 },
         };
     }
-
-    draggleRef = React.createRef();
 
     navigate = action => {
         this.props.onNavigate(action)
@@ -37,32 +33,21 @@ class CustomToolbar extends React.Component {
         });
     };
 
-    handleOk = () => {
-        this.setState({ loading: true });
-        setTimeout(() => {
-            this.setState({ loading: false, visible: false });
-        }, 3000);
-    };
-
     handleCancel = () => {
         this.setState({ visible: false });
     };
 
-    onStart = (event, uiData) => {
-        const { clientWidth, clientHeight } = window?.document?.documentElement;
-        const targetRect = this.draggleRef?.current?.getBoundingClientRect();
-        this.setState({
-            bounds: {
-                left: -targetRect?.left + uiData?.x,
-                right: clientWidth - (targetRect?.right - uiData?.x),
-                top: -targetRect?.top + uiData?.y,
-                bottom: clientHeight - (targetRect?.bottom - uiData?.y),
-            },
-        });
+    onCreate = (values) => {
+        console.log('Received values of form: ', values);
+        console.log("Event time: ", values.eventTime);
+        console.log("Event time[0] :", values.eventTime[0]);
+        console.log("Fecha inicio: ", values.eventTime[0].toDate());
+        console.log("Fecha FIN: ", values.eventTime[1].toDate());
+        this.handleCancel();
     };
 
     render() {
-        const { bounds, disabled, visible } = this.state;
+        const { visible } = this.state;
         let { label } = this.props
         return (
             <>
@@ -97,66 +82,11 @@ class CustomToolbar extends React.Component {
                     </Row>
                 </Row>
                 <br />
-                <Modal
-                    title={
-                        <div
-                            style={{
-                                width: '100%',
-                                cursor: 'move',
-                            }}
-                            onMouseOver={() => {
-                                if (disabled) {
-                                    this.setState({
-                                        disabled: false,
-                                    });
-                                }
-                            }}
-                            onMouseOut={() => {
-                                this.setState({
-                                    disabled: true,
-                                });
-                            }}
-                            // fix eslintjsx-a11y/mouse-events-have-key-events
-                            // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/mouse-events-have-key-events.md
-                            onFocus={() => { }}
-                            onBlur={() => { }}
-                        // end
-                        >
-                            Draggable Modal
-                        </div>
-                    }
+                <CalendarForm
                     visible={visible}
-                    onOk={this.handleOk}
+                    onCreate={this.onCreate}
                     onCancel={this.handleCancel}
-                    footer={[
-                        <Button key="back" onClick={this.handleCancel}>
-                            Return
-                        </Button>,
-                        <Button key="submit" type="primary" onClick={this.handleOk}>
-                            Submit
-                        </Button>,
-                        <Button
-                            key="other"
-                            type="primary"
-                            onClick={this.handleOk}
-                        >
-                            Otro boton
-                        </Button>,
-                    ]}
-                    modalRender={modal => (
-                        <Draggable
-                            disabled={disabled}
-                            bounds={bounds}
-                            onStart={(event, uiData) => this.onStart(event, uiData)}
-                        >
-                            <div ref={this.draggleRef}>{modal}</div>
-                        </Draggable>
-                    )}
-                >
-                    <p>
-                        SOME TEXT
-                    </p>
-                </Modal>
+                />
             </>
 
         );

@@ -6,4 +6,4 @@ import "moment/locale/es";
 moment.updateLocale('es', momentConfig)
 const localizer = momentLocalizer(moment);
 
-export { localizer }
+export { moment, localizer }

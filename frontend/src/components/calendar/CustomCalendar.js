@@ -49,7 +49,6 @@ class CustomCalendar extends React.Component {
     render() {
         const { events } = this.state;
         return (
-            <div>
                 <Calendar
                     selectable
                     localizer={localizer}
@@ -67,7 +66,6 @@ class CustomCalendar extends React.Component {
                     onSelectEvent={event => alert(event.title)}
                     onSelectSlot={this.handleSelect}
                 />
-            </div>
         )
     }
 }
