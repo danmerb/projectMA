@@ -1,6 +1,6 @@
 import React from "react";
 import { Views, Navigate } from "react-big-calendar";
-import { Button, Typography, Row, Modal, Space, Select, Tooltip } from "antd";
+import { Button, Typography, Row, Space, Select, Tooltip } from "antd";
 import { LeftOutlined, RightOutlined, CalendarOutlined, PlusCircleTwoTone } from "@ant-design/icons";
 import CalendarForm from "./CalendarForm"
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -39,10 +39,13 @@ class CustomToolbar extends React.Component {
 
     onCreate = (values) => {
         console.log('Received values of form: ', values);
-        console.log("Event time: ", values.eventTime);
-        console.log("Event time[0] :", values.eventTime[0]);
-        console.log("Fecha inicio: ", values.eventTime[0].toDate());
-        console.log("Fecha FIN: ", values.eventTime[1].toDate());
+        const event = {            
+            title: values.eventTitle,
+            start: values.eventTime[0].toDate(),
+            end: values.eventTime[0].toDate(),
+            details: values.eventDetails
+        }
+        console.log(event);
         this.handleCancel();
     };
 
@@ -88,7 +91,6 @@ class CustomToolbar extends React.Component {
                     onCancel={this.handleCancel}
                 />
             </>
-
         );
     }
 }

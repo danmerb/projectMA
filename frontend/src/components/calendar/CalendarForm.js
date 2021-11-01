@@ -31,6 +31,7 @@ const CalendarForm = ({ visible, onCreate, onCancel }) => {
                     .then((values) => {
                         form.resetFields();
                         onCreate(values);
+                        // ! ACA PUEDO AÑADIR LA VALIDACION DE LAS FECHAS
                     })
                     .catch((info) => {
                         console.log('Validate Failed:', info);

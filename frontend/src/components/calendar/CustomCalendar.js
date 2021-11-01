@@ -6,8 +6,10 @@ import CustomToolbar from "./CustomToolbar"
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "antd/dist/antd.css";
+import { Affix, Button, Tooltip } from 'antd';
+import { PlusOutlined } from "@ant-design/icons";
 
-let events = [
+const events = [
     {
         id: 14,
         title: 'Matemáticas',
@@ -49,6 +51,7 @@ class CustomCalendar extends React.Component {
     render() {
         const { events } = this.state;
         return (
+            <>
                 <Calendar
                     selectable
                     localizer={localizer}
@@ -58,7 +61,7 @@ class CustomCalendar extends React.Component {
                     components={{
                         toolbar: CustomToolbar
                     }}
-                    style={{ height: "100vh", margin: 5}}
+                    style={{ height: "75vh", margin: 5}}
                     defaultView={Views.WEEK}
                     messages={calendarMessages}
                     formats={calendarFormats}
@@ -66,6 +69,12 @@ class CustomCalendar extends React.Component {
                     onSelectEvent={event => alert(event.title)}
                     onSelectSlot={this.handleSelect}
                 />
+                <Affix style={{ position: 'fixed', bottom: 70, right: 20 }}>
+                    <Tooltip title="Nueva cita">
+                        <Button disabled type="primary" shape="circle" icon={<PlusOutlined />} size="large" onClick={this.handleSelect}/>
+                    </Tooltip>
+                </Affix>
+            </>
         )
     }
 }
