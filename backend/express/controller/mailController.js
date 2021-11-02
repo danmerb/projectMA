@@ -4,19 +4,19 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const Controller = {}
 
 Controller.sendMail = (req, res, next) =>{
-   const correoDestinario = req.body.email;
-
+   const {email, nombrePaciente, nombreDoctor, hora, lugar } = req.body;
+    console.log(email, nombrePaciente)
     const msg = {
-      "to": String(correoDestinario), // Change to your recipient
+      "to": String(email), // Change to your recipient
       "from": "no-reply@em7397.med-aid.software", // Change to your verified sender
       //"subject": "Sending with SendGrid is Really Fun :D",
      // text: "and easy to do anywhere, even with Node.js",
       //html: "<strong>and easy to do anywhere, even with Node.js</strong>",
       "dynamicTemplateData":{
-         "nombrePaciente":"Diego Lopez",
-         "nombreDoctor":"Lopez Guevara",
-         "hora":"3pm",
-         "lugar":"Hospital del diagnostico"
+         "nombrePaciente":nombrePaciente,
+         "nombreDoctor":nombreDoctor,
+         "hora":hora,
+         "lugar": lugar
       },
       "template_id":"d-8f284cbd5d3442c2acb3fdf94ab1ec01",
     };
