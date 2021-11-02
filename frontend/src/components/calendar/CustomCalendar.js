@@ -1,6 +1,7 @@
 import React from "react";
 import { Calendar, Views} from "react-big-calendar";
 import { calendarMessages, calendarFormats } from "./CalendarConfig"
+import axios from "axios"
 import { localizer } from "./Localizer"
 import CustomToolbar from "./CustomToolbar"
 import CalendarForm from "./CalendarForm"
@@ -43,15 +44,21 @@ class CustomCalendar extends React.Component {
         this.setState({ visible: false });
     };
 
-    onCreate = (values) => {
+    onCreate = async(values) => {
         console.log('Received values of form: ', values);
         const event = {
             title: values.eventTitle,
             start: values.eventTime[0].toDate(),
             end: values.eventTime[1].toDate(),
-            details: values.eventDetails
+            details: values.eventDetails,
+            email: values.email,
+            nombrePaciente: values.nombrePaciente
         }
         console.log(event);
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/mailer/send`, {
+            ...event
+        })
+        console.log(res)
         this.setState({
             events: [
                 ...this.state.events,

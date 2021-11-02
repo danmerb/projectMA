@@ -69,7 +69,34 @@ const CalendarForm = ({ visible, onCreate, onCancel }) => {
                     />
                 </Form.Item>
 
-                <Form.Item name="eventDetails" label="Más detalles"
+                
+                <Form.Item                    
+                    label="Nombre del paciente"
+                    name="nombrePaciente"
+                    required tooltip="Este campo es obligatorio"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Por favor, inserte un título para la cita.',
+                        },
+                    ]}
+                >
+                    <Input placeholder="Nombre Paciente" />
+                </Form.Item>
+                <Form.Item                    
+                    label="Email del paciente"
+                    name="email"
+                    required tooltip="Este campo es obligatorio"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Por favor, inserte un email para la cita.',
+                        },
+                    ]}
+                >
+                    <Input placeholder="Email del paciente" />
+                </Form.Item>
+                <Form.Item name="eventDetails" label="Detalles adicionales"
                     tooltip={{
                         title: 'Este campo es opcional',
                         icon: <InfoCircleOutlined />,

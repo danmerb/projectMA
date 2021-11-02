@@ -4,8 +4,8 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const Controller = {}
 
 Controller.sendMail = (req, res, next) =>{
-   const {email, nombrePaciente, nombreDoctor, hora, lugar } = req.body;
-    console.log(email, nombrePaciente)
+   let {email, nombrePaciente, nombreDoctor, start, tittle, details } = req.body;
+   if(!details){ details = "No hay detalles adicionales"}
     const msg = {
       "to": String(email), // Change to your recipient
       "from": "no-reply@em7397.med-aid.software", // Change to your verified sender
@@ -15,8 +15,9 @@ Controller.sendMail = (req, res, next) =>{
       "dynamicTemplateData":{
          "nombrePaciente":nombrePaciente,
          "nombreDoctor":nombreDoctor,
-         "hora":hora,
-         "lugar": lugar
+         "hora":start,
+         "tittle": tittle,
+         "details":details
       },
       "template_id":"d-8f284cbd5d3442c2acb3fdf94ab1ec01",
     };
