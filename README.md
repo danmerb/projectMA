@@ -1,1 +1,2 @@
 MED AID
+REQUIRED VARIABLES:  REACT_APP_BACKEND_BASE_URL= http://localhost:4000 (development)
