@@ -2,7 +2,6 @@ import React from "react";
 import { Views, Navigate } from "react-big-calendar";
 import { Button, Typography, Row, Space, Select, Tooltip } from "antd";
 import { LeftOutlined, RightOutlined, CalendarOutlined, PlusCircleTwoTone } from "@ant-design/icons";
-import CalendarForm from "./CalendarForm"
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import 'antd/dist/antd.css';
@@ -25,7 +24,7 @@ class CustomToolbar extends React.Component {
     }
 
     render() {
-        const { label, showCreateModalProp, hideCreateModalProp, onSubmitFormProp, modalStatusProp } = this.props
+        const { label, showCreateModalProp } = this.props
         return (
             <>
                 <Row justify="space-between" align="middle">
@@ -58,12 +57,7 @@ class CustomToolbar extends React.Component {
                         </Space>
                     </Row>
                 </Row>
-                <br />
-                <CalendarForm
-                    visible={modalStatusProp}
-                    onCreate={onSubmitFormProp}
-                    onCancel={hideCreateModalProp}
-                />
+                <br />                
             </>
         );
     }

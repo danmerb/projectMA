@@ -3,6 +3,7 @@ import { Calendar, Views} from "react-big-calendar";
 import { calendarMessages, calendarFormats } from "./CalendarConfig"
 import { localizer } from "./Localizer"
 import CustomToolbar from "./CustomToolbar"
+import CalendarForm from "./CalendarForm"
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "antd/dist/antd.css";
@@ -59,6 +60,12 @@ class CustomCalendar extends React.Component {
         })
         this.handleCancel();
     };
+
+    onSelectEvent = (event) => {        
+        console.log("Eveento HP: ", event);
+        console.log("Detalles almacenados: ", event.details);
+        alert((event.title).toString() + "\n" + (event.details).toString());
+    }
     
     handleSelect = ({ start, end }) => {
         const title = window.prompt('Título de la cita')
@@ -91,9 +98,7 @@ class CustomCalendar extends React.Component {
                     components={{
                         toolbar: (props) => <CustomToolbar {...props}
                             showCreateModalProp={this.showModal}
-                            hideCreateModalProp={this.handleCancel}
-                            onSubmitFormProp={this.onCreate}
-                            modalStatusProp={visible}
+                            
                         />
                     }}
                     style={{ height: "75vh", margin: 5}}
@@ -101,8 +106,13 @@ class CustomCalendar extends React.Component {
                     messages={calendarMessages}
                     formats={calendarFormats}
                     scrollToTime={new Date()}
-                    onSelectEvent={event => alert(event.title)}
+                    onSelectEvent={this.onSelectEvent}
                     onSelectSlot={this.handleSelect}
+                />
+                <CalendarForm
+                    visible={visible}
+                    onCreate={this.onCreate}
+                    onCancel={this.handleCancel}
                 />
             </>
         )
