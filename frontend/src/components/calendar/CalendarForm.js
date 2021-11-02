@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Modal, Form, Input, DatePicker } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import AuthContext from '../../context/auth-context';
 import locale from 'antd/es/date-picker/locale/es_ES';
 import 'antd/dist/antd.css';
 
@@ -18,6 +19,7 @@ const rangeConfig = {
 
 const CalendarForm = ({ visible, onCreate, onCancel }) => {
     const [form] = Form.useForm();
+    const AuthCTX = useContext(AuthContext)
     return (
         <Modal
             visible={visible}
@@ -30,7 +32,7 @@ const CalendarForm = ({ visible, onCreate, onCancel }) => {
                     .validateFields()
                     .then((values) => {
                         form.resetFields();
-                        onCreate(values);
+                        onCreate({...values, nombreDoctor:AuthCTX.currentUser.displayName});
                         // ! ACA PUEDO AÑADIR LA VALIDACION DE LAS FECHAS
                     })
                     .catch((info) => {

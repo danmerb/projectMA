@@ -5,6 +5,7 @@ import axios from "axios"
 import { localizer } from "./Localizer"
 import CustomToolbar from "./CustomToolbar"
 import CalendarForm from "./CalendarForm"
+import AuthContext from '../../context/auth-context'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "antd/dist/antd.css";
@@ -15,14 +16,12 @@ const events = [
         title: 'Matemáticas',
         start: new Date(new Date().setHours(new Date().getHours() - 3)),
         end: new Date(new Date().setHours(new Date().getHours() + 3)),
-        details: "Detalles de la materia de mate xdxd"
     },
     {
         id: 15,
         title: 'Ingles',
         start: new Date(new Date().setHours(new Date().getHours() - 2)),
         end: new Date(new Date().setHours(new Date().getHours() + 2)),
-        details: "Detalles de la materia de ingles xdxd"
     },
 ]
 
@@ -54,7 +53,8 @@ class CustomCalendar extends React.Component {
             end: values.eventTime[1].toDate(),
             details: values.eventDetails,
             email: values.email,
-            nombrePaciente: values.nombrePaciente
+            nombrePaciente: values.nombrePaciente,
+            nombreDoctor: values.nombreDoctor
         }
         console.log(event);
         const res = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/mailer/send`, {
