@@ -39,6 +39,7 @@ class Dashboard extends React.Component {
             <Menu
               theme="dark"
               mode="inline"
+              defaultSelectedKeys={["1"]}
               inlineIndent={24}
               defaultOpenKeys={["sub1"]}
             >
@@ -52,11 +53,11 @@ class Dashboard extends React.Component {
                 Dr. {currentUser.displayName}
               </Menu.Item>
 
-              <Menu.Item key="1" icon={<CalendarOutlined />} onClick={() => this.props.cb(`${this.props.path}/calendario`)}>
+              <Menu.Item key="1" icon={<CalendarOutlined />} onClick={() => this.props.cb(`${this.props.path}/`)}>
                 Citas Médicas
               </Menu.Item>
 
-              <Menu.Item key="2" icon={<FileOutlined />}>
+              <Menu.Item key="2" icon={<FileOutlined />} onClick={() => this.props.cb(`${this.props.path}/cita`)}>
                 Crear Receta
               </Menu.Item>
 
