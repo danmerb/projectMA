@@ -28,10 +28,14 @@ const ContactForm = () => {
 
   return (
     <Form
+      style={{ marginLeft: "30%" }}
       form={form}
       layout="vertical"
       name="event"
       initialValues={initialFieldValues}
+      wrapperCol={{
+        span: 14,
+      }}
     >
       <Form.Item label="Nombre" name="name" rules={inputsRules}>
         <Input />
