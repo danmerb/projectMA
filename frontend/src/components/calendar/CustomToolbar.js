@@ -14,9 +14,6 @@ class CustomToolbar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            visible: false,
-        };
     }
 
     navigate = action => {
@@ -27,31 +24,8 @@ class CustomToolbar extends React.Component {
         this.props.onView(view)
     }
 
-    showModal = () => {
-        this.setState({
-            visible: true,
-        });
-    };
-
-    handleCancel = () => {
-        this.setState({ visible: false });
-    };
-
-    onCreate = (values) => {
-        console.log('Received values of form: ', values);
-        const event = {            
-            title: values.eventTitle,
-            start: values.eventTime[0].toDate(),
-            end: values.eventTime[0].toDate(),
-            details: values.eventDetails
-        }
-        console.log(event);
-        this.handleCancel();
-    };
-
     render() {
-        const { visible } = this.state;
-        let { label } = this.props
+        const { label, showCreateModalProp, hideCreateModalProp, onSubmitFormProp, modalStatusProp } = this.props
         return (
             <>
                 <Row justify="space-between" align="middle">
@@ -72,7 +46,7 @@ class CustomToolbar extends React.Component {
                     </Row>
                     <Row justify="space-around" align="middle">
                         <Space size={10}>
-                            <Button type="default" size="large" icon={<PlusCircleTwoTone style={{ display: "inline-block", verticalAlign: "initial" }}/>} onClick={this.showModal}>
+                            <Button type="default" size="large" icon={<PlusCircleTwoTone style={{ display: "inline-block", verticalAlign: "initial" }} />} onClick={showCreateModalProp}>
                                 Nueva cita
                             </Button>
                             <Select defaultValue={Views.WEEK} size="large" style={{ width: 100 }} bordered={true} onChange={this.handleChangeView}>
@@ -86,9 +60,9 @@ class CustomToolbar extends React.Component {
                 </Row>
                 <br />
                 <CalendarForm
-                    visible={visible}
-                    onCreate={this.onCreate}
-                    onCancel={this.handleCancel}
+                    visible={modalStatusProp}
+                    onCreate={onSubmitFormProp}
+                    onCancel={hideCreateModalProp}
                 />
             </>
         );

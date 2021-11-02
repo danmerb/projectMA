@@ -6,8 +6,6 @@ import CustomToolbar from "./CustomToolbar"
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "antd/dist/antd.css";
-import { Affix, Button, Tooltip } from 'antd';
-import { PlusOutlined } from "@ant-design/icons";
 
 const events = [
     {
@@ -29,9 +27,38 @@ class CustomCalendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            events: events
+            events: events,
+            visible: false,
         };
     }
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    handleCancel = () => {
+        this.setState({ visible: false });
+    };
+
+    onCreate = (values) => {
+        console.log('Received values of form: ', values);
+        const event = {
+            title: values.eventTitle,
+            start: values.eventTime[0].toDate(),
+            end: values.eventTime[1].toDate(),
+            details: values.eventDetails
+        }
+        console.log(event);
+        this.setState({
+            events: [
+                ...this.state.events,
+                event
+            ],
+        })
+        this.handleCancel();
+    };
     
     handleSelect = ({ start, end }) => {
         const title = window.prompt('Título de la cita')
@@ -46,10 +73,13 @@ class CustomCalendar extends React.Component {
                     },
                 ],
             })
+        console.log("Start: \n", start, "\ntipo de start: ",typeof start);
+        console.log("\nEnd: \n", end, "\ntipo de end: ",typeof end);
     }
 
     render() {
-        const { events } = this.state;
+        const { events, visible } = this.state;
+        
         return (
             <>
                 <Calendar
@@ -59,7 +89,12 @@ class CustomCalendar extends React.Component {
                     startAccessor="start"
                     endAccessor="end"
                     components={{
-                        toolbar: CustomToolbar
+                        toolbar: (props) => <CustomToolbar {...props}
+                            showCreateModalProp={this.showModal}
+                            hideCreateModalProp={this.handleCancel}
+                            onSubmitFormProp={this.onCreate}
+                            modalStatusProp={visible}
+                        />
                     }}
                     style={{ height: "75vh", margin: 5}}
                     defaultView={Views.WEEK}
@@ -69,11 +104,6 @@ class CustomCalendar extends React.Component {
                     onSelectEvent={event => alert(event.title)}
                     onSelectSlot={this.handleSelect}
                 />
-                <Affix style={{ position: 'fixed', bottom: 70, right: 20 }}>
-                    <Tooltip title="Nueva cita">
-                        <Button disabled type="primary" shape="circle" icon={<PlusOutlined />} size="large" onClick={this.handleSelect}/>
-                    </Tooltip>
-                </Affix>
             </>
         )
     }
