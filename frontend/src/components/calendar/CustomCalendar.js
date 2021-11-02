@@ -5,7 +5,6 @@ import axios from "axios"
 import { localizer } from "./Localizer"
 import CustomToolbar from "./CustomToolbar"
 import CalendarForm from "./CalendarForm"
-import AuthContext from '../../context/auth-context'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "antd/dist/antd.css";
@@ -16,12 +15,14 @@ const events = [
         title: 'Matemáticas',
         start: new Date(new Date().setHours(new Date().getHours() - 3)),
         end: new Date(new Date().setHours(new Date().getHours() + 3)),
+        details: "detalles mat"
     },
     {
         id: 15,
         title: 'Ingles',
         start: new Date(new Date().setHours(new Date().getHours() - 2)),
         end: new Date(new Date().setHours(new Date().getHours() + 2)),
+        details: "detalles ing"
     },
 ]
 
@@ -73,7 +74,7 @@ class CustomCalendar extends React.Component {
     onSelectEvent = (event) => {        
         console.log("Eveento HP: ", event);
         console.log("Detalles almacenados: ", event.details);
-        alert((event.title).toString() + "\n" + (event.details).toString());
+        (event.details) ? alert(`${event.title}\n${event.details}`) : alert(event.title);
     }
     
     handleSelect = ({ start, end }) => {
@@ -106,8 +107,7 @@ class CustomCalendar extends React.Component {
                     endAccessor="end"
                     components={{
                         toolbar: (props) => <CustomToolbar {...props}
-                            showCreateModalProp={this.showModal}
-                            
+                            showCreateModalProp={this.showModal}                            
                         />
                     }}
                     style={{ height: "75vh", margin: 5}}
