@@ -14,12 +14,14 @@ const events = [
         title: 'Matemáticas',
         start: new Date(new Date().setHours(new Date().getHours() - 3)),
         end: new Date(new Date().setHours(new Date().getHours() + 3)),
+        details: "Detalles de la materia de mate xdxd"
     },
     {
         id: 15,
         title: 'Ingles',
         start: new Date(new Date().setHours(new Date().getHours() - 2)),
         end: new Date(new Date().setHours(new Date().getHours() + 2)),
+        details: "Detalles de la materia de ingles xdxd"
     },
 ]
 
