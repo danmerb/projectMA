@@ -12,6 +12,8 @@ const calendarFormats = {
     dayHeaderFormat: 'dddd D MMM',
     agendaDateFormat: 'ddd D MMM',
     eventTimeRangeFormat: ({ start, end }) =>
+        localizer.format(start, 'hh:mm A') + ' – ' + localizer.format(end, 'hh:mm A'),
+    selectRangeFormat: ({ start, end }) =>
         localizer.format(start, 'hh:mm A') + ' – ' + localizer.format(end, 'hh:mm A')
 }
 
