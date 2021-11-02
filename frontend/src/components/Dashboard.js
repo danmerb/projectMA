@@ -4,7 +4,6 @@ import {
   WalletFilled,
   FileOutlined,
   CalendarOutlined,
-  MedicineBoxOutlined,
   HeartTwoTone,
   CopyrightOutlined
 } from "@ant-design/icons";
@@ -27,7 +26,7 @@ class Dashboard extends React.Component {
     const { collapsed } = this.state;
     return (
       <AuthContext.Consumer >
-        {({currentUser, logout})=>
+        {({ currentUser, logout }) =>
         (<Layout style={{ minHeight: "100vh", maxWidth: "99%" }}>
           <Sider
             collapsible
@@ -39,44 +38,40 @@ class Dashboard extends React.Component {
             <div className="logo" />
             <Menu
               theme="dark"
-              defaultSelectedKeys={["0"]}
               mode="inline"
+              defaultSelectedKeys={["1"]}
               inlineIndent={24}
-              defaultOpenKeys={["sub1", "sub2"]}
+              defaultOpenKeys={["sub1"]}
             >
-              <Menu.Item key="0" icon={<MedicineBoxOutlined />} onClick={()=>this.props.cb(`${this.props.path}/`)}>
-                MED AID HOME
-              </Menu.Item>
               <Menu.Item
-                key="1"
+                key="0"
                 icon={
-                  <Avatar
-                    src={`https://avatars.dicebear.com/api/jdenticon/${currentUser.uid}.svg`}
-                  />
+                  <Avatar src={`https://avatars.dicebear.com/api/jdenticon/${currentUser.uid}.svg`} style={{ marginLeft: -8 }} />
                 }
+                style={{ pointerEvents: "none" }}
               >
                 Dr. {currentUser.displayName}
               </Menu.Item>
-              <SubMenu key="sub1" icon={<WalletFilled />} title="Expedientes">
-                <Menu.Item key="3" onClick={()=>this.props.cb(`${this.props.path}/expediente`)}>
-                  Crear Expediente
-                </Menu.Item>
-                <Menu.Item key="4" disabled>
-                  Expediente 2
-                </Menu.Item>
-                <Menu.Item key="5" danger>
-                  Expediente 3
-                </Menu.Item>
-              </SubMenu>
-              <SubMenu key="sub2" icon={<CalendarOutlined />} title="Citas Medicas">
-                <Menu.Item key="6" onClick={()=>this.props.cb(`${this.props.path}/calendario`)}>Paciente 1</Menu.Item>
-                <Menu.Item key="8">Paciente 2</Menu.Item>
-              </SubMenu>
-              <Menu.Item key="9" icon={<FileOutlined />}>
+
+              <Menu.Item key="1" icon={<CalendarOutlined />} onClick={() => this.props.cb(`${this.props.path}/`)}>
+                Citas Médicas
+              </Menu.Item>
+
+              <Menu.Item key="2" icon={<FileOutlined />} onClick={() => this.props.cb(`${this.props.path}/cita`)}>
                 Crear Receta
               </Menu.Item>
+
+              <SubMenu key="sub1" icon={<WalletFilled />} title="Expedientes">
+                <Menu.Item key="3" onClick={() => this.props.cb(`${this.props.path}/expediente`)}>
+                  Crear expediente
+                </Menu.Item>
+                <Menu.Item key="4" onClick={() => this.props.cb(`${this.props.path}/expedientes`)}>
+                  Ver expedientes
+                </Menu.Item>
+              </SubMenu>
             </Menu>
           </Sider>
+
           <Layout className="site-layout">
             <Header className="site-layout-background">
               <Button type="primary" onClick={logout}>Cerrar Sesion</Button>
@@ -85,11 +80,11 @@ class Dashboard extends React.Component {
               {this.props.children}
             </Content>
             <Footer style={{ textAlign: "center" }}>
-              Med Aid - Hecho con <HeartTwoTone twoToneColor="#eb2f96" style={{ display: "inline-block", verticalAlign: "initial" , fontSize: "16px"}} /> por DJCOK <CopyrightOutlined style={{ display: "inline-block", verticalAlign: "1px" }}/>
+              Med Aid - Hecho con <HeartTwoTone twoToneColor="#eb2f96" style={{ display: "inline-block", verticalAlign: "initial", fontSize: "16px" }} /> por DJCOK <CopyrightOutlined style={{ display: "inline-block", verticalAlign: "1px" }} />
             </Footer>
           </Layout>
         </Layout>)
-      }
+        }
       </AuthContext.Consumer>
     );
   }
