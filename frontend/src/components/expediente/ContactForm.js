@@ -1,91 +1,90 @@
-import React, { useState, useEffect } from "react";
-import PictureWall from '../../components/PictureWall'
+import React from "react";
+import { Form, Input, DatePicker, Button } from "antd";
+import locale from "antd/es/date-picker/locale/es_ES";
+import PictureWall from "../../components/PictureWall";
 
-const ContactForm = (props) => {
-    const initialFieldValues = {
-        fullName: '',
-        mobile: '',
-        email: '',
-        address: ''
-    }
+const inputsRules = [
+  {
+    required: true,
+    message: "Campo requerido",
+  },
+];
 
-    var [values, setValues] = useState(initialFieldValues)
+const ContactForm = () => {
+  const initialFieldValues = {
+    fullName: "",
+    mobile: "",
+    email: "",
+    address: "",
+  };
 
-    useEffect(() => {
-        if (props.currentId == '')
-            setValues({
-                ...initialFieldValues
-            })
-        else
-            setValues({
-                ...props.contactObjects[props.currentId]
-            })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.currentId, props.contactObjects])
+  const [form] = Form.useForm();
 
-    const handleInputChange = e => {
-        var { name, value } = e.target
-        setValues({
-            ...values,
-            [name]: value
-        })
-    }
-    const handleFormSubmit = e => {
-        e.preventDefault();
-        //props.addOrEdit(values)
-    }
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const values = await form.validateFields();
+    console.log(values);
+  };
 
-    return (
-        <form autoComplete="off" onSubmit={handleFormSubmit}>
-            <div className="form-group input-group">
-                <div className="input-group-prepend">
-                    <div className="input-group-text">
-                        <i className="fas fa-user"></i>
-                    </div>
-                </div>
-                <input className="form-control" placeholder="Full Name" name="fullName"
-                    value={values.fullName}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div className="form-row">
-                <div className="form-group input-group col-md-6">
-                    <div className="input-group-prepend">
-                        <div className="input-group-text">
-                            <i className="fas fa-mobile-alt"></i>
-                        </div>
-                    </div>
-                    <input className="form-control" placeholder="Mobile" name="mobile"
-                        value={values.mobile}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div className="form-group input-group col-md-6">
-                    <div className="input-group-prepend">
-                        <div className="input-group-text">
-                            <i className="fas fa-envelope"></i>
-                        </div>
-                    </div>
-                    <input className="form-control" placeholder="Email" name="email"
-                        value={values.email}
-                        onChange={handleInputChange}
-                    />
-                </div>
-            </div>
-            <div className="form-group">
-                <textarea className="form-control" placeholder="Address" name="address"
-                    value={values.address}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div>
-                <PictureWall />
-            </div>
-            <div className="form-group">
-                <input type="submit" value={props.currentId == '' ? "Save" : "Update"} className="btn btn-primary btn-block" />
-            </div>
-        </form >
-    );
-}
+  return (
+    <Form
+      form={form}
+      layout="vertical"
+      name="event"
+      initialValues={initialFieldValues}
+    >
+      <Form.Item label="Nombre" name="name" rules={inputsRules}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Correo Electrónico" name="email" rules={inputsRules}>
+        <Input type="email" />
+      </Form.Item>
+
+      <Form.Item name="direccion" label="Dirección" rules={inputsRules}>
+        <Input.TextArea />
+      </Form.Item>
+
+      <Form.Item label="Teléfono" name="phone" rules={inputsRules}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="fechaNacimiento"
+        label="Fecha de Nacimiento"
+        rules={inputsRules}
+      >
+        <DatePicker locale={locale} format="DD/MM/YYYY" />
+      </Form.Item>
+
+      <Form.Item label="Género" name="genero" rules={inputsRules}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Teléfono de Emergencia"
+        name="phone"
+        rules={inputsRules}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item>
+        <PictureWall />
+      </Form.Item>
+
+      <Form.Item>
+        <Button
+          type="primary"
+          onClick={(e) => {
+            handleFormSubmit(e);
+          }}
+        >
+          ENVIAR
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
 
 export default ContactForm;
