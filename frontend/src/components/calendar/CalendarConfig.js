@@ -1,9 +1,4 @@
-const momentConfig = {
-    months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-    weekdays: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
-    weekdaysShort: ["Dom.", "Lun.", "Mar.", "Mié.", "Jue.", "Vie.", "Sáb."],
-}
+import { localizer } from "./Localizer"
 
 const calendarMessages = {
     'today': "Hoy", "previous": 'Anterior', "next": "Siguiente",
@@ -15,7 +10,11 @@ const calendarFormats = {
     timeGutterFormat: 'hh:mm A',
     agendaTimeFormat: 'hh:mm A',
     dayHeaderFormat: 'dddd D MMM',
-    agendaDateFormat: 'ddd D MMM'
+    agendaDateFormat: 'ddd D MMM',
+    eventTimeRangeFormat: ({ start, end }) =>
+        localizer.format(start, 'hh:mm A') + ' – ' + localizer.format(end, 'hh:mm A'),
+    selectRangeFormat: ({ start, end }) =>
+        localizer.format(start, 'hh:mm A') + ' – ' + localizer.format(end, 'hh:mm A')
 }
 
-export { momentConfig, calendarMessages, calendarFormats}
+export {calendarMessages, calendarFormats}
