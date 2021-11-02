@@ -11,7 +11,7 @@ export const App = () => {
     <AuthProvider>
       <Switch>
         <Route exact path="/" render={() => <Redirect exact to="/login" />} />
-        <Route exact path="/home" component={LayoutDashboard} />
+        <LayoutDashboard path="/home" />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
       </Switch>
