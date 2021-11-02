@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Formik } from "formik";
 import AuthContext from "../../context/auth-context";
 import { Form, Input, Button } from "antd";
-import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined, EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import "../../style/login.css"
 
@@ -89,7 +89,7 @@ const LoginForm = () => {
                 },
               ]}
             >
-              <Input
+              <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="CONTRASEÑA"
@@ -99,6 +99,7 @@ const LoginForm = () => {
                 onChange={handleChange}
                 className="transparentInput"
                 autoComplete="off"
+                iconRender={visible => (visible ? <EyeOutlined style={{ color: "#FFFFFF" }} /> : <EyeInvisibleOutlined style={{ color: "#FFFFFF" }}/>)}
               />
             </Form.Item>
 
@@ -113,6 +114,14 @@ const LoginForm = () => {
 
               <div onClick={restablecerContra} className="reset-password">
                 ¿Olvidaste la contraseña?
+              </div>
+              <div>
+                <Button
+                  type="link" 
+                  style={{ color: "#FFFFFF" }}
+                  onClick={() => history.push("/register")}>
+                  ¿No tiene cuenta? Registrese ahora
+                </Button>
               </div>
             </Form.Item>
           </Form>
