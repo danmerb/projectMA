@@ -8,6 +8,7 @@ import PictureWall from '../components/PictureWall'
 import Contacts from '../components/expediente/Contacts'
 import ContactForm from '../components/expediente/ContactForm'
 import CustomCalendar from '../components/calendar/CustomCalendar'
+import Receta from '../components/receta/Receta'
 
 const LayoutDashboard = ({ exact, path }) => {
     const AuthCTX = useContext(AuthContext)
@@ -26,6 +27,7 @@ const LayoutDashboard = ({ exact, path }) => {
                         <Route exact path={`${routeProps.match.path}/expediente`} component={ContactForm} />
                         <Route exact path={`${routeProps.match.path}/expedientes`} component={Contacts} />
                         <Route exact path={`${routeProps.match.path}/`} component={CustomCalendar} />
+                        <Route exact path={`${routeProps.match.path}/imprimir`} component={Receta} />
                     </Switch>
                 </Dashboard>)
             return cp

@@ -6,15 +6,16 @@ const calendarMessages = {
     "time": "Hora", "event": "Evento", "noEventsInRange": "No hay citas en este rango."
 }
 
+const rangeFormat = ({ start, end }) =>
+    localizer.format(start, 'hh:mm A') + ' – ' + localizer.format(end, 'hh:mm A');
+
 const calendarFormats = {
     timeGutterFormat: 'hh:mm A',
     agendaTimeFormat: 'hh:mm A',
     dayHeaderFormat: 'dddd D MMM',
     agendaDateFormat: 'ddd D MMM',
-    eventTimeRangeFormat: ({ start, end }) =>
-        localizer.format(start, 'hh:mm A') + ' – ' + localizer.format(end, 'hh:mm A'),
-    selectRangeFormat: ({ start, end }) =>
-        localizer.format(start, 'hh:mm A') + ' – ' + localizer.format(end, 'hh:mm A')
+    eventTimeRangeFormat: rangeFormat,
+    selectRangeFormat: rangeFormat
 }
 
 export {calendarMessages, calendarFormats}
