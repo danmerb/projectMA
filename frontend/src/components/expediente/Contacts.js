@@ -1,22 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { getExpedientes } from "../../firebase/firebase";
+import React, { useContext } from "react";
 import {EyeOutlined} from '@ant-design/icons'
-import AuthContext from "../../context/auth-context";
+import ExpedienteContext from "../../context/expedientes-context";
 import { useHistory} from 'react-router-dom'
 
 const Contacts = () => {
-  const { currentUser } = useContext(AuthContext);
-  const history = useHistory();
-  var [contactObjects, setContactObjects] = useState([]);
 
-  useEffect(() => {
-    const fetch = async()=>{
-      const expedientes = await getExpedientes(currentUser.uid);
-      setContactObjects(expedientes);
-    }
-   fetch();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const {expedientes} = useContext(ExpedienteContext);
+  const history = useHistory();
 
   const expedienteDetail = (paciente)=>{
     history.push(`${history.location.pathname}/detail`, paciente)
@@ -34,7 +24,7 @@ const Contacts = () => {
           </tr>
         </thead>
         <tbody>
-          {contactObjects.map((paciente) => {
+          {expedientes.map((paciente) => {
             return (
               <tr key={paciente.id}>
                 <td>{paciente.nombre}</td>
@@ -42,12 +32,12 @@ const Contacts = () => {
                 <td>{paciente.telefono}</td>
                 <td>
                   <EyeOutlined twoToneColor="#52c41a" onClick={()=>{expedienteDetail(paciente)}}/>
-                  <a className="btn text-primary" onClick={() => {}}>
+                  <p className="btn text-primary" onClick={() => {}}>
                     <i className="fas fa-pencil-alt"></i>
-                  </a>
-                  <a className="btn text-danger" onClick={() => {}}>
+                  </p>
+                  <p className="btn text-danger" onClick={() => {}}>
                     <i className="far fa-trash-alt"></i>
-                  </a>
+                  </p>
                 </td>
               </tr>
             );

@@ -11,10 +11,6 @@ const { Option } = Select;
 
 class CustomToolbar extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     navigate = action => {
         this.props.onNavigate(action)
     }

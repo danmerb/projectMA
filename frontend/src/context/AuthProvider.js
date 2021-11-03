@@ -30,7 +30,9 @@ const AuthProvider = (props) => {
   }
 
   useEffect(() => {
+    console.log("SE EJECUTA EFFECT AUTH CONTEXT")
     const observer = onAuthStateChanged(auth, (user) => {
+      console.log("SE EJECUTA LISTENER AUTH CONTEXT")
       setCurrentUser(user);
     });
 
