@@ -61,6 +61,10 @@ class Dashboard extends React.Component {
                 Crear Receta
               </Menu.Item>
 
+              <Menu.Item key="2.1" icon={<FileOutlined />} onClick={() => this.props.cb(`${this.props.path}/imprimir`)}>
+                Imprimir receta
+              </Menu.Item>
+
               <SubMenu key="sub1" icon={<WalletFilled />} title="Expedientes">
                 <Menu.Item key="3" onClick={() => this.props.cb(`${this.props.path}/expediente`)}>
                   Crear expediente
