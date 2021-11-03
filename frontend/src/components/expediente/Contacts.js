@@ -1,17 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getExpedientes } from "../../firebase/firebase";
+import {EyeOutlined} from '@ant-design/icons'
 import AuthContext from "../../context/auth-context";
+import { useHistory} from 'react-router-dom'
 
 const Contacts = () => {
   const { currentUser } = useContext(AuthContext);
-
+  const history = useHistory();
   var [contactObjects, setContactObjects] = useState([]);
 
   useEffect(() => {
-    getExpedientes(currentUser.uid).then((expedientes) => {
+    const fetch = async()=>{
+      const expedientes = await getExpedientes(currentUser.uid);
       setContactObjects(expedientes);
-    });
+    }
+   fetch();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const expedienteDetail = (paciente)=>{
+    history.push(`${history.location.pathname}/detail`, {paciente})
+  }
 
   return (
     <>
@@ -25,13 +34,14 @@ const Contacts = () => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(contactObjects).map((id) => {
+          {contactObjects.map((paciente) => {
             return (
-              <tr key={id}>
-                <td>{contactObjects[id].nombre}</td>
-                <td>{contactObjects[id].correo}</td>
-                <td>{contactObjects[id].telefono}</td>
+              <tr key={paciente.id}>
+                <td>{paciente.nombre}</td>
+                <td>{paciente.correo}</td>
+                <td>{paciente.telefono}</td>
                 <td>
+                  <EyeOutlined twoToneColor="#52c41a" onClick={()=>{expedienteDetail(paciente)}}/>
                   <a className="btn text-primary" onClick={() => {}}>
                     <i className="fas fa-pencil-alt"></i>
                   </a>
