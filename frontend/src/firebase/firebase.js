@@ -14,6 +14,7 @@ const db = getFirestore(app);
 const expedienteCol = collection(db, "expedientes");
 
 async function getExpedientes(idDoc) {
+  if (!idDoc) return [];
   const q = query(
     expedienteCol,
     where("idDoc", "==", idDoc),
