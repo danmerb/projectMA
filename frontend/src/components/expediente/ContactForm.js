@@ -14,19 +14,12 @@ const inputsRules = [
 
 const ContactForm = () => {
   const { currentUser } = useContext(AuthContext);
-  const initialFieldValues = {
-    fullName: "",
-    mobile: "",
-    email: "",
-    address: "",
-  };
 
   const [form] = Form.useForm();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const values = await form.validateFields();
-    console.log(values);
 
     let expediente = {
       nombre: values.nombre,
@@ -38,7 +31,8 @@ const ContactForm = () => {
       telEmerg: values.telefonoEmergencia,
       idDoc: currentUser.uid,
     };
-    await setExpediente(expediente);
+
+    await setExpediente(expediente).then(() => form.resetFields());
   };
 
   return (
@@ -47,7 +41,7 @@ const ContactForm = () => {
       form={form}
       layout="vertical"
       name="event"
-      initialValues={initialFieldValues}
+      initialValues={{}}
       wrapperCol={{
         span: 14,
       }}
