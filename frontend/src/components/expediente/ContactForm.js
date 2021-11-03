@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Input, DatePicker, Button } from "antd";
 import locale from "antd/es/date-picker/locale/es_ES";
 import PictureWall from "../../components/PictureWall";
+import { setExpediente } from "../../firebase/firebase";
+import AuthContext from "../../context/auth-context";
 
 const inputsRules = [
   {
@@ -11,6 +13,7 @@ const inputsRules = [
 ];
 
 const ContactForm = () => {
+  const { currentUser } = useContext(AuthContext);
   const initialFieldValues = {
     fullName: "",
     mobile: "",
@@ -24,6 +27,18 @@ const ContactForm = () => {
     e.preventDefault();
     const values = await form.validateFields();
     console.log(values);
+
+    let expediente = {
+      nombre: values.nombre,
+      correo: values.correo,
+      direccion: values.direccion,
+      telefono: values.telefono,
+      fechaNac: values.fechaNac.toDate(),
+      genero: values.genero,
+      telEmerg: values.telefonoEmergencia,
+      idDoc: currentUser.uid,
+    };
+    await setExpediente(expediente);
   };
 
   return (
@@ -37,11 +52,11 @@ const ContactForm = () => {
         span: 14,
       }}
     >
-      <Form.Item label="Nombre" name="name" rules={inputsRules}>
+      <Form.Item label="Nombre" name="nombre" rules={inputsRules}>
         <Input />
       </Form.Item>
 
-      <Form.Item label="Correo Electrónico" name="email" rules={inputsRules}>
+      <Form.Item label="Correo Electrónico" name="correo" rules={inputsRules}>
         <Input type="email" />
       </Form.Item>
 
@@ -49,12 +64,12 @@ const ContactForm = () => {
         <Input.TextArea />
       </Form.Item>
 
-      <Form.Item label="Teléfono" name="phone" rules={inputsRules}>
+      <Form.Item label="Teléfono" name="telefono" rules={inputsRules}>
         <Input />
       </Form.Item>
 
       <Form.Item
-        name="fechaNacimiento"
+        name="fechaNac"
         label="Fecha de Nacimiento"
         rules={inputsRules}
       >
@@ -67,7 +82,7 @@ const ContactForm = () => {
 
       <Form.Item
         label="Teléfono de Emergencia"
-        name="phone"
+        name="telefonoEmergencia"
         rules={inputsRules}
       >
         <Input />
