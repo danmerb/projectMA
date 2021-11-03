@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Form, Input, DatePicker, Button } from "antd";
+import { Form, Input, DatePicker, Button, message } from "antd";
 import locale from "antd/es/date-picker/locale/es_ES";
 import PictureWall from "../../components/PictureWall";
 import { setExpediente } from "../../firebase/firebase";
@@ -31,8 +31,14 @@ const ContactForm = () => {
       telEmerg: values.telefonoEmergencia,
       idDoc: currentUser.uid,
     };
-
-    await setExpediente(expediente).then(() => form.resetFields());
+    try{
+      await setExpediente(expediente);
+      message.success("Expendiente Creado con exito")
+      form.resetFields();
+    }catch(e){
+      message.error("Error al crear expediente")
+    }
+   
   };
 
   return (

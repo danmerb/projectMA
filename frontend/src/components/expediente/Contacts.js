@@ -19,7 +19,7 @@ const Contacts = () => {
   }, []);
 
   const expedienteDetail = (paciente)=>{
-    history.push(`${history.location.pathname}/detail`, {paciente})
+    history.push(`${history.location.pathname}/detail`, paciente)
   }
 
   return (
