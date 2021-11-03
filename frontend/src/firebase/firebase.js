@@ -60,9 +60,9 @@ async function getExpedientes(idDoc, setState) {
         idDoc: doc.data().idDoc,
       });
     });
-    console.log(expedientes)
     setState(expedientes)
   });
+  console.log(unsubscribe)
   return unsubscribe
 }
 

@@ -7,7 +7,7 @@ const ExpedienteProvider = (props) => {
   const [expedientes, setExpedientes] = useState([]);
   const { currentUser } = useContext(AuthContext);
   useEffect(() => {
-    console.log("SE EJECUTA EFECTO EXPEDIENTE PROVIDER")
+    
     const unsubscribe = getExpedientes(currentUser.uid, setExpedientes);
     return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
