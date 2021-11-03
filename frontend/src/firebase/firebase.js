@@ -9,9 +9,15 @@ import {
   where,
   orderBy,
 } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL} from "firebase/storage";
 const db = getFirestore(app);
 
 const expedienteCol = collection(db, "expedientes");
+const storage = getStorage();
+
+async function getImage(path){
+  return getDownloadURL(ref(storage, path))
+}
 
 async function getExpedientes(idDoc) {
   if (!idDoc) return [];
@@ -33,6 +39,7 @@ async function getExpedientes(idDoc) {
       fechaNac: doc.data().fechaNac,
       genero: doc.data().genero,
       telEmerg: doc.data().telEmerg,
+      img: doc.data().img,
       idDoc: doc.data().idDoc,
     });
   });
@@ -45,5 +52,5 @@ async function setExpediente(expediente, id) {
   await setDoc(docRef, expediente);
 }
 
-export { getExpedientes, setExpediente };
+export { getExpedientes, setExpediente, getImage };
 export default db;

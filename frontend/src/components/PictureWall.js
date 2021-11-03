@@ -5,7 +5,7 @@ import { useContext } from "react";
 import AuthContext from "../context/auth-context";
 // Create a root reference
 
-const UploadPic = () => {
+const UploadPic = ({imgCallback}) => {
   const storage = getStorage();
   const AuthCtx = useContext(AuthContext);
 
@@ -15,7 +15,7 @@ const UploadPic = () => {
     listType: "picture",
     onChange(info) {
       if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+        //console.log(info.file, info.fileList);
       }
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
@@ -35,11 +35,12 @@ const UploadPic = () => {
       });
       uploadBytes(imgRef, options.file)
         .then((snapshot) => {
+          imgCallback(snapshot.ref.fullPath)
           onSuccess();
         })
         .catch((e) => {
           onError();
-        });
+        }); 
     },
     progress: {
       strokeColor: {

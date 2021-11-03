@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Input, DatePicker, Button, message } from "antd";
 import locale from "antd/es/date-picker/locale/es_ES";
 import PictureWall from "../../components/PictureWall";
@@ -14,8 +14,12 @@ const inputsRules = [
 
 const ContactForm = () => {
   const { currentUser } = useContext(AuthContext);
-
+  const [imgPath, setImgId] = useState('');
   const [form] = Form.useForm();
+
+  const imgCallback = (id)=>{
+    setImgId(id)
+  }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -30,12 +34,14 @@ const ContactForm = () => {
       genero: values.genero,
       telEmerg: values.telefonoEmergencia,
       idDoc: currentUser.uid,
+      img: imgPath!==""?imgPath:"default/user.png"
     };
     try{
       await setExpediente(expediente);
       message.success("Expendiente Creado con exito")
       form.resetFields();
     }catch(e){
+      console.log(e)
       message.error("Error al crear expediente")
     }
    
@@ -89,7 +95,7 @@ const ContactForm = () => {
       </Form.Item>
 
       <Form.Item>
-        <PictureWall />
+        <PictureWall imgCallback={imgCallback} />
       </Form.Item>
 
       <Form.Item>

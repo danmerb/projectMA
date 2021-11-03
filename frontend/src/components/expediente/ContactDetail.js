@@ -2,18 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Row, Card, Col, Image } from "antd";
 import { MedicineBoxOutlined } from "@ant-design/icons";
+import {getImage} from '../../firebase/firebase'
 
 const ContactDetail = (props) => {
   const history = useHistory();
   const [paciente, setPaciente] = useState({});
 
   useEffect(() => {
-    console.log(history.location.state)
     if (history.location.state) {
-      setPaciente(history.location.state);
+      getImage(history.location.state.img)
+      .then(res=>{
+        history.location.state.img = res
+        setPaciente(history.location.state);
+      })
     } else {
       history.push("/home");
     }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   return (
@@ -22,7 +27,7 @@ const ContactDetail = (props) => {
       <Image.PreviewGroup>
         <Image
           width={200}
-          src={`https://avatars.dicebear.com/api/jdenticon/${paciente.id}.svg`}
+          src={paciente.img}
         />
       </Image.PreviewGroup>
       <Row gutter={24} style={{ marginTop: "3rem" }} justify="space-between">
