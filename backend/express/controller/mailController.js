@@ -5,12 +5,11 @@ const Controller = {}
 
 Controller.sendMail = (req, res, next) =>{
    let {email, nombrePaciente, nombreDoctor, start, title, details } = req.body;
-   console.log(nombreDoctor)
    if(!details){ details = "No hay detalles adicionales"}
     const msg = {
       "to": String(email), // Change to your recipient
-      "from": "no-reply@em7397.med-aid.software", // Change to your verified sender
-      //"subject": "Sending with SendGrid is Really Fun :D",
+      "from": "no-reply@em5140.med-aid.software", // Change to your verified sender
+      "subject": "Recordatorio de tu consulta!",
      // text: "and easy to do anywhere, even with Node.js",
       //html: "<strong>and easy to do anywhere, even with Node.js</strong>",
       "dynamicTemplateData":{
@@ -20,7 +19,7 @@ Controller.sendMail = (req, res, next) =>{
          "title": title,
          "details":details
       },
-      "template_id":"d-8f284cbd5d3442c2acb3fdf94ab1ec01",
+      "template_id":"d-59225a48b35d4b839397924a5748e05a",
     };
 
    sgMail.send(msg)
