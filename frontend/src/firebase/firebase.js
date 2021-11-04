@@ -14,6 +14,7 @@ const db = getFirestore(app);
 
 const expedienteCol = collection(db, "expedientes");
 const citaCol = collection(db, "citas");
+const recetaCol = collection(db,"recetas")
 const storage = getStorage();
 
 async function getImage(path) {
@@ -86,5 +87,41 @@ async function setCita(cita, id) {
   await setDoc(docRef, cita, { merge: true });
 }
 
-export { getExpedientes, setExpediente, getImage, getCitas, setCita };
+async function getReceta(idDoc, setState,nombrePa) {
+  if (!idDoc) return [];
+  const q = query(
+    recetaCol,
+    where("idDoc", "==", idDoc),
+    where("nombrePa", "==", nombrePa)
+  );
+
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    let receta = [];
+    querySnapshot.forEach((doc) => {
+      receta.push({
+        id: doc.id,
+        nombrePa: doc.data().nombrePa,
+        edad: doc.data().edad,
+        genero: doc.data().genero,
+        fechaPr: doc.data().fechaPr.toDate(),
+        idDoc: doc.data().idDoc,
+        nombreCom: doc.data().nombreCom,
+        nombreGen: doc.data().nombreGen,
+        presentacion: doc.data().presentacion,
+        dosis: doc.data().dosis,
+        tiempo: doc.data().tiempo,
+      });
+    });
+    setState(receta);
+  });
+  return unsubscribe;
+}
+
+async function setReceta(receta, id) {
+  let docRef = id ? doc(recetaCol, id) : doc(recetaCol);
+  await setDoc(docRef, receta);
+}
+
+
+export { getExpedientes, setExpediente, getImage, getCitas, setCita, getReceta, setReceta };
 export default db;

@@ -11,6 +11,8 @@ import CustomCalendar from '../components/calendar/CustomCalendar'
 import Receta from '../components/receta/Receta'
 import ContactDetail from '../components/expediente/ContactDetail'
 import DataProvider from "../context/DataProvider"
+import RecetaFormulario from '../components/receta/RecetaFormulario'
+import ShowReceta from '../components/receta/ShowReceta'
 
 const LayoutDashboard = ({ exact, path }) => {
     const AuthCTX = useContext(AuthContext)
@@ -33,6 +35,8 @@ const LayoutDashboard = ({ exact, path }) => {
                             <Route exact path={`${routeProps.match.path}/expedientes/detail`} component={ContactDetail} />
                             <Route exact path={`${routeProps.match.path}/`} component={CustomCalendar} />
                             <Route exact path={`${routeProps.match.path}/imprimir`} component={Receta} />
+                            <Route exact path={`${routeProps.match.path}/receta`} component={RecetaFormulario} />
+                            <Route exact path={`${routeProps.match.path}/vistaReceta`} component={ShowReceta} />
                         </Switch>
                     </Dashboard>
                 </DataProvider>
