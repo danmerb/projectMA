@@ -5,6 +5,7 @@ import AuthContext from "../../context/auth-context";
 import locale from "antd/es/date-picker/locale/es_ES";
 import "antd/dist/antd.css";
 import { setCita } from "../../firebase/firebase";
+import '../../style/calendar.css'
 
 const { RangePicker } = DatePicker;
 

@@ -1,4 +1,12 @@
-svg {
-    display: inline-block;
-    vertical-align: initial;
+/* !ESTO ES PARA EL COLOR DE LOS EDIT*/
+/*.ant-input[disabled], .ant-picker-input > input[disabled] {
+  color: #919191
+}*/
+
+.ant-modal-body {
+  padding: 16px 16px 0px 16px;
+}
+
+.ant-form-item {
+  margin-bottom: 16px;
 }
