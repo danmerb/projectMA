@@ -14,12 +14,12 @@ const inputsRules = [
 
 const ContactForm = () => {
   const { currentUser } = useContext(AuthContext);
-  const [imgPath, setImgId] = useState('');
+  const [imgPath, setImgId] = useState("");
   const [form] = Form.useForm();
 
-  const imgCallback = (id)=>{
-    setImgId(id)
-  }
+  const imgCallback = (id) => {
+    setImgId(id);
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -34,17 +34,16 @@ const ContactForm = () => {
       genero: values.genero,
       telEmerg: values.telefonoEmergencia,
       idDoc: currentUser.uid,
-      img: imgPath!==""?imgPath:"default/user.png"
+      img: imgPath !== "" ? imgPath : "default/user.png",
     };
-    try{
+    try {
       await setExpediente(expediente);
-      message.success("Expendiente Creado con exito")
+      message.success("Expendiente creado con éxito");
       form.resetFields();
-    }catch(e){
-      console.log(e)
-      message.error("Error al crear expediente")
+    } catch (e) {
+      console.log(e);
+      message.error("Error al crear expediente");
     }
-   
   };
 
   return (

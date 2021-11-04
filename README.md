@@ -1,7 +1,5 @@
-MED AID  
-
-REQUIRED VARIABLES:  
-##FRONTEND:  
+# MED AID
+## Variables FRONTEND:
 `REACT_APP_BACKEND_BASE_URL=http://localhost:4000` (development)
-##BACKEND  
+## Variables BACKEND:
 `SENDGRID_API_KEY= SG`
