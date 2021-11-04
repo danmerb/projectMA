@@ -83,7 +83,7 @@ async function getCitas(idDoc, setState) {
 
 async function setCita(cita, id) {
   let docRef = id ? doc(citaCol, id) : doc(citaCol);
-  await setDoc(docRef, cita);
+  await setDoc(docRef, cita, { merge: true });
 }
 
 export { getExpedientes, setExpediente, getImage, getCitas, setCita };
