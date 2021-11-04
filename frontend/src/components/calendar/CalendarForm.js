@@ -35,6 +35,7 @@ const CalendarForm = ({ visible, onCreate, onCancel }) => {
             // Guardar información de la cita
             try {
               let cita = {
+                active: true,
                 titulo: values.eventTitle,
                 startDate: values.eventTime[0].toDate(),
                 endDate: values.eventTime[1].toDate(),
