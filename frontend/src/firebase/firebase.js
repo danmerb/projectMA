@@ -84,13 +84,13 @@ async function getCitas(idDoc, setState) {
     querySnapshot.forEach((doc) => {
       citas.push({
         id: doc.id,
-        detalles: doc.data().detalles,
-        enDate: doc.data().endDate,
+        details: doc.data().detalles,
+        end: doc.data().endDate.toDate(),
         idDoc: doc.data().idDoc,
         paciente: doc.data().paciente,
         pacienteCorreo: doc.data().pacienteCorreo,
-        startDate: doc.data().startDate,
-        titulo: doc.data().titulo,
+        start: doc.data().startDate.toDate(),
+        title: doc.data().titulo,
       });
     });
     setState(citas);
