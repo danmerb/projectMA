@@ -2,7 +2,6 @@ import app from "./fire";
 import {
   getFirestore,
   collection,
-  //  getDocs,
   doc,
   setDoc,
   query,
@@ -70,6 +69,33 @@ async function getExpedientes(idDoc, setState) {
 async function setExpediente(expediente, id) {
   let docRef = id ? doc(expedienteCol, id) : doc(expedienteCol);
   await setDoc(docRef, expediente);
+}
+
+async function getCitas(idDoc, setState) {
+  if (!idDoc) return [];
+  const q = query(
+    citaCol,
+    where("idDoc", "==", idDoc),
+    where("active", "==", true)
+  );
+
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    let citas = [];
+    querySnapshot.forEach((doc) => {
+      citas.push({
+        id: doc.id,
+        detalles: doc.data().detalles,
+        enDate: doc.data().endDate,
+        idDoc: doc.data().idDoc,
+        paciente: doc.data().paciente,
+        pacienteCorreo: doc.data().pacienteCorreo,
+        startDate: doc.data().startDate,
+        titulo: doc.data().titulo,
+      });
+    });
+    setState(citas);
+  });
+  return unsubscribe;
 }
 
 async function setCita(cita, id) {
