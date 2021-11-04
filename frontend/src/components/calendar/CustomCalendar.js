@@ -1,6 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import DataContext from "../../context/data-context";
 import { Calendar, Views } from "react-big-calendar";
+import {notification} from 'antd'
 import { calendarMessages, calendarFormats } from "./CalendarConfig";
 import axios from "axios";
 import { localizer } from "./Localizer";
@@ -14,8 +15,27 @@ import { setCita } from "../../firebase/firebase";
 
 const CustomCalendar = () => {
   const { citas } = useContext(DataContext);
-
   const [visible, setVisible] = useState(false);
+  //const [visible, setTodayDates] = useState(false);
+
+  useEffect(()=>{
+    const day = new Date().toDateString();
+    if(citas!==[]&&citas[0]){
+      //console.log(day+"     "+citas[0].start.toDateString())
+      const citasDeHoy = citas.filter(cita=>{
+        return cita.start.toDateString()===day?true:false
+      })
+      citasDeHoy.forEach(cita => {
+        notification.info({
+          message: `Cita para el día de hoy!`,
+          description:
+            `Cita con ${cita.paciente} sobre ${cita.title} a las ${cita.start.getHours()} horas y ${cita.start.getMinutes()} minutos`,
+          placement:'bottomLeft',
+        });
+      });
+    }
+  }, [citas])
+  
 
   const showModal = () => {
     setVisible(true);

@@ -8,7 +8,7 @@ const DataProvider = (props) => {
   const [citas, setCitas] = useState([]);
   const { currentUser } = useContext(AuthContext);
   useEffect(() => {
-    
+    console.log("EFECTO DATA")
     try{
       const suscriberExpediente = getExpedientes(currentUser.uid, setExpedientes);
       const suscriberCitas = getCitas(currentUser.uid, setCitas);
@@ -16,6 +16,7 @@ const DataProvider = (props) => {
     }catch(e){
       console.log("error "+e)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser.uid]);
 
   const dataObject = {
