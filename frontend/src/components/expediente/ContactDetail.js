@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Row, Card, Col, Image } from "antd";
 import { MedicineBoxOutlined } from "@ant-design/icons";
 import {getImage} from '../../firebase/firebase'
+import moment from 'moment'
 
 const ContactDetail = (props) => {
   const history = useHistory();
@@ -23,7 +24,7 @@ const ContactDetail = (props) => {
   },[]);
   return (
     
-    <div>
+    <div style={{display:'flex', width:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
       <Image.PreviewGroup>
         <Image
           width={200}
@@ -45,25 +46,25 @@ const ContactDetail = (props) => {
             {paciente.correo}
           </Card>
         </Col>
-        <Col span={8}>
-          <Card title="Genero" bordered={false}>
-            {paciente.genero}
+        {paciente&&paciente.fechaNac&&(<Col span={8}>
+          <Card title="Fecha de nacimiento" bordered={false}>
+            {moment(paciente.fechaNac.toDate()).format("DD-MM-YYYY")}
           </Card>
-        </Col>
+        </Col>)}
         <Col span={24}>
-          <Card title="Direccion" bordered={false}>
+          <Card title="Dirección" bordered={false}>
             {paciente.direccion}
           </Card>
         </Col>
         {paciente.genero === "masculino" ? (
           <Col span={8}>
-            <Card title="Genero" style={{ color: "#1155FF" }} bordered={false}>
+            <Card title="Género" style={{ color: "#1155FF" }} bordered={false}>
               {paciente.genero}
             </Card>
           </Col>
         ) : (
           <Col span={8}>
-            <Card title="Genero" style={{ color: "#FF64E7" }} bordered={false}>
+            <Card title="Género" style={{ color: "#FF64E7" }} bordered={false}>
               {paciente.genero}
             </Card>
           </Col>
