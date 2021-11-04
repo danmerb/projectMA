@@ -16,6 +16,26 @@ const rangeConfig = {
       required: true,
       message: "Por favor, indique el inicio y fin de la cita.",
     },
+    {
+      validator: async (_, eventTime) => {        
+        const now = new Date();
+        const minutesDelay = 5;
+        const dateAfterDelay = now;
+        console.log(`Initial values: Now: ${now}\n minutesDelay: ${minutesDelay}\n dateAfterDelay: ${dateAfterDelay}\n`);
+        dateAfterDelay.setMinutes(now.getMinutes() - minutesDelay);
+        console.log(`End values: Now: ${now}\n minutesDelay: ${minutesDelay}\n dateAfterDelay: ${dateAfterDelay}\n`);
+        if (eventTime && (eventTime[0].toDate() < dateAfterDelay)) {
+          return Promise.reject(new Error('La hora de inicio es anterior a la hora actual'));
+        }
+      },
+    },
+    {
+      validator: async (_, eventTime) => {
+        if (eventTime && (eventTime[0].toDate() > eventTime[1].toDate())) {
+          return Promise.reject(new Error('La fecha de fin no puede ser despues que la de inicio'));
+        }
+      },
+    }
   ],
 };
 
@@ -75,7 +95,7 @@ const CalendarForm = ({ visible, onCreate, onCancel }) => {
           rules={[
             {
               required: true,
-              message: "Por favor, inserte un título para la cita.",
+              message: "Por favor, ingrese un título para la cita.",
             },
           ]}
         >
@@ -105,7 +125,7 @@ const CalendarForm = ({ visible, onCreate, onCancel }) => {
           rules={[
             {
               required: true,
-              message: "Por favor, inserte el nombre del paciente.",
+              message: "Por favor, ingrese el nombre del paciente.",
             },
           ]}
         >
@@ -119,8 +139,12 @@ const CalendarForm = ({ visible, onCreate, onCancel }) => {
           rules={[
             {
               required: true,
-              message: "Por favor, inserte el correo del paciente.",
+              message: "Por favor, ingrese el correo del paciente.",
             },
+            {
+              type: "email",
+              message: "Tienes que ingresar un correo"
+            }
           ]}
         >
           <Input placeholder="Correo del paciente" />
