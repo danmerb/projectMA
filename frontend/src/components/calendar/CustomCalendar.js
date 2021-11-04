@@ -44,7 +44,7 @@ const CustomCalendar = () => {
             start: values.eventTime[0].toDate(),
             end: values.eventTime[1].toDate(),
             details: values.eventDetails,
-            email: values.email,
+            email: values.correoPaciente,
             nombrePaciente: values.nombrePaciente,
             nombreDoctor: values.nombreDoctor
         }
