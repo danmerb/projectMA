@@ -1,0 +1,28 @@
+.imagen { 
+    margin-bottom:2cm;
+    margin-left: 10%;
+    justify-content: center; 
+    align-items: center;   
+    align-content: center;
+    width: 80%;
+    height: 7cm;
+    
+}
+
+.textArea{
+    margin-left: 10%;
+    width: fit-content;
+
+   
+}
+.textArea2{
+   width: auto;
+    width: fit-content;  
+}
+
+.BotonImpr{
+    justify-content: center;       
+    display: flex;
+    align-items: center;  
+    margin: 5;
+ }
