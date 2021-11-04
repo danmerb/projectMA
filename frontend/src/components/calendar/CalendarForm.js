@@ -41,13 +41,14 @@ const CalendarForm = ({ visible, onCreate, onCancel }) => {
                 endDate: values.eventTime[1].toDate(),
                 paciente: values.nombrePaciente,
                 pacienteCorreo: values.correoPaciente,
-                detalles: values.eventDetails,
+                detalles: values.eventDetails || "",
                 idDoc: AuthCTX.currentUser.uid,
               };
 
               await setCita(cita);
               message.success("Cita creada con éxito");
               form.resetFields();
+              onCancel();
             } catch (e) {
               console.log(e);
               message.error("Error al crear cita");
