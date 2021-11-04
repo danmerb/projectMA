@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import DataContext from "../../context/data-context";
 import { Calendar, Views } from "react-big-calendar";
 import {notification} from 'antd'
+import {MedicineBoxOutlined} from '@ant-design/icons'
 import { calendarMessages, calendarFormats } from "./CalendarConfig";
 import axios from "axios";
 import { localizer } from "./Localizer";
@@ -26,11 +27,12 @@ const CustomCalendar = () => {
         return cita.start.toDateString()===day?true:false
       })
       citasDeHoy.forEach(cita => {
-        notification.info({
+        notification.success({
           message: `Cita para el día de hoy!`,
           description:
             `Cita con ${cita.paciente} sobre ${cita.title} a las ${cita.start.getHours()} horas y ${cita.start.getMinutes()} minutos`,
-          placement:'bottomLeft',
+          placement:'bottomRight',
+          icon: <MedicineBoxOutlined  style={{ color: '#108ee9' }} />
         });
       });
     }
