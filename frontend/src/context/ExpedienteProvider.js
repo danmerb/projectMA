@@ -7,11 +7,10 @@ const ExpedienteProvider = (props) => {
   const [expedientes, setExpedientes] = useState([]);
   const { currentUser } = useContext(AuthContext);
   useEffect(() => {
-    
     const unsubscribe = getExpedientes(currentUser.uid, setExpedientes);
     return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentUser.uid]);
 
   const expObject = {
     expedientes,
