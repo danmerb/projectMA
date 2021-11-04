@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
+import DataContext from '../../context/data-context'
 import { Calendar, Views } from "react-big-calendar";
 import { calendarMessages, calendarFormats } from "./CalendarConfig"
 import axios from "axios"
@@ -10,7 +11,8 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "antd/dist/antd.css";
 
 const CustomCalendar = () => {
-    const myEvents = [
+    const {citas} = useContext(DataContext);
+  /*  const myEvents = [
         {
             id: 14,
             title: 'Matemáticas',
@@ -25,8 +27,7 @@ const CustomCalendar = () => {
             end: new Date(new Date().setHours(new Date().getHours() + 2)),
             details: "Detalles de la materia de ingles xdxd"
         },
-    ]
-    const [events, setEvents] = useState(myEvents);
+    ]*/
     const [visible, setVisible] = useState(false);
 
     const showModal = () => {
@@ -48,17 +49,10 @@ const CustomCalendar = () => {
             nombrePaciente: values.nombrePaciente,
             nombreDoctor: values.nombreDoctor
         }
-        console.log(event);
-        const res = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/mailer/send`, {
+         await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/mailer/send`, {
             ...event
         })
-        console.log(res)
-        setEvents(
-            [
-                ...events,
-                event
-            ]
-        );
+
         handleCancel();
     };
 
@@ -68,7 +62,7 @@ const CustomCalendar = () => {
         (event.details) ? alert(`${event.title}\n${event.details}`) : alert(event.title);
     }
 
-    const handleSelect = ({ start, end }) => {
+    /*const handleSelect = ({ start, end }) => {
         console.log("Handle select from functional component xd");
         const title = window.prompt('Título de la cita')
         if (title)
@@ -84,14 +78,14 @@ const CustomCalendar = () => {
             );
         console.log("Start: \n", start, "\ntipo de start: ", typeof start);
         console.log("\nEnd: \n", end, "\ntipo de end: ", typeof end);
-    }
+    }*/
 
     return (
         <>
             <Calendar
                 selectable
                 localizer={localizer}
-                events={events}
+                events={citas}
                 startAccessor="start"
                 endAccessor="end"
                 components={{
@@ -105,7 +99,7 @@ const CustomCalendar = () => {
                 formats={calendarFormats}
                 scrollToTime={new Date()}
                 onSelectEvent={onSelectEvent}
-                onSelectSlot={handleSelect}
+               // onSelectSlot={handleSelect}
             />
             <CalendarForm
                 visible={visible}

@@ -27,23 +27,7 @@ async function getExpedientes(idDoc, setState) {
     where("idDoc", "==", idDoc),
     orderBy("nombre")
   );
-  /* const expSnapshot = await getDocs(q);
-  let expedientes = [];
 
-  expSnapshot.forEach((doc) => {
-    expedientes.push({
-      id: doc.id,
-      nombre: doc.data().nombre,
-      correo: doc.data().correo,
-      direccion: doc.data().direccion,
-      telefono: doc.data().telefono,
-      fechaNac: doc.data().fechaNac,
-      genero: doc.data().genero,
-      telEmerg: doc.data().telEmerg,
-      img: doc.data().img,
-      idDoc: doc.data().idDoc,
-    });
-  });*/
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     let expedientes = [];
     querySnapshot.forEach((doc) => {
@@ -62,7 +46,6 @@ async function getExpedientes(idDoc, setState) {
     });
     setState(expedientes);
   });
-  console.log(unsubscribe);
   return unsubscribe;
 }
 
@@ -103,5 +86,5 @@ async function setCita(cita, id) {
   await setDoc(docRef, cita);
 }
 
-export { getExpedientes, setExpediente, getImage, setCita };
+export { getExpedientes, setExpediente, getImage, getCitas, setCita };
 export default db;

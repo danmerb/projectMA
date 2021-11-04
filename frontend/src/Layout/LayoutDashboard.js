@@ -10,7 +10,7 @@ import ContactForm from '../components/expediente/ContactForm'
 import CustomCalendar from '../components/calendar/CustomCalendar'
 import Receta from '../components/receta/Receta'
 import ContactDetail from '../components/expediente/ContactDetail'
-import ExpedienteProvider from "../context/ExpedienteProvider"
+import DataProvider from "../context/DataProvider"
 
 const LayoutDashboard = ({ exact, path }) => {
     const AuthCTX = useContext(AuthContext)
@@ -24,7 +24,7 @@ const LayoutDashboard = ({ exact, path }) => {
             if (!AuthCTX.currentUser) return <Redirect exact to="/login" />
             const cp =
                 (
-                <ExpedienteProvider>
+                <DataProvider>
                     <Dashboard path={routeProps.match.path} cb={redireccionar}>
                         <Switch>
                             <Route exact path={`${routeProps.match.path}/cita`} component={PictureWall} />
@@ -35,7 +35,7 @@ const LayoutDashboard = ({ exact, path }) => {
                             <Route exact path={`${routeProps.match.path}/imprimir`} component={Receta} />
                         </Switch>
                     </Dashboard>
-                </ExpedienteProvider>
+                </DataProvider>
                 )
             return cp
         }}

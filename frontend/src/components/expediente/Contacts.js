@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import {EyeOutlined} from '@ant-design/icons'
-import ExpedienteContext from "../../context/expedientes-context";
+import DataContext from "../../context/data-context";
 import { useHistory} from 'react-router-dom'
 
 const Contacts = () => {
 
-  const {expedientes} = useContext(ExpedienteContext);
+  const {expedientes} = useContext(DataContext);
   const history = useHistory();
 
   const expedienteDetail = (paciente)=>{
