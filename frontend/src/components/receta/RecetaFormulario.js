@@ -2,11 +2,9 @@ import React, { useContext, useState } from "react";
 import { Form, Input, DatePicker, Button, message } from "antd";
 import { useHistory } from "react-router";
 import locale from "antd/es/date-picker/locale/es_ES";
-import PictureWall from "../../components/PictureWall";
 import { setReceta } from "../../firebase/firebase";
 import AuthContext from "../../context/auth-context";
 import PictureUp from "../../assets/receta.png"
-import { NestedForm } from "react-form";
 import Item from "antd/lib/list/Item";
 const inputsRules = [
   {
