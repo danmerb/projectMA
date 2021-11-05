@@ -23,7 +23,7 @@ const RegisterForm = () => {
             valores.password
           );
           history.push("/home");
-        //  funciones.resetForm({ nombre: "", correo: "", password: "" });
+          //  funciones.resetForm({ nombre: "", correo: "", password: "" });
         } catch (e) {
           console.log(e);
         }
@@ -37,7 +37,14 @@ const RegisterForm = () => {
         handleBlur,
         touched,
       }) => (
-        <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop:'15em'}}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "15em",
+          }}
+        >
           <Form
             name="normal_login"
             className="login-form"
@@ -69,32 +76,27 @@ const RegisterForm = () => {
               rules={[
                 {
                   required: true,
-                  message: "Se necesita correo electronico!",
+                  message: "Se necesita correo electrónico!",
                 },
               ]}
             >
               <Input
                 prefix={<MailOutlined className="site-form-item-icon" />}
-                placeholder="Correo electronico"
+                placeholder="Correo electrónico"
                 id="correo"
                 name="correo"
                 value={values.correo}
                 onChange={handleChange}
               />
             </Form.Item>
-            <Form.Item name="rol" label="Rol" rules={[{ required: true, message:"El rol es requerido!" }]}>
-              <Select placeholder="Seleccionar un rol" allowClear> 
-                <Select.Option value="medico">medico</Select.Option>
-                <Select.Option value="paciente">paciente</Select.Option>
-              </Select>
-            </ Form.Item>
+
             <Form.Item
               name="password"
               rules={[
                 {
                   min: 5,
                   required: true,
-                  message: "Contraseña no menos de 5 caracteres!",
+                  message: "Contraseña no menos de 5 carácteres!",
                 },
               ]}
             >
@@ -110,7 +112,7 @@ const RegisterForm = () => {
             </Form.Item>
             <Form.Item>
               <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Recordar sesion</Checkbox>
+                <Checkbox>Recordar sesión</Checkbox>
               </Form.Item>
             </Form.Item>
 
@@ -123,9 +125,13 @@ const RegisterForm = () => {
                 Registrarse ⚕️
               </Button>
               <div>
-                ¿Ya registrado ? 
-                <Button type="dashed" onClick={()=>history.push("/login")}>
-                  Iniciar Sesion
+                ¿Ya registrado?
+                <Button
+                  type="dashed"
+                  onClick={() => history.push("/login")}
+                  style={{ marginLeft: "10px", marginTop: "10px" }}
+                >
+                  Iniciar Sesión
                 </Button>
               </div>
             </Form.Item>
