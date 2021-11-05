@@ -15,7 +15,7 @@ const { SubMenu } = Menu;
 
 class Dashboard extends React.Component {
   state = {
-    collapsed: false,
+    collapsed: true,
   };
   onCollapse = (collapsed) => {
     console.log(collapsed);
@@ -41,7 +41,6 @@ class Dashboard extends React.Component {
               mode="inline"
               defaultSelectedKeys={["1"]}
               inlineIndent={24}
-              defaultOpenKeys={["sub1"]}
             >
               <Menu.Item
                 key="0"

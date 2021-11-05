@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Formik } from "formik";
 import AuthContext from "../../context/auth-context";
-import { Form, Input, Button, Checkbox, Select } from "antd";
+import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
 
