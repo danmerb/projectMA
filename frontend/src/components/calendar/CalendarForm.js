@@ -125,8 +125,10 @@ const CalendarForm = ({ visible, title, isEdit, onCreate, onCancel, selectedEven
         if (result.isDenied) {
           try {
             await setCita({ active: false }, id);
+            message.success("Cita eliminada con éxito");
           } catch (error) {
             console.log(error);
+            message.error("Error al eliminar la cita");
           }
           onCancel();
         }
