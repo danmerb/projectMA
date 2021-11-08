@@ -5,6 +5,7 @@ const Controller = {}
 
 Controller.sendMail = (req, res, next) =>{
    let {email, nombrePaciente, nombreDoctor, start, title, details } = req.body;
+   console.log(req.body)
    if(!details){ details = "No hay detalles adicionales"}
     const msg = {
       "to": String(email), // Change to your recipient

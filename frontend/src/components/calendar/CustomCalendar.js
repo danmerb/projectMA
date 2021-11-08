@@ -77,6 +77,7 @@ const CustomCalendar = () => {
       nombrePaciente: values.nombrePaciente,
       nombreDoctor: values.nombreDoctor,
     };
+    console.log("CALENDAR CALLBACK ", event);
     await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/mailer/send`, {
       ...event,
     });

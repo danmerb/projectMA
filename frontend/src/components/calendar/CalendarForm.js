@@ -1,77 +1,47 @@
-import React, { useContext, useEffect } from "react";
-import { Modal, Form, Input, DatePicker, message, Button } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Modal,
+  Form,
+  Input,
+  DatePicker,
+  message,
+  Button,
+  AutoComplete,
+} from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import AuthContext from "../../context/auth-context";
+import DataContext from "../../context/data-context";
 import locale from "antd/es/date-picker/locale/es_ES";
 import "antd/dist/antd.css";
 import { setCita } from "../../firebase/firebase";
-import '../../style/calendar.css'
+import "../../style/calendar.css";
 import swal from "sweetalert2";
+import { formRules, mapCalendarPacientes } from "./configCalendar";
 
 const { RangePicker } = DatePicker;
 
-const formRules = {
-  titleRules: [
-    {
-      required: true,
-      message: "Por favor, ingrese un título para la cita.",
-    }
-  ],
-  eventTimeRules: [
-    {
-      type: "array",
-      required: true,
-      message: "Por favor, indique el inicio y fin de la cita.",
-    },
-    {
-      validator: async (_, eventTime) => {
-        const now = new Date();
-        const minutesDelay = 5;
-        const dateAfterDelay = now;
-        //console.log(`Initial values: Now: ${now}\n minutesDelay: ${minutesDelay}\n dateAfterDelay: ${dateAfterDelay}\n`);
-        dateAfterDelay.setMinutes(now.getMinutes() - minutesDelay);
-        //console.log(`End values: Now: ${now}\n minutesDelay: ${minutesDelay}\n dateAfterDelay: ${dateAfterDelay}\n`);
-        if (eventTime && (eventTime[0].toDate() < dateAfterDelay)) {
-          return Promise.reject(new Error('La hora de inicio es anterior a la hora actual'));
-        }
-      },
-    },
-    {
-      validator: async (_, eventTime) => {
-        if (eventTime && (eventTime[0].toDate() > eventTime[1].toDate())) {
-          return Promise.reject(new Error('La fecha/hora de fin no puede ser despues que la inicial'));
-        }
-      },
-    }
-
-  ],
-  patientNameRules: [
-    {
-      required: true,
-      message: "Por favor, ingrese el nombre del paciente.",
-    }
-  ],
-  patientEmailRules: [
-    {
-      required: true,
-      message: "Por favor, ingrese el correo del paciente.",
-    },
-    {
-      type: "email",
-      message: "El correo ingresado no tiene formato valido, por favor revise."
-    }
-  ],
-  detailsRules: []
-}
-
-const CalendarForm = ({ visible, title, isEdit, onCreate, onCancel, selectedEvent, editMode }) => {
+const CalendarForm = ({
+  visible,
+  title,
+  isEdit,
+  onCreate,
+  onCancel,
+  selectedEvent,
+  editMode,
+}) => {
   const [form] = Form.useForm();
   const AuthCTX = useContext(AuthContext);
+  const { expedientes } = useContext(DataContext);
+
+  const [mappedExpedientes, setMappedExpedientes] = useState([]);
+  const [userObj, setUserObj] = useState({});
 
   useEffect(() => {
     console.log("EJECUTA EFFECT EN EL FORM");
     if (visible) form.resetFields();
-  }, [selectedEvent, visible, form]);
+    if (expedientes && expedientes.length !== 0)
+      setMappedExpedientes(mapCalendarPacientes(expedientes));
+  }, [expedientes, selectedEvent, visible, form]);
 
   const onSubmitCreate = () => {
     form
@@ -84,12 +54,12 @@ const CalendarForm = ({ visible, title, isEdit, onCreate, onCancel, selectedEven
             titulo: values.eventTitle,
             startDate: values.eventTime[0].toDate(),
             endDate: values.eventTime[1].toDate(),
-            paciente: values.nombrePaciente,
-            pacienteCorreo: values.correoPaciente,
+            paciente: userObj.nombre,
+            pacienteCorreo: userObj.correo,
             detalles: values.eventDetails || "",
             idDoc: AuthCTX.currentUser.uid,
           };
-
+          console.log(cita)
           await setCita(cita);
           message.success("Cita creada con éxito");
           form.resetFields();
@@ -98,17 +68,19 @@ const CalendarForm = ({ visible, title, isEdit, onCreate, onCancel, selectedEven
           console.log(e);
           message.error("Error al crear cita");
         }
-
+          
         form.resetFields();
         onCreate({
           ...values,
+          correoPaciente:userObj.correo,
+          nombrePaciente: userObj.nombre,
           nombreDoctor: AuthCTX.currentUser.displayName,
-        });
+        }); 
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
-  }
+  };
 
   const onDeleteEvent = ({ id }) => {
     console.log(id);
@@ -137,27 +109,30 @@ const CalendarForm = ({ visible, title, isEdit, onCreate, onCancel, selectedEven
 
   const onSubmitEdit = () => {
     console.log("Logica de guardar al editarsh");
-  }
+  };
 
   const createFooter = [
-    <Button key="back"
-      onClick={onCancel}>
+    <Button key="back" onClick={onCancel}>
       Regresar
     </Button>,
-    <Button key="submit"
+    <Button
+      key="submit"
       type="primary"
-      onClick={(isEdit) ? onSubmitEdit : onSubmitCreate}
+      onClick={isEdit ? onSubmitEdit : onSubmitCreate}
     >
       Guardar
-    </Button>
+    </Button>,
   ];
 
-  const deleteButton =
-    <Button key="delete"
+  const deleteButton = (
+    <Button
+      key="delete"
       type="danger"
-      onClick={() => onDeleteEvent(selectedEvent)}>
+      onClick={() => onDeleteEvent(selectedEvent)}
+    >
       Eliminar cita
-    </Button>;
+    </Button>
+  );
 
   return (
     <Modal
@@ -165,15 +140,16 @@ const CalendarForm = ({ visible, title, isEdit, onCreate, onCancel, selectedEven
       visible={visible}
       title={title}
       onCancel={onCancel}
-      footer={(isEdit) ? ([...createFooter, deleteButton]) : (createFooter)}
+      footer={isEdit ? [...createFooter, deleteButton] : createFooter}
     >
-      <Form name="event"
+      <Form
+        name="event"
         form={form}
         layout="vertical"
         initialValues={selectedEvent}
       >
-
-        <Form.Item name="eventTitle"
+        <Form.Item
+          name="eventTitle"
           label="Título"
           required
           tooltip="Este campo es obligatorio"
@@ -186,7 +162,8 @@ const CalendarForm = ({ visible, title, isEdit, onCreate, onCancel, selectedEven
           />
         </Form.Item>
 
-        <Form.Item name="eventTime"
+        <Form.Item
+          name="eventTime"
           label="Inicio y fin esperado de la cita"
           required
           tooltip="Este campo es obligatorio"
@@ -202,33 +179,30 @@ const CalendarForm = ({ visible, title, isEdit, onCreate, onCancel, selectedEven
           />
         </Form.Item>
 
-        <Form.Item name="nombrePaciente"
+        <Form.Item
+          name="pacienteDetails"
           label="Nombre del paciente"
           required
-          tooltip="Este campo es obligatorio"
-          rules={formRules.patientNameRules}
+          tooltip={{
+            title: "Este campo es obligatorio",
+            icon: <InfoCircleOutlined />,
+          }}
         >
-          <Input
-            placeholder="Nombre Paciente"
-            bordered={editMode}
-            disabled={!editMode}
+          <AutoComplete
+            style={{ width: "70%" }}
+            options={mappedExpedientes}
+            placeholder="Paciente"
+            filterOption={(inputValue, option) =>
+              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+              -1
+            }
+            onSelect={(value, { pacienteObj }) => {
+              setUserObj(pacienteObj)
+            }}
           />
         </Form.Item>
-
-        <Form.Item name="correoPaciente"
-          label="Correo del paciente"
-          required
-          tooltip="Este campo es obligatorio"
-          rules={formRules.patientEmailRules}
-        >
-          <Input
-            placeholder="Correo del paciente"
-            bordered={editMode}
-            disabled={!editMode}
-          />
-        </Form.Item>
-
-        <Form.Item name="eventDetails"
+        <Form.Item
+          name="eventDetails"
           label="Detalles adicionales"
           tooltip={{
             title: "Este campo es opcional",
@@ -241,7 +215,6 @@ const CalendarForm = ({ visible, title, isEdit, onCreate, onCancel, selectedEven
             disabled={!editMode}
           />
         </Form.Item>
-
       </Form>
     </Modal>
   );

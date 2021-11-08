@@ -8,7 +8,6 @@ const DataProvider = (props) => {
   const [citas, setCitas] = useState([]);
   const { currentUser } = useContext(AuthContext);
   useEffect(() => {
-    console.log("EFECTO DATA")
     try{
       const suscriberExpediente = getExpedientes(currentUser.uid, setExpedientes);
       const suscriberCitas = getCitas(currentUser.uid, setCitas);
