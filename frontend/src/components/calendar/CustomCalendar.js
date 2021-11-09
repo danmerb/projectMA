@@ -32,27 +32,27 @@ const CustomCalendar = () => {
         notification.success({
           message: `Cita para el día de hoy!`,
           description:
-            `Cita con ${cita.paciente} sobre ${cita.title} a las ${cita.start.getHours()} horas y ${cita.start.getMinutes()} minutos`,
+            `Cita con ${cita.paciente} sobre ${(cita.title).toLowerCase()} a las ${moment(cita.start).format('hh:mm A')}.`,
           placement: 'bottomRight',
           icon: <MedicineBoxOutlined style={{ color: '#108ee9' }} />
         });
       });
     }
-  }, [citas])
+  }, [citas]);
 
   const showCreateModal = () => {
     setCreateVisible(true);
   };
 
   const showEditModal = (event) => {
+    console.log("Evento recibido en show dit Modal: ", event);
     setCreateEdit(true);
     const data = {
       id: event.id,
       eventTitle: event.title,
       eventTime: [moment(event.start), moment(event.end)],
-      nombrePaciente: event.paciente,
-      correoPaciente: event.pacienteCorreo,
-      eventDetails: event.details
+      eventDetails: event.details,
+      pacienteDetails: event.paciente
     }
     setSelectedEvent(data);
     /*setSelectedEvent((state) => {
@@ -86,7 +86,7 @@ const CustomCalendar = () => {
 
   const onChangeMode = (checked) => {
     setEnableEdit(checked);
-  }
+  };
 
   return (
     <>

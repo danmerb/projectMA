@@ -1,12 +1,14 @@
-.ant-input[disabled], .ant-picker-input > input[disabled] {
-  color: #808080;
-  border: #FFFFFF
+.ant-input[disabled],
+.ant-picker-input > input[disabled],
+input[type="search"][disabled] {
+    color: #808080;
+    border: #ffffff;
 }
 
 .ant-modal-body {
-  padding: 16px 16px 0px 16px;
+    padding: 16px 16px 0px 16px;
 }
 
 .ant-form-item {
-  margin-bottom: 16px;
+    margin-bottom: 16px;
 }

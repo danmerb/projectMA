@@ -16,7 +16,7 @@ import "antd/dist/antd.css";
 import { setCita } from "../../firebase/firebase";
 import "../../style/calendar.css";
 import swal from "sweetalert2";
-import { formRules, mapCalendarPacientes } from "./configCalendar";
+import { formRules, mapCalendarPacientes } from "./CalendarConfig";
 
 const { RangePicker } = DatePicker;
 
@@ -59,7 +59,7 @@ const CalendarForm = ({
             detalles: values.eventDetails || "",
             idDoc: AuthCTX.currentUser.uid,
           };
-          console.log(cita)
+          console.log("Evento que se guarda en BD:",cita)
           await setCita(cita);
           message.success("Cita creada con éxito");
           form.resetFields();
@@ -107,8 +107,9 @@ const CalendarForm = ({
       });
   };
 
-  const onSubmitEdit = () => {
+  const onSubmitEdit = (originalEvent) => {
     console.log("Logica de guardar al editarsh");
+    console.log("Evento original recibido en onSubmit: ", originalEvent);
   };
 
   const createFooter = [
@@ -118,7 +119,7 @@ const CalendarForm = ({
     <Button
       key="submit"
       type="primary"
-      onClick={isEdit ? onSubmitEdit : onSubmitCreate}
+      onClick={(isEdit) ? (() => onSubmitEdit(selectedEvent)) : onSubmitCreate}
     >
       Guardar
     </Button>,
@@ -183,13 +184,10 @@ const CalendarForm = ({
           name="pacienteDetails"
           label="Nombre del paciente"
           required
-          tooltip={{
-            title: "Este campo es obligatorio",
-            icon: <InfoCircleOutlined />,
-          }}
+          tooltip="Este campo es obligatorio"
+          rules={formRules.patientNameRules}
         >
-          <AutoComplete
-            style={{ width: "70%" }}
+          <AutoComplete            
             options={mappedExpedientes}
             placeholder="Paciente"
             filterOption={(inputValue, option) =>
@@ -199,6 +197,8 @@ const CalendarForm = ({
             onSelect={(value, { pacienteObj }) => {
               setUserObj(pacienteObj)
             }}
+            bordered={editMode}
+            disabled={!editMode}
           />
         </Form.Item>
         <Form.Item
