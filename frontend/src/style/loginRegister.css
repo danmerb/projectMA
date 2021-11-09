@@ -1,4 +1,4 @@
-.containerLogin { 
+.containerLogin, .containerRegister { 
     display: flex; 
     justify-content: center; 
     align-items: center;
@@ -10,7 +10,7 @@
     flex-direction: column;
 }
 
-.login-form {
+.login-form, .register-form {
     width: 20em;
 }
 
@@ -25,7 +25,7 @@
 .transparentInput input {
     background-color: transparent !important;
     color: #F1F2EF !important;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 input:-webkit-autofill,
@@ -35,11 +35,11 @@ input:-webkit-autofill:active{
     transition: background-color 5000s ease-in-out 0s;
 }
 
-.login-form-button {
+.login-form-button, .register-form-button {
     background-color: white !important;
     border: none !important;
     color: #2148C0 !important;
-    margin-top: 2em;
+    margin-top: 1em;
     font-weight: bold !important;
 }
 
@@ -54,6 +54,16 @@ input:-webkit-autofill:active{
     text-align: end;
     color: white;
     cursor: pointer;
+}
+
+.customLink {
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-top: 1em;
+}
+
+.reset-password:hover, .link:hover, .customLink:hover {
+    text-decoration: underline;
 }
 
 .ant-form-item-explain-error {

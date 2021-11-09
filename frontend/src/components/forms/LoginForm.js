@@ -4,7 +4,7 @@ import AuthContext from "../../context/auth-context";
 import { Form, Input, Button } from "antd";
 import { LockOutlined, MailOutlined, EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
-import "../../style/login.css"
+import "../../style/loginRegister.css"
 
 const LoginForm = () => {
   const AuthCtx = useContext(AuthContext);
@@ -115,13 +115,10 @@ const LoginForm = () => {
               <div onClick={restablecerContra} className="reset-password">
                 ¿Olvidaste la contraseña?
               </div>
-              <div>
-                <Button
-                  type="link" 
-                  style={{ color: "#FFFFFF" }}
+              <div
+                  className="customLink"
                   onClick={() => history.push("/register")}>
-                  ¿No tiene cuenta? Registrese ahora
-                </Button>
+                  ¿No tiene cuenta? Registrese ahora                
               </div>
             </Form.Item>
           </Form>

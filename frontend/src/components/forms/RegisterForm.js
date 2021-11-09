@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import { Formik } from "formik";
 import AuthContext from "../../context/auth-context";
 import { Form, Input, Button, Checkbox } from "antd";
-import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, MailOutlined, EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
+import "../../style/loginRegister.css"
 
 const RegisterForm = () => {
   const AuthCtx = useContext(AuthContext);
@@ -38,16 +39,12 @@ const RegisterForm = () => {
         touched,
       }) => (
         <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "15em",
-          }}
+          className="containerRegister"
         >
+          <div className="imgLogo" />
           <Form
             name="normal_login"
-            className="login-form"
+            className="register-form"
             initialValues={{
               remember: true,
             }}
@@ -58,7 +55,7 @@ const RegisterForm = () => {
               rules={[
                 {
                   required: true,
-                  message: "Se necesita nombre de usuario!",
+                  message: "Por favor, ingrese su nombre de usuario.",
                 },
               ]}
             >
@@ -69,6 +66,7 @@ const RegisterForm = () => {
                 name="nombre"
                 value={values.nombre}
                 onChange={handleChange}
+                className="transparentInput"
               />
             </Form.Item>
             <Form.Item
@@ -76,7 +74,10 @@ const RegisterForm = () => {
               rules={[
                 {
                   required: true,
-                  message: "Se necesita correo electrónico!",
+                  message: "Por favor, ingrese su correo electrónico.",
+                }, {
+                  type: "email",
+                  message: "El correo no tiene formato valido.",
                 },
               ]}
             >
@@ -87,6 +88,7 @@ const RegisterForm = () => {
                 name="correo"
                 value={values.correo}
                 onChange={handleChange}
+                className="transparentInput"
               />
             </Form.Item>
 
@@ -96,11 +98,11 @@ const RegisterForm = () => {
                 {
                   min: 5,
                   required: true,
-                  message: "Contraseña no menos de 5 carácteres!",
+                  message: "Contraseña no menos de 5 carácteres.",
                 },
               ]}
             >
-              <Input
+              <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Contraseña"
@@ -108,11 +110,13 @@ const RegisterForm = () => {
                 name="password"
                 value={values.password}
                 onChange={handleChange}
+                className="transparentInput"
+                iconRender={visible => (visible ? <EyeOutlined style={{ color: "#FFFFFF" }} /> : <EyeInvisibleOutlined style={{ color: "#FFFFFF" }} />)}
               />
             </Form.Item>
             <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Recordar sesión</Checkbox>
+              <Form.Item name="remember" valuePropName="checked">
+                <Checkbox style={{ color: '#FFFFFF'}}>Recordar sesión</Checkbox>
               </Form.Item>
             </Form.Item>
 
@@ -120,19 +124,14 @@ const RegisterForm = () => {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="login-form-button"
+                className="register-form-button"
               >
                 Registrarse ⚕️
               </Button>
-              <div>
-                ¿Ya registrado?
-                <Button
-                  type="dashed"
-                  onClick={() => history.push("/login")}
-                  style={{ marginLeft: "10px", marginTop: "10px" }}
-                >
-                  Iniciar Sesión
-                </Button>
+              <div
+                className="customLink"
+                onClick={() => history.push("/login")}>
+                ¿Ya registrado? Iniciar Sesión
               </div>
             </Form.Item>
           </Form>
