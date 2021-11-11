@@ -77,7 +77,7 @@ class Dashboard extends React.Component {
 
           <Layout className="site-layout">
             <Header className="site-layout-background">
-              <Button type="primary" onClick={logout}>Cerrar Sesion</Button>
+              <Button type="primary" onClick={logout}>Cerrar Sesión</Button>
             </Header>
             <Content className="content-layout">
               {this.props.children}

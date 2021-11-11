@@ -54,7 +54,7 @@ const UploadPic = ({imgCallback}) => {
   return (
     <div style={{backgroundColor:"white"}}>
       <Upload {...atributos}>
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        <Button icon={<UploadOutlined />}>Subir Archivos</Button>
       </Upload>
     </div>
   );

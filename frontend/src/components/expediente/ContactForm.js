@@ -57,7 +57,7 @@ const ContactForm = () => {
         span: 14,
       }}
     >
-      <Form.Item label="Nombre" name="nombre" rules={inputsRules}>
+      <Form.Item label="Nombre del paciente" name="nombre" rules={inputsRules}>
         <Input />
       </Form.Item>
 
