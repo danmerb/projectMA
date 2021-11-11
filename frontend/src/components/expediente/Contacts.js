@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
-import {EyeOutlined} from '@ant-design/icons'
 import DataContext from "../../context/data-context";
-import { useHistory} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 const Contacts = () => {
-
-  const {expedientes} = useContext(DataContext);
+  const { expedientes } = useContext(DataContext);
   const history = useHistory();
 
-  const expedienteDetail = (paciente)=>{
-    history.push(`${history.location.pathname}/detail`, paciente)
-  }
+  const expedienteDetail = (paciente) => {
+    history.push(`${history.location.pathname}/detail`, paciente);
+  };
 
   return (
     <>
@@ -31,7 +29,14 @@ const Contacts = () => {
                 <td>{paciente.correo}</td>
                 <td>{paciente.telefono}</td>
                 <td>
-                  <EyeOutlined twoToneColor="#52c41a" onClick={()=>{expedienteDetail(paciente)}}/>
+                  <p
+                    className="btn text-success"
+                    onClick={() => {
+                      expedienteDetail(paciente);
+                    }}
+                  >
+                    <i className="far fa-eye"></i>
+                  </p>
                   <p className="btn text-primary" onClick={() => {}}>
                     <i className="fas fa-pencil-alt"></i>
                   </p>
