@@ -2,7 +2,8 @@ import {createContext} from 'react'
 
 const ExpedientesContext = createContext({
     expedientes: [],
-    citas:[]
+    citas:[],
+    receta:[]
 });
 ExpedientesContext.displayName = "ExpedientesContext"
 export default ExpedientesContext;
