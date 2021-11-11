@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "./auth-context";
-import { getExpedientes, getCitas } from "../firebase/firebase";
+import { getExpedientes, getCitas,getReceta } from "../firebase/firebase";
 import DataContext from "./data-context";
 
 const DataProvider = (props) => {
   const [expedientes, setExpedientes] = useState([]);
+  const [receta, setReceta] = useState([]);
   const [citas, setCitas] = useState([]);
   const { currentUser } = useContext(AuthContext);
   useEffect(() => {
@@ -12,7 +13,8 @@ const DataProvider = (props) => {
     try{
       const suscriberExpediente = getExpedientes(currentUser.uid, setExpedientes);
       const suscriberCitas = getCitas(currentUser.uid, setCitas);
-      return {suscriberExpediente, suscriberCitas};
+      const suscriberReceta = getReceta(currentUser.uid, setReceta);
+      return {suscriberExpediente, suscriberCitas,suscriberReceta};
     }catch(e){
       console.log("error "+e)
     }
@@ -20,7 +22,8 @@ const DataProvider = (props) => {
 
   const dataObject = {
     expedientes,
-    citas
+    citas,
+    receta
   };
 
   return (

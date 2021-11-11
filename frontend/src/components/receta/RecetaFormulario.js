@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState  } from "react";
 import { Form, Input, DatePicker, Button, message } from "antd";
 import { useHistory } from "react-router";
 import locale from "antd/es/date-picker/locale/es_ES";
+import {GetRec} from "./ShowReceta";
 import { setReceta } from "../../firebase/firebase";
 import AuthContext from "../../context/auth-context";
 import PictureUp from "../../assets/receta.png"
@@ -30,7 +31,7 @@ const RecetaFormulario = () => {
   const [form] = Form.useForm();
   const [rows, setRows] = useState([defaultState]);
   const history = useHistory();
-
+  
   const handleOnChange = (index, name, value) => {
     const copyRows = [...rows];
     copyRows[index] = {
@@ -49,6 +50,10 @@ const RecetaFormulario = () => {
     copyRows.splice(index, 1);
     setRows(copyRows);
   };
+
+
+
+  
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -70,20 +75,24 @@ const RecetaFormulario = () => {
       
     };
     try {
-      await setReceta(receta);
+      await setReceta(receta);      
+      
       message.success("Receta creada con éxito");
-      console.log(receta);
+      console.log(receta);      
+      //await GetRec(receta);
+      history.push(`vistaReceta`,receta);
       form.resetFields();
     } catch (e) {
       console.log(e);
       message.error("Error al crear la receta");
       console.log(receta);
     }
-
-    history.push('/home/vistaReceta');
+    
+    //history.push('/home/vistaReceta');
   };
 
   return (
+    
     <Form
       style={{ marginLeft: "30%" }}
       form={form}
@@ -183,6 +192,7 @@ function Row({ onChange, onRemove,medicamento,nombreCom,nombreGen,presentacion,d
       </div>
     );
   }
+
 export default RecetaFormulario;
 
 /*<Form.Item name="medicamentos" label="Medicamentos" >

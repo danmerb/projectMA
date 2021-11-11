@@ -1,12 +1,26 @@
-import React,{StyleSheet} from 'react';
-import { List } from 'antd';
+import React,{useRef,useState,useEffect} from 'react';
+import { Row, Card, Col } from "antd";
+import { MedicineBoxOutlined } from "@ant-design/icons";
 import 'antd/dist/antd.css';
 import PictureUp from "../../assets/receta.png"
 import '../../style/receta.css';
+import { useHistory } from "react-router";
+import moment from 'moment'
 
 const ViewReceta = React.forwardRef((props,ref) => {
+    const [receta, setReceta] = useState({});    
+    const history2 = useHistory();
+    useEffect(() => {
+        setReceta(history2.location.state)
+        
+    },[]);
+    
+    console.log(receta);
     
     
+
+    
+   /*
     const data = [
         {
             nombrePa: 'Alonso Garcia',
@@ -22,18 +36,90 @@ const ViewReceta = React.forwardRef((props,ref) => {
 
         },
         
-        
+       
+
+
         
        
     ];
+*/ 
+    const data = Object.keys(receta).reduce((array, key) => {
+        return [...array, {key: receta[key]}]
+    }, []);
+
+    const prueba =  Object.keys(data).map(function(name){
+        var obj = {};
+        obj[name] = data[name];
+        return obj;
+    });
+
+    
+    
+    //const receta = useState({});
+    //console.log("hola");
+    //console.log(receta);
+    
     return (
         <div>
            
         <div style={{ overflow: "hidden"}} ref={ref}>
-
-            <img src={PictureUp} className="imagen"/>
+        <img src={PictureUp} className="imagen"/>
             
-            <List
+
+        <Row gutter={24}  >
+
+        
+        <Col span={10} style={ {marginLeft:"4cm"}}>
+        <h5 style={ {marginLeft:"0.5cm"}}> Paciente: {receta.nombrePa}</h5>         
+         </Col>
+        
+        
+        
+        <Col span={4}>
+        <h5 style={ {marginLeft:"0.5cm"}}> Edad: {receta.edad}</h5>  
+        </Col>
+
+        <Col span={4}>    
+        <h5 style={ {marginLeft:"0.5cm"}}> Genero: {receta.genero}</h5>     
+        </Col>
+               
+        
+        
+        <Col span={15} style={ {marginTop:"1cm"}}>
+          <h4 style={ {marginLeft:"4.5cm"}}> Medicamentos</h4>
+          <h5 style={ {marginLeft:"4.5cm"}}> Nombre comercial: {receta.nombreCom}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Nombre Generico: {receta.nombreGen}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Presentacion: {receta.presentacion}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Dosis: {receta.dosis}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Tiempo de tratamiento: {receta.tiempo}</h5>
+          
+     
+          
+        </Col>
+        
+      
+        
+        </Row>
+
+            
+        </div>
+        
+        </div>
+        
+    );
+});
+
+
+
+
+
+
+export default ViewReceta;
+ /* 
+ <List
+
+
+                
                 style={{ margin: 5 }}
                 itemLayout="horizontal"
                 dataSource={data}
@@ -63,12 +149,4 @@ const ViewReceta = React.forwardRef((props,ref) => {
 
                       
             />
-        </div>
-        
-        </div>
-        
-    );
-});
-
-
-export default ViewReceta;
+ */
