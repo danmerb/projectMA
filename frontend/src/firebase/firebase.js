@@ -87,12 +87,11 @@ async function setCita(cita, id) {
   await setDoc(docRef, cita, { merge: true });
 }
 
-async function getReceta(idDoc, setState,nombrePa) {
+async function getReceta(idDoc, setState) {
   if (!idDoc) return [];
   const q = query(
     recetaCol,
-    where("idDoc", "==", idDoc),
-    where("nombrePa", "==", nombrePa)
+    where("idDoc", "==", idDoc)
   );
 
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
