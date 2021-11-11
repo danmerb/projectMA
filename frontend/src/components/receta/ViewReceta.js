@@ -6,6 +6,7 @@ import PictureUp from "../../assets/receta.png"
 import '../../style/receta.css';
 import { useHistory } from "react-router";
 import moment from 'moment'
+import { RecaptchaVerifier } from '@firebase/auth';
 
 const ViewReceta = React.forwardRef((props,ref) => {
     const [receta, setReceta] = useState({});    
@@ -76,11 +77,19 @@ const ViewReceta = React.forwardRef((props,ref) => {
         
         
         <Col span={4}>
-        <h5 style={ {marginLeft:"0.5cm"}}> Edad: {receta.edad}</h5>  
+        <h5 style={ {marginLeft:"0.4cm"}}> Edad: {receta.edad}</h5>  
         </Col>
 
         <Col span={4}>    
-        <h5 style={ {marginLeft:"0.5cm"}}> Genero: {receta.genero}</h5>     
+        <h5 style={ {marginLeft:"0.3cm"}}> Genero: {receta.genero}</h5>     
+        </Col>
+
+        <Col span={6} style={ {marginLeft:"4.5cm"}}>    
+        <h5 > Fecha: {new Intl.DateTimeFormat("en-GB", {
+          year: "numeric",
+          month: "numeric",
+          day: "2-digit"
+        }).format(receta.fechaPr)}</h5>     
         </Col>
                
         
