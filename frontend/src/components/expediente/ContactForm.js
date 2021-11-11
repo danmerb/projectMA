@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Form, Input, DatePicker, Button, message } from "antd";
+import { Form, Input, DatePicker, Button, message, AutoComplete } from "antd";
 import locale from "antd/es/date-picker/locale/es_ES";
 import PictureWall from "../../components/PictureWall";
 import { setExpediente } from "../../firebase/firebase";
@@ -11,6 +11,8 @@ const inputsRules = [
     message: "Campo requerido",
   },
 ];
+
+const generosOpts = [{ value: "Masculino" }, { value: "Femenino" }];
 
 const ContactForm = () => {
   const { currentUser } = useContext(AuthContext);
@@ -81,8 +83,13 @@ const ContactForm = () => {
         <DatePicker locale={locale} format="DD/MM/YYYY" />
       </Form.Item>
 
-      <Form.Item label="Género" name="genero" rules={inputsRules}>
-        <Input />
+      <Form.Item name="genero" label="Género" rules={inputsRules}>
+        <AutoComplete
+          options={generosOpts}
+          filterOption={(inputValue, option) =>
+            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+          }
+        />
       </Form.Item>
 
       <Form.Item

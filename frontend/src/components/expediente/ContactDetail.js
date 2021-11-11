@@ -61,7 +61,7 @@ const ContactDetail = (props) => {
             {paciente.direccion}
           </Card>
         </Col>
-        {paciente.genero === "masculino" ? (
+        {paciente.genero === "Masculino" ? (
           <Col span={8}>
             <Card title="Género" style={{ color: "#1155FF" }} bordered={false}>
               {paciente.genero}
