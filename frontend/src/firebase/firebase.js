@@ -5,6 +5,7 @@ import {
   doc,
   setDoc,
   query,
+  deleteDoc ,
   where,
   orderBy,
   onSnapshot,
@@ -14,12 +15,17 @@ const db = getFirestore(app);
 
 const expedienteCol = collection(db, "expedientes");
 const citaCol = collection(db, "citas");
-const recetaCol = collection(db,"recetas")
+const recetaCol = collection(db, "recetas")
 const storage = getStorage();
 
 async function getImage(path) {
   return getDownloadURL(ref(storage, path));
 }
+
+async function deleteExpediente(id) {
+    let docRef = id ? doc(expedienteCol, id) : doc(expedienteCol);
+    await deleteDoc(docRef);
+  }
 
 async function getExpedientes(idDoc, setState) {
   if (!idDoc) return [];
@@ -54,6 +60,7 @@ async function setExpediente(expediente, id) {
   let docRef = id ? doc(expedienteCol, id) : doc(expedienteCol);
   await setDoc(docRef, expediente);
 }
+
 
 async function getCitas(idDoc, setState) {
   if (!idDoc) return [];
@@ -122,5 +129,6 @@ async function setReceta(receta, id) {
 }
 
 
-export { getExpedientes, setExpediente, getImage, getCitas, setCita, getReceta, setReceta };
+
+export { getExpedientes, setExpediente, getImage, getCitas, setCita, getReceta, setReceta, deleteExpediente };
 export default db;

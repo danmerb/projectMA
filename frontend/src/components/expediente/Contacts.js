@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import DataContext from "../../context/data-context";
 import { useHistory } from "react-router-dom";
+import { deleteExpediente } from "../../firebase/firebase";
 
 const Contacts = () => {
   const { expedientes } = useContext(DataContext);
@@ -9,6 +10,11 @@ const Contacts = () => {
   const expedienteDetail = (paciente) => {
     history.push(`${history.location.pathname}/detail`, paciente);
   };
+
+  const expedientEdit = (paciente) => {
+    history.push(`${history.location.pathname}/edit`, paciente);
+  };
+
 
   return (
     <>
@@ -37,10 +43,15 @@ const Contacts = () => {
                   >
                     <i className="far fa-eye"></i>
                   </p>
-                  <p className="btn text-primary" onClick={() => {}}>
+                  <p className="btn text-primary" onClick={() => {
+                    expedientEdit(paciente);
+                  }}>
                     <i className="fas fa-pencil-alt"></i>
                   </p>
-                  <p className="btn text-danger" onClick={() => {}}>
+                  <p className="btn text-danger" onClick={() => {
+                    deleteExpediente(paciente.id);
+
+                  }}>
                     <i className="far fa-trash-alt"></i>
                   </p>
                 </td>

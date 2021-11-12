@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Row, Card, Col, Image } from "antd";
+import { Row, Card, Col, Image, Button } from "antd";
 import { MedicineBoxOutlined } from "@ant-design/icons";
 import { getImage } from "../../firebase/firebase";
 import DataContext from '../../context/data-context'
@@ -11,6 +11,10 @@ const ContactDetail = (props) => {
   const [paciente, setPaciente] = useState({});
   const [recetasCurrentUser, setRecetas] = useState([]);
   const {receta: recetas} = useContext(DataContext)
+
+  const cancelEdit = () => {
+    history.goBack();
+  };
 
   useEffect(() => {
     console.log(recetas)
@@ -120,6 +124,16 @@ const ContactDetail = (props) => {
           })}
         </tbody>
       </table>
+
+      <Button
+            type="primary"
+            onClick={() => {
+              cancelEdit();
+            }}
+          >
+            CANCELAR
+          </Button>
+<br></br>
     </div>
   );
 };
