@@ -91,6 +91,7 @@ const CustomCalendar = () => {
   return (
     <>
       <Calendar
+        popup
         localizer={localizer}
         events={citas}
         startAccessor="start"
@@ -106,6 +107,7 @@ const CustomCalendar = () => {
         formats={calendarFormats}
         scrollToTime={new Date()}
         onSelectEvent={showEditModal}
+        dayLayoutAlgorithm='no-overlap'
       />
       <CalendarForm
         visible={createVisible}
