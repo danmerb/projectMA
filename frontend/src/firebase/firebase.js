@@ -23,7 +23,6 @@ async function getImage(path) {
   return getDownloadURL(ref(storage, path));
 }
 
-
 async function getExpedientes(idDoc, setState) {
   if (!idDoc) return [];
   const q = query(
@@ -63,12 +62,10 @@ async function deleteExpediente(id) {
   await deleteDoc(docRef);
 }
 
-
 async function updateExpediente(id, expediente) {
   let docRef = id ? doc(expedienteCol, id) : doc(expedienteCol);
   await updateDoc(docRef, expediente);
 }
-
 
 async function getCitas(idDoc, setState) {
   if (!idDoc) return [];
@@ -137,8 +134,6 @@ async function setReceta(receta, id) {
   let docRef = id ? doc(recetaCol, id) : doc(recetaCol);
   await setDoc(docRef, receta);
 }
-
-
 
 export { getExpedientes, setExpediente, getImage, getCitas, setCita, getReceta, setReceta, deleteExpediente, updateExpediente };
 export default db;
