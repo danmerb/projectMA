@@ -31,7 +31,7 @@ const CalendarForm = ({
 }) => {
   const [form] = Form.useForm();
   const AuthCTX = useContext(AuthContext);
-  const { expedientes } = useContext(DataContext);
+  const { citas, expedientes } = useContext(DataContext);
 
   const [mappedExpedientes, setMappedExpedientes] = useState([]);
   const [userObj, setUserObj] = useState({});
@@ -112,6 +112,48 @@ const CalendarForm = ({
     console.log("Evento original recibido en onSubmit: ", originalEvent);
   };
 
+  const overlapRule = {
+    validator: async (_, eventTime) => {
+      if (eventTime && citas !== [] && citas[0]) {
+        const initialDay = eventTime[0].toDate();
+        const endDay = eventTime[1].toDate();
+        initialDay.setSeconds(0);
+        endDay.setSeconds(0);
+        const citasDiaInicio = citas.filter(cita => {
+          return cita.start.toDateString() === initialDay.toDateString() ? true : false
+        });        
+        for (let cita of citasDiaInicio) {
+          // * Que la hora de la cita a programar NO sea igual a la de otra cita existente
+          if (initialDay.toTimeString() === cita.start.toTimeString()) {
+            return Promise.reject(
+              new Error(
+                "La hora de inicio es igual a la de otra cita."
+              )
+            );
+          }
+          // * Que la hora de la cita a programar NO este en el rango de otra cita existente
+          else if (cita.start.toTimeString() < initialDay.toTimeString()
+            && cita.end.toTimeString() > initialDay.toTimeString()) {
+            return Promise.reject(
+              new Error(
+                "La hora de inicio choca con otra cita"
+              )
+            );
+          }
+          // * Que la hora de la cita a programar NO este en un hueco entre dos citas
+          else if (initialDay.toTimeString() < cita.start.toTimeString()
+            && endDay.toTimeString() > cita.start.toTimeString()) {
+            return Promise.reject(
+              new Error(
+                "La hora de fin choca con otra cita"
+              )
+            );
+          }                   
+        }
+      }
+    },
+  };
+
   const createFooter = [
     <Button key="back" onClick={onCancel}>
       Regresar
@@ -168,7 +210,7 @@ const CalendarForm = ({
           label="Inicio y fin esperado de la cita"
           required
           tooltip="Este campo es obligatorio"
-          rules={formRules.eventTimeRules}
+          rules={[...formRules.eventTimeRules, overlapRule]}
         >
           <RangePicker
             locale={locale}
