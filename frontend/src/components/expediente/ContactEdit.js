@@ -6,7 +6,7 @@ import DataContext from '../../context/data-context'
 import moment from "moment";
 import locale from "antd/es/date-picker/locale/es_ES";
 import PictureWall from "../../components/PictureWall";
-import { setExpediente } from "../../firebase/firebase";
+import { updateExpediente } from "../../firebase/firebase";
 import AuthContext from "../../context/auth-context";
 
 const inputsRules = [
@@ -19,15 +19,18 @@ const inputsRules = [
 const generosOpts = [{ value: "Masculino" }, { value: "Femenino" }];
 
 const ContactEdit = (props) => {
+
+  
   const history = useHistory();
   const [paciente, setPaciente] = useState({});
-  console.log(paciente);
   const [recetasCurrentUser, setRecetas] = useState([]);
   const { receta: recetas } = useContext(DataContext)
   const [form] = Form.useForm();
   const { currentUser } = useContext(AuthContext);
   const [imgPath, setImgId] = useState("");
   const { expedientes } = useContext(DataContext);
+  
+
 
   const inputsRules = [
     {
@@ -35,7 +38,7 @@ const ContactEdit = (props) => {
       message: "Campo requerido",
     },
   ];
-
+  
   const imgCallback = (id) => {
     setImgId(id);
   };
@@ -49,6 +52,8 @@ const ContactEdit = (props) => {
     e.preventDefault();
     const values = await form.validateFields();
 
+    console.log(paciente.id);
+    console.log(history.location.state.nombre);
     let expediente = {
       nombre: values.nombre,
       correo: values.correo,
@@ -61,12 +66,16 @@ const ContactEdit = (props) => {
       img: imgPath !== "" ? imgPath : "default/user.png",
     };
     try {
-      await setExpediente(expediente);
-      message.success("Expendiente creado con éxito");
-      form.resetFields();
+      await updateExpediente(paciente.id, expediente);
+    
+      message.success("Expendiente actualizado con éxito");
+      
+      
+
     } catch (e) {
       console.log(e);
-      message.error("Error al crear expediente");
+
+      message.error("Error al actualizar expediente");
     }
   };
 
@@ -107,7 +116,6 @@ const ContactEdit = (props) => {
         form={form}
         layout="vertical"
         name="event"
-        initialValues={{}}
         wrapperCol={{
           span: 14,
         }}
@@ -115,7 +123,7 @@ const ContactEdit = (props) => {
         
       
         <Form.Item label="Nombre del paciente" name="nombre" rules={inputsRules}>
-          <Input defaultValue={paciente.nombre } /> 
+          <Input value={paciente.nombre } /> 
        </Form.Item>
 
         <Form.Item label="Correo Electrónico" name="correo" rules={inputsRules}>

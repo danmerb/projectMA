@@ -5,7 +5,8 @@ import {
   doc,
   setDoc,
   query,
-  deleteDoc ,
+  updateDoc,
+  deleteDoc,
   where,
   orderBy,
   onSnapshot,
@@ -22,10 +23,6 @@ async function getImage(path) {
   return getDownloadURL(ref(storage, path));
 }
 
-async function deleteExpediente(id) {
-    let docRef = id ? doc(expedienteCol, id) : doc(expedienteCol);
-    await deleteDoc(docRef);
-  }
 
 async function getExpedientes(idDoc, setState) {
   if (!idDoc) return [];
@@ -61,6 +58,17 @@ async function setExpediente(expediente, id) {
   await setDoc(docRef, expediente);
 }
 
+async function deleteExpediente(id) {
+  let docRef = id ? doc(expedienteCol, id) : doc(expedienteCol);
+  await deleteDoc(docRef);
+}
+
+
+async function updateExpediente(id, expediente) {
+  let docRef = id ? doc(expedienteCol, id) : doc(expedienteCol);
+  await updateDoc(docRef, expediente);
+}
+
 
 async function getCitas(idDoc, setState) {
   if (!idDoc) return [];
@@ -69,6 +77,7 @@ async function getCitas(idDoc, setState) {
     where("idDoc", "==", idDoc),
     where("active", "==", true)
   );
+
 
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     let citas = [];
@@ -107,6 +116,7 @@ async function getReceta(idDoc, setState) {
       receta.push({
         id: doc.id,
         nombrePa: doc.data().nombrePa,
+        idPa: doc.data().idPa,
         edad: doc.data().edad,
         genero: doc.data().genero,
         fechaPr: doc.data().fechaPr.toDate(),
@@ -130,5 +140,5 @@ async function setReceta(receta, id) {
 
 
 
-export { getExpedientes, setExpediente, getImage, getCitas, setCita, getReceta, setReceta, deleteExpediente };
+export { getExpedientes, setExpediente, getImage, getCitas, setCita, getReceta, setReceta, deleteExpediente, updateExpediente };
 export default db;

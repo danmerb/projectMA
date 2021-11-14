@@ -37,7 +37,9 @@ const RecetaFormulario = () => {
   const [mappedExpedientes, setMappedExpedientes] = useState([]);
   const [userObj, setUserObj] = useState({});
   const history = useHistory();
+  console.log(userObj);
 
+  
   useEffect(() => {
     if (expedientes && expedientes.length !== 0)
       setMappedExpedientes(mapCalendarPacientes(expedientes));
@@ -68,6 +70,7 @@ const RecetaFormulario = () => {
 
     let receta = {
       nombrePa: userObj.nombre,
+      idPa: userObj.id,
       edad: values.edad,
       genero: userObj.genero,
       fechaPr: new Date(),
@@ -82,7 +85,7 @@ const RecetaFormulario = () => {
       await setReceta(receta);
 
       message.success("Receta creada con éxito");
-      console.log(receta);
+
       //await GetRec(receta);
       history.push(`vistaReceta`, receta);
       form.resetFields();
@@ -122,7 +125,10 @@ const RecetaFormulario = () => {
           }
           onSelect={(value, { pacienteObj }) => {
             setUserObj(pacienteObj);
+            
           }}
+
+          
         />
       </Form.Item>
 

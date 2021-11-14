@@ -22,7 +22,7 @@ const ContactDetail = (props) => {
       getImage(history.location.state.img).then((res) => {
         history.location.state.img = res;
         setPaciente(history.location.state);
-        setRecetas(recetas.filter(receta=>receta.nombrePa===history.location.state.nombre))
+        setRecetas(recetas.filter(receta=>receta.idPa===history.location.state.id))
       });
     } else {
       history.push("/home");
@@ -112,7 +112,7 @@ const ContactDetail = (props) => {
         <tbody>
           {recetasCurrentUser.map((receta) => {
             return (
-              <tr key={receta.idDoc}>
+              <tr key={receta.id}>
                 <td>{String(receta.fechaPr)}</td>
                 <td>{receta.nombreCom}</td>
                 <td>{receta.nombreGen}</td>
