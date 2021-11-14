@@ -17,7 +17,7 @@ const { Text } = Typography;
 const CustomCalendar = () => {
   const { citas } = useContext(DataContext);
   const [createVisible, setCreateVisible] = useState(false);
-  const [createEdit, setCreateEdit] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
   const [enableEdit, setEnableEdit] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
 
@@ -46,7 +46,7 @@ const CustomCalendar = () => {
 
   const showEditModal = (event) => {
     console.log("Evento recibido en show dit Modal: ", event);
-    setCreateEdit(true);
+    setEditVisible(true);
     const data = {
       id: event.id,
       eventTitle: event.title,
@@ -62,7 +62,7 @@ const CustomCalendar = () => {
 
   const handleCancel = () => {
     setCreateVisible(false);
-    setCreateEdit(false);
+    setEditVisible(false);
     onChangeMode(false);
   };
 
@@ -119,7 +119,7 @@ const CustomCalendar = () => {
         editMode={true}
       />
       <CalendarForm
-        visible={createEdit}
+        visible={editVisible}
         title={
           <Row justify="space-between">
             Detalles de cita
@@ -132,7 +132,7 @@ const CustomCalendar = () => {
             </Space>
           </Row>
         }
-        isEdit={createEdit}
+        isEdit={editVisible}
         onCreate={onCreate}
         onCancel={handleCancel}
         selectedEvent={selectedEvent}
