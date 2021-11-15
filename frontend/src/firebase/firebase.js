@@ -100,6 +100,11 @@ async function setCita(cita, id) {
   await setDoc(docRef, cita, { merge: true });
 }
 
+async function updateCita(cita, id) {
+  let docRef = id ? doc(citaCol, id) : doc(citaCol);
+  await updateDoc(docRef, cita, { merge: true });
+}
+
 async function getReceta(idDoc, setState) {
   if (!idDoc) return [];
   const q = query(
@@ -135,5 +140,5 @@ async function setReceta(receta, id) {
   await setDoc(docRef, receta);
 }
 
-export { getExpedientes, setExpediente, getImage, getCitas, setCita, getReceta, setReceta, deleteExpediente, updateExpediente };
+export { getExpedientes, setExpediente, getImage, getCitas, setCita, updateCita, getReceta, setReceta, deleteExpediente, updateExpediente };
 export default db;
