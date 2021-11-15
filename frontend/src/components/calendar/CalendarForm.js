@@ -13,7 +13,7 @@ import AuthContext from "../../context/auth-context";
 import DataContext from "../../context/data-context";
 import locale from "antd/es/date-picker/locale/es_ES";
 import "antd/dist/antd.css";
-import { setCita } from "../../firebase/firebase";
+import { setCita, updateCita } from "../../firebase/firebase";
 import "../../style/calendar.css";
 import swal from "sweetalert2";
 import { formRules, mapCalendarPacientes } from "./CalendarConfig";
@@ -43,7 +43,8 @@ const CalendarForm = ({
       setMappedExpedientes(mapCalendarPacientes(expedientes));
   }, [expedientes, selectedEvent, visible, form]);
 
-  const onSubmitCreate = () => {
+  const onSubmitForm = (originalEvent) => {
+    console.warn("Entro al onSubmitForm, es modo edicion?", isEdit)
     form
       .validateFields()
       .then(async (values) => {
@@ -59,23 +60,27 @@ const CalendarForm = ({
             detalles: values.eventDetails || "",
             idDoc: AuthCTX.currentUser.uid,
           };
-          console.log("Evento que se guarda en BD:",cita)
-          await setCita(cita);
-          message.success("Cita creada con éxito");
-          form.resetFields();
+          console.log("Evento que se guarda en BD:", cita)
+          if (!isEdit) {
+            await setCita(cita);
+            message.success("Cita creada con éxito");
+          } else {
+            await updateCita(cita, originalEvent.id);
+            message.success("Cita actualizada con éxito");
+          }
           onCancel();
         } catch (e) {
-          console.log(e);
-          message.error("Error al crear cita");
+          console.error(e);
+          (!isEdit) ? message.error("Error al crear cita") : message.error("Error al actualizar cita");
         }
-          
+
         form.resetFields();
         onCreate({
           ...values,
-          correoPaciente:userObj.correo,
+          correoPaciente: userObj.correo,
           nombrePaciente: userObj.nombre,
           nombreDoctor: AuthCTX.currentUser.displayName,
-        }); 
+        });
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
@@ -107,11 +112,7 @@ const CalendarForm = ({
       });
   };
 
-  const onSubmitEdit = (originalEvent) => {
-    console.log("Logica de guardar al editarsh");
-    console.log("Evento original recibido en onSubmit: ", originalEvent);
-  };
-
+  // TODO: que si se esta editando un evento ignore esta cita
   const overlapRule = {
     validator: async (_, eventTime) => {
       if (eventTime && citas !== [] && citas[0]) {
@@ -161,7 +162,7 @@ const CalendarForm = ({
     <Button
       key="submit"
       type="primary"
-      onClick={(isEdit) ? (() => onSubmitEdit(selectedEvent)) : onSubmitCreate}
+      onClick={() => onSubmitForm(selectedEvent)}
     >
       Guardar
     </Button>,
@@ -191,6 +192,29 @@ const CalendarForm = ({
         layout="vertical"
         initialValues={selectedEvent}
       >
+
+        <Form.Item
+          name="pacienteDetails"
+          label="Nombre del paciente"
+          required
+          tooltip="Este campo es obligatorio"
+          rules={formRules.patientNameRules}
+        >
+          <AutoComplete
+            options={mappedExpedientes}
+            placeholder="Paciente"
+            filterOption={(inputValue, option) =>
+              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+              -1
+            }
+            onSelect={(value, { pacienteObj }) => {
+              setUserObj(pacienteObj)
+            }}
+            bordered={editMode}
+            disabled={!editMode}
+          />
+        </Form.Item>
+
         <Form.Item
           name="eventTitle"
           label="Título"
@@ -222,27 +246,6 @@ const CalendarForm = ({
           />
         </Form.Item>
 
-        <Form.Item
-          name="pacienteDetails"
-          label="Nombre del paciente"
-          required
-          tooltip="Este campo es obligatorio"
-          rules={formRules.patientNameRules}
-        >
-          <AutoComplete            
-            options={mappedExpedientes}
-            placeholder="Paciente"
-            filterOption={(inputValue, option) =>
-              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
-              -1
-            }
-            onSelect={(value, { pacienteObj }) => {
-              setUserObj(pacienteObj)
-            }}
-            bordered={editMode}
-            disabled={!editMode}
-          />
-        </Form.Item>
         <Form.Item
           name="eventDetails"
           label="Detalles adicionales"
