@@ -5,6 +5,7 @@ import Register from "./components/forms/RegisterForm";
 import Login from "./components/forms/LoginForm";
 import LayoutDashboard from "./Layout/LayoutDashboard";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import NotFound from "./components/error/NotFound";
 
 export const App = () => {
   return (
@@ -14,6 +15,7 @@ export const App = () => {
           <LayoutDashboard path="/home" />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route component={NotFound} />
         </Switch>
     </AuthProvider>
   );
