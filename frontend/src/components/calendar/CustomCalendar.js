@@ -22,20 +22,24 @@ const CustomCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState({});
 
   useEffect(() => {
-    const day = new Date().toDateString();
+    const today = new Date();
+    const day = today.toDateString();    
+    today.setSeconds(0);
+    const time = today.toTimeString();
     if (citas !== [] && citas[0]) {
       //console.log(day+"     "+citas[0].start.toDateString())
       const citasDeHoy = citas.filter(cita => {
         return cita.start.toDateString() === day ? true : false
       })
       citasDeHoy.forEach(cita => {
-        notification.success({
-          message: `Cita para el día de hoy!`,
-          description:
-            `Cita con ${cita.paciente} sobre ${(cita.title).toLowerCase()} a las ${moment(cita.start).format('hh:mm A')}.`,
-          placement: 'bottomRight',
-          icon: <MedicineBoxOutlined style={{ color: '#108ee9' }} />
-        });
+        if (cita.start.toTimeString() >= time || cita.end.toTimeString() >= time)
+          notification.success({
+            message: `Cita para el día de hoy!`,
+            description:
+              `Cita con ${cita.paciente} sobre ${(cita.title).toLowerCase()} a las ${moment(cita.start).format('hh:mm A')}.`,
+            placement: 'bottomRight',
+            icon: <MedicineBoxOutlined style={{ color: '#108ee9' }} />
+          });
       });
     }
   }, [citas]);
