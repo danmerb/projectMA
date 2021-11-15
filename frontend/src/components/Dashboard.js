@@ -1,11 +1,12 @@
 import React from "react";
-import { Layout, Menu, Avatar, Button } from "antd";
+import { Layout, Menu, Avatar, Button, PageHeader } from "antd";
 import {
   WalletFilled,
   FileOutlined,
   CalendarOutlined,
   HeartTwoTone,
-  CopyrightOutlined
+  CopyrightOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
 import AuthContext from "../context/auth-context";
 import "../app.css";
@@ -16,6 +17,7 @@ const { SubMenu } = Menu;
 class Dashboard extends React.Component {
   state = {
     collapsed: true,
+    headerTitle: "Citas médicas",
   };
   onCollapse = (collapsed) => {
     console.log(collapsed);
@@ -23,7 +25,7 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { collapsed } = this.state;
+    const { collapsed, headerTitle } = this.state;
     return (
       <AuthContext.Consumer >
         {({ currentUser, logout }) =>
@@ -38,7 +40,7 @@ class Dashboard extends React.Component {
             <div className="logo" />
             <Menu
               theme="dark"
-              mode="inline"
+              mode="inline"              
               defaultSelectedKeys={["1"]}
               inlineIndent={24}
             >
@@ -52,28 +54,52 @@ class Dashboard extends React.Component {
                 Dr. {currentUser.displayName}
               </Menu.Item>
 
-              <Menu.Item key="1" icon={<CalendarOutlined />} onClick={() => this.props.cb(`${this.props.path}/`)}>
+              <Menu.Item key="1" icon={<CalendarOutlined />}
+                onClick={() => {
+                  this.props.cb(`${this.props.path}/`);
+                  this.setState({ headerTitle: "Citas médicas" });                  
+                }}>
                 Citas Médicas
               </Menu.Item>
 
-              <Menu.Item key="2" icon={<FileOutlined />} onClick={() => this.props.cb(`${this.props.path}/receta`)}>
+              <Menu.Item key="2" icon={<FileOutlined />}
+                onClick={() => {
+                  this.props.cb(`${this.props.path}/receta`);
+                  this.setState({ headerTitle: "Nueva receta" });
+                }}>
                 Crear Receta
               </Menu.Item>            
 
               <SubMenu key="sub1" icon={<WalletFilled />} title="Expedientes">
-                <Menu.Item key="3" onClick={() => this.props.cb(`${this.props.path}/expediente`)}>
+                <Menu.Item key="3"
+                  onClick={() => {
+                    this.props.cb(`${this.props.path}/expediente`);                    
+                    this.setState({ headerTitle: "Nuevo expediente" });
+                  }}>
                   Crear expediente
                 </Menu.Item>
-                <Menu.Item key="4" onClick={() => this.props.cb(`${this.props.path}/expedientes`)}>
+                <Menu.Item key="4"
+                  onClick={() => {
+                    this.props.cb(`${this.props.path}/expedientes`);                    
+                    this.setState({ headerTitle: "Expedientes" });
+                  }}>
                   Ver expedientes
                 </Menu.Item>
               </SubMenu>
+              <Menu.Item key="5" icon={<LogoutOutlined style={{ color: '#c11c1e'}}/>} onClick={logout}>
+                Cerrar Sesión
+              </Menu.Item>
             </Menu>
           </Sider>
 
           <Layout className="site-layout">
-            <Header className="site-layout-background">
-              <Button type="primary" onClick={logout}>Cerrar Sesión</Button>
+            <Header className="site-layout-background" style={{padding: 0}}>
+              <PageHeader                
+                onBack={null}
+                title={headerTitle}
+                extra={<Button type="danger" onClick={logout}>Cerrar Sesión</Button>}
+                style={{padding:8, paddingLeft:16}}
+              />              
             </Header>
             <Content className="content-layout">
               {this.props.children}
