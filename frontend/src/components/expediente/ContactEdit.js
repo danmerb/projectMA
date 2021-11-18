@@ -23,12 +23,9 @@ const ContactEdit = (props) => {
   
   const history = useHistory();
   const [paciente, setPaciente] = useState({});
-  const [recetasCurrentUser, setRecetas] = useState([]);
-  const { receta: recetas } = useContext(DataContext)
   const [form] = Form.useForm();
   const { currentUser } = useContext(AuthContext);
   const [imgPath, setImgId] = useState("");
-  const { expedientes } = useContext(DataContext);
   
 
 
@@ -82,19 +79,17 @@ const ContactEdit = (props) => {
 
 
   useEffect(() => {
-    console.log(recetas)
     if (history.location.state) {
       getImage(history.location.state.img).then((res) => {
         history.location.state.img = res;
         setPaciente(history.location.state);
-        setRecetas(recetas.filter(receta => receta.nombrePa === history.location.state.nombre))
       });
     } else {
       history.push("/home");
     }
 
 
-  }, [history, recetas]);
+  }, [history]);
   return (
     <>
 
@@ -120,10 +115,9 @@ const ContactEdit = (props) => {
           span: 14,
         }}
       >
-        
       
         <Form.Item label="Nombre del paciente" name="nombre" rules={inputsRules}>
-          <Input value={paciente.nombre } /> 
+          <Input value={paciente.nombre} placeholder= {paciente.nombre}/> 
        </Form.Item>
 
         <Form.Item label="Correo Electrónico" name="correo" rules={inputsRules}>
@@ -132,18 +126,18 @@ const ContactEdit = (props) => {
         </Form.Item>
 
         <Form.Item name="direccion" label="Dirección" rules={inputsRules}>
-          <Input.TextArea value={paciente.direccion} />
+          <Input.TextArea value={paciente.direccion}  placeholder= {paciente.direccion} />
         </Form.Item>
 
         <Form.Item label="Teléfono" name="telefono" rules={inputsRules}>
-          <Input value={paciente.telefono} />
+          <Input value={paciente.telefono}  placeholder= {paciente.telefono} />
         </Form.Item>
 
         <Form.Item
           name="fechaNac"
           label="Fecha de Nacimiento"
           rules={inputsRules}
-          value={paciente.nombre}
+          value={paciente.fechaNac}
         >
           <DatePicker locale={locale} format="DD/MM/YYYY" />
         </Form.Item>
@@ -151,6 +145,7 @@ const ContactEdit = (props) => {
         <Form.Item name="genero" label="Género" rules={inputsRules}>
           <AutoComplete
             options={generosOpts}
+            placeholder={paciente.genero}
             filterOption={(inputValue, option) =>
               option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
             }
@@ -162,7 +157,7 @@ const ContactEdit = (props) => {
           name="telefonoEmergencia"
           rules={inputsRules}
         >
-          <Input />
+          <Input  placeholder= {paciente.telEmerg} />
         </Form.Item>
 
         <Form.Item>
