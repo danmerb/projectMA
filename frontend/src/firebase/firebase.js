@@ -16,7 +16,7 @@ const db = getFirestore(app);
 
 const expedienteCol = collection(db, "expedientes");
 const citaCol = collection(db, "citas");
-const recetaCol = collection(db, "recetas")
+const recetaCol = collection(db, "recetas");
 const storage = getStorage();
 
 async function getImage(path) {
@@ -34,20 +34,22 @@ async function getExpedientes(idDoc, setState) {
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     let expedientes = [];
     querySnapshot.forEach((doc) => {
-      expedientes.push({
-        id: doc.id,
-        nombre: doc.data().nombre,
-        correo: doc.data().correo,
-        direccion: doc.data().direccion,
-        telefono: doc.data().telefono,
-        fechaNac: doc.data().fechaNac,
-        genero: doc.data().genero,
-        telEmerg: doc.data().telEmerg,
-        img: doc.data().img,
-        idDoc: doc.data().idDoc,
+      getImage(doc.data().img).then((url) => {
+        expedientes.push({
+          id: doc.id,
+          nombre: doc.data().nombre,
+          correo: doc.data().correo,
+          direccion: doc.data().direccion,
+          telefono: doc.data().telefono,
+          fechaNac: doc.data().fechaNac,
+          genero: doc.data().genero,
+          telEmerg: doc.data().telEmerg,
+          img: url,
+          idDoc: doc.data().idDoc,
+        });
       });
+      setState(expedientes);
     });
-    setState(expedientes);
   });
   return unsubscribe;
 }
@@ -74,7 +76,6 @@ async function getCitas(idDoc, setState) {
     where("idDoc", "==", idDoc),
     where("active", "==", true)
   );
-
 
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     let citas = [];
@@ -107,10 +108,7 @@ async function updateCita(cita, id) {
 
 async function getReceta(idDoc, setState) {
   if (!idDoc) return [];
-  const q = query(
-    recetaCol,
-    where("idDoc", "==", idDoc)
-  );
+  const q = query(recetaCol, where("idDoc", "==", idDoc));
 
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     let receta = [];
@@ -122,7 +120,7 @@ async function getReceta(idDoc, setState) {
         edad: doc.data().edad,
         genero: doc.data().genero,
         fechaPr: doc.data().fechaPr.toDate(),
-        medicamentos: doc.data().medicamentos
+        medicamentos: doc.data().medicamentos,
       });
     });
     setState(receta);
@@ -135,5 +133,16 @@ async function setReceta(receta, id) {
   await setDoc(docRef, receta);
 }
 
-export { getExpedientes, setExpediente, getImage, getCitas, setCita, updateCita, getReceta, setReceta, deleteExpediente, updateExpediente };
+export {
+  getExpedientes,
+  setExpediente,
+  getImage,
+  getCitas,
+  setCita,
+  updateCita,
+  getReceta,
+  setReceta,
+  deleteExpediente,
+  updateExpediente,
+};
 export default db;

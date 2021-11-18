@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DataContext from "../../context/data-context";
 import { useHistory } from "react-router-dom";
 import { deleteExpediente } from "../../firebase/firebase";
@@ -6,7 +6,6 @@ import { Card, Avatar, Col, Row, List, Image } from 'antd';
 import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import '../../app.css';
-import { getImage } from "../../firebase/firebase";
 
 
 
@@ -56,7 +55,7 @@ const Contacts = () => {
           >
 
             <Meta
-              avatar={< Avatar src={ paciente.img} />}
+              avatar={< Avatar src={paciente.img} />}
               title={'Nombre: ' + paciente.nombre}
               description={'Teléfono: ' + paciente.telefono}
             />
