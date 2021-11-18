@@ -117,17 +117,12 @@ async function getReceta(idDoc, setState) {
     querySnapshot.forEach((doc) => {
       receta.push({
         id: doc.id,
-        nombrePa: doc.data().nombrePa,
+        idDoc: doc.data().idDoc,
         idPa: doc.data().idPa,
         edad: doc.data().edad,
         genero: doc.data().genero,
         fechaPr: doc.data().fechaPr.toDate(),
-        idDoc: doc.data().idDoc,
-        nombreCom: doc.data().nombreCom,
-        nombreGen: doc.data().nombreGen,
-        presentacion: doc.data().presentacion,
-        dosis: doc.data().dosis,
-        tiempo: doc.data().tiempo,
+        medicamentos: doc.data().medicamentos
       });
     });
     setState(receta);

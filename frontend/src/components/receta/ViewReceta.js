@@ -95,14 +95,17 @@ const ViewReceta = React.forwardRef((props,ref) => {
         
         
         <Col span={15} style={ {marginTop:"1cm"}}>
+        {receta.medicamentos.map(({ nombreCom,nombreGen,presentacion,dosis,tiempo }) => (
+            <Col >
           <h4 style={ {marginLeft:"4.5cm"}}> Medicamentos</h4>
-          <h5 style={ {marginLeft:"4.5cm"}}> Nombre comercial: {receta.nombreCom}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Nombre Generico: {receta.nombreGen}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Presentacion: {receta.presentacion}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Dosis: {receta.dosis}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Tiempo de tratamiento: {receta.tiempo}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Nombre comercial: {nombreCom}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Nombre Generico: {nombreGen}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Presentacion: {presentacion}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Dosis: {dosis}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Tiempo de tratamiento: {tiempo}</h5>
+          </Col>
           
-     
+          ))}
           
         </Col>
         

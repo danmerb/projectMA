@@ -3,32 +3,32 @@ import { useHistory } from "react-router-dom";
 import { Row, Card, Col, Image, Button } from "antd";
 import { MedicineBoxOutlined } from "@ant-design/icons";
 import { getImage } from "../../firebase/firebase";
-import DataContext from '../../context/data-context'
+import DataContext from "../../context/data-context";
 import moment from "moment";
 
 const ContactDetail = (props) => {
   const history = useHistory();
   const [paciente, setPaciente] = useState({});
   const [recetasCurrentUser, setRecetas] = useState([]);
-  const {receta: recetas} = useContext(DataContext)
+  const { receta: recetas } = useContext(DataContext);
 
   const cancelEdit = () => {
     history.goBack();
   };
 
   useEffect(() => {
-    console.log(recetas)
+    console.log(recetas);
     if (history.location.state) {
       getImage(history.location.state.img).then((res) => {
         history.location.state.img = res;
         setPaciente(history.location.state);
-        setRecetas(recetas.filter(receta=>receta.idPa===history.location.state.id))
+        setRecetas(
+          recetas.filter((receta) => receta.idPa === history.location.state.id)
+        );
       });
     } else {
       history.push("/home");
     }
-
-
   }, [history, recetas]);
   return (
     <div
@@ -70,7 +70,7 @@ const ContactDetail = (props) => {
             {paciente.direccion}
           </Card>
         </Col>
-        {paciente.genero === "Masculino" ? (
+        {paciente.genero.toLowerCase() === "masculino" ? (
           <Col span={8}>
             <Card title="Género" style={{ color: "#1155FF" }} bordered={false}>
               {paciente.genero}
@@ -102,23 +102,36 @@ const ContactDetail = (props) => {
         <thead className="thead-light">
           <tr>
             <th>Fecha Receta</th>
-            <th>Nombre comercial</th>
-            <th>Nombre generico</th>
-            <th>Presentacion</th>
-            <th>Dosis</th>
-            <th>Tiempo</th>
+            <th>Medicamentos recetadas para esa consulta</th>
           </tr>
         </thead>
         <tbody>
           {recetasCurrentUser.map((receta) => {
             return (
               <tr key={receta.id}>
-                <td>{String(receta.fechaPr)}</td>
-                <td>{receta.nombreCom}</td>
-                <td>{receta.nombreGen}</td>
-                <td>{receta.presentacion}</td>
-                <td>{receta.dosis}</td>
-                <td>{receta.tiempo}</td>
+                <td>{moment(receta.fechaPr).format("DD-MM-YYYY")}</td>
+                <table>
+                  <thead className="thead-light">
+                    <tr>
+                      <th>Nombre Comercial</th>
+                      <th>Nombre Generico</th>
+                      <th>Presentacion</th>
+                      <th>Dosis</th>
+                      <th>Tiempo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {receta.medicamentos.map((medicamento, index) => (
+                    <tr key={index}>
+                      <td>{medicamento.nombreCom}</td>
+                      <td>{medicamento.nombreGen}</td>
+                      <td>{medicamento.presentacion}</td>
+                      <td>{medicamento.dosis}</td>
+                      <td>{medicamento.tiempo}</td>
+                    </tr>
+                  ))}
+                  </tbody>
+                </table>
               </tr>
             );
           })}
@@ -126,14 +139,14 @@ const ContactDetail = (props) => {
       </table>
 
       <Button
-            type="primary"
-            onClick={() => {
-              cancelEdit();
-            }}
-          >
-            CANCELAR
-          </Button>
-<br></br>
+        type="primary"
+        onClick={() => {
+          cancelEdit();
+        }}
+      >
+        CANCELAR
+      </Button>
+      <br></br>
     </div>
   );
 };
