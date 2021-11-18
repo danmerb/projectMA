@@ -41,7 +41,10 @@ const RecetaFormulario = () => {
   const [userObj, setUserObj] = useState({});
   const [medObj, setMedObj] = useState({});
   const history = useHistory();
-  console.log(userObj);
+
+  const [inputFields, setInputFields] = useState([
+    { id: uuidv4(), nombreCom: '', nombreGen: '', presentacion:'',dosis:'',tiempo:'' },
+  ]);
 
   const defaultReceta = {
       nombrePa: "",
@@ -61,14 +64,14 @@ const RecetaFormulario = () => {
       setMappedExpedientes(mapCalendarPacientes(expedientes));
   }, [expedientes]);
 
-  const [inputFields, setInputFields] = useState([
-    { id: uuidv4(), nombreCom: '', nombreGen: '', presentacion:'',dosis:'',tiempo:'' },
-  ]);
+  
 
   
   const handleChangeInput = (id, event) => {
+    
     const newInputFields = inputFields.map(i => {
       if(id === i.id) {
+        console.log("el id es "+id)
         i[event.target.name] = event.target.value
       }
       return i;
@@ -92,7 +95,7 @@ const RecetaFormulario = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const values = await form.validateFields();
-
+    console.log(inputFields)
     let receta = {
       nombrePa: userObj.nombre,
       idPa: userObj.id,
@@ -114,13 +117,13 @@ const RecetaFormulario = () => {
     try {
       console.log("Hola");
       console.log("InputFields", inputFields);
-      await setReceta(receta);
+     // await setReceta(receta);
       
       message.success("Receta creada con éxito");
 
       //await GetRec(receta);
-      history.push(`vistaReceta`, receta);
-      form.resetFields();
+   //   history.push(`vistaReceta`, receta);
+     // form.resetFields();
     } catch (e) {
       console.log(e);
       message.error("Error al crear la receta");
@@ -175,10 +178,11 @@ const RecetaFormulario = () => {
       </Form.Item>
 
       <Form.Item >
-      { inputFields.map(inputField => (
+      { inputFields.map((inputField, index) => (
           <div key={inputField.id}>
-            <Form.Item name="nombreCom" label="Nombre Comercial">
-            <Input 
+            <Form.Item label="Nombre Comercial">
+            <Input
+              name="nombreCom"
               variant="filled"
               value={inputField.nombreCom}
               onChange={event => handleChangeInput(inputField.id, event)}
@@ -188,8 +192,8 @@ const RecetaFormulario = () => {
             
             <Form.Item name="nombreGen" label="Nombre Generico">
             <Input 
+              name="nombreGen"
               variant="filled"
-              value={inputField.nombreGen}
               onChange={event => handleChangeInput(inputField.id, event)}
             />
               
@@ -197,8 +201,8 @@ const RecetaFormulario = () => {
 
             <Form.Item name="presentacion" label="Presentacion ">
             <Input 
+             name="presentacion"
               variant="filled"
-              value={inputField.presentacion}
               onChange={event => handleChangeInput(inputField.id, event)}
             />
               
@@ -206,8 +210,8 @@ const RecetaFormulario = () => {
 
             <Form.Item name="dosis" label="Dosis ">
             <Input 
+              name="dosis"
               variant="filled"
-              value={inputField.dosis}
               onChange={event => handleChangeInput(inputField.id, event)}
             />
               
@@ -215,8 +219,8 @@ const RecetaFormulario = () => {
 
             <Form.Item name="tiempo" label="tiempo ">
             <Input 
+              name="tiempo"
               variant="filled"
-              value={inputField.tiempo}
               onChange={event => handleChangeInput(inputField.id, event)}
             />
               
