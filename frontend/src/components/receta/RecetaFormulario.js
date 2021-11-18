@@ -46,15 +46,7 @@ const RecetaFormulario = () => {
     { id: uuidv4(), nombreCom: '', nombreGen: '', presentacion:'',dosis:'',tiempo:'' },
   ]);
 
-  const defaultReceta = {
-      nombrePa: "",
-      idPa: "",
-      edad: "",
-      genero: "",
-      fechaPr: "",
-      idDoc: "",
-      medicamentos: [],
-  }
+
         
 
   
@@ -71,7 +63,7 @@ const RecetaFormulario = () => {
     
     const newInputFields = inputFields.map(i => {
       if(id === i.id) {
-        console.log("el id es "+id)
+        
         i[event.target.name] = event.target.value
       }
       return i;
@@ -95,7 +87,7 @@ const RecetaFormulario = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const values = await form.validateFields();
-    console.log(inputFields)
+    
     let receta = {
       nombrePa: userObj.nombre,
       idPa: userObj.id,
@@ -103,22 +95,14 @@ const RecetaFormulario = () => {
       genero: userObj.genero,
       fechaPr: new Date(),
       idDoc: currentUser.uid,
-      medicamentos: [
-        {
-          nombreCom: medObj.nombreCom,
-          nombreGen: medObj.medObj,
-          presentacion:medObj.presentacion,
-          dosis: medObj.dosis,
-          tiempo: medObj.tiempo,
-        },
-      ], 
+      medicamentos: inputFields, 
       
     };
     try {
-      console.log("Hola");
-      console.log("InputFields", inputFields);
-     // await setReceta(receta);
       
+      
+      await setReceta(receta);
+       console.log(receta);
       message.success("Receta creada con éxito");
 
       //await GetRec(receta);
@@ -190,7 +174,7 @@ const RecetaFormulario = () => {
               
             </Form.Item>
             
-            <Form.Item name="nombreGen" label="Nombre Generico">
+            <Form.Item  label="Nombre Generico">
             <Input 
               name="nombreGen"
               variant="filled"
@@ -199,7 +183,7 @@ const RecetaFormulario = () => {
               
             </Form.Item>
 
-            <Form.Item name="presentacion" label="Presentacion ">
+            <Form.Item  label="Presentacion ">
             <Input 
              name="presentacion"
               variant="filled"
@@ -208,7 +192,7 @@ const RecetaFormulario = () => {
               
             </Form.Item>
 
-            <Form.Item name="dosis" label="Dosis ">
+            <Form.Item label="Dosis ">
             <Input 
               name="dosis"
               variant="filled"
@@ -217,7 +201,7 @@ const RecetaFormulario = () => {
               
             </Form.Item>
 
-            <Form.Item name="tiempo" label="tiempo ">
+            <Form.Item  label="tiempo ">
             <Input 
               name="tiempo"
               variant="filled"
