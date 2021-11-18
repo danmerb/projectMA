@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Form, Input, DatePicker, Button, message, AutoComplete } from "antd";
+
+import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router";
 import locale from "antd/es/date-picker/locale/es_ES";
 import { GetRec } from "./ShowReceta";
@@ -7,7 +9,8 @@ import { setReceta } from "../../firebase/firebase";
 import AuthContext from "../../context/auth-context";
 import DataContext from "../../context/data-context";
 import PictureUp from "../../assets/receta.png";
-import Item from "antd/lib/list/Item";
+import { v4 as uuidv4 } from 'uuid';
+
 import { mapCalendarPacientes } from "../calendar/CalendarConfig";
 
 const inputsRules = [
@@ -17,17 +20,17 @@ const inputsRules = [
   },
 ];
 
-const defaultState = {
-  medicamentos: {
-    medicamento: {
+const defaultState =  {
+
+    
       nombreCom: "",
       nombreGen: "",
       presentacion: "",
       dosis: "",
       tiempo: "",
-    },
-  },
+
 };
+
 
 const RecetaFormulario = () => {
   const { currentUser } = useContext(AuthContext);
@@ -36,33 +39,55 @@ const RecetaFormulario = () => {
   const [rows, setRows] = useState([defaultState]);
   const [mappedExpedientes, setMappedExpedientes] = useState([]);
   const [userObj, setUserObj] = useState({});
+  const [medObj, setMedObj] = useState({});
   const history = useHistory();
   console.log(userObj);
 
+  const defaultReceta = {
+      nombrePa: "",
+      idPa: "",
+      edad: "",
+      genero: "",
+      fechaPr: "",
+      idDoc: "",
+      medicamentos: [],
+  }
+        
+
+  
   
   useEffect(() => {
     if (expedientes && expedientes.length !== 0)
       setMappedExpedientes(mapCalendarPacientes(expedientes));
   }, [expedientes]);
+
+  const [inputFields, setInputFields] = useState([
+    { id: uuidv4(), nombreCom: '', nombreGen: '', presentacion:'',dosis:'',tiempo:'' },
+  ]);
+
   
-  const handleOnChange = (index, name, value) => {
-    const copyRows = [...rows];
-    copyRows[index] = {
-      ...copyRows[index],
-      [name]: value,
-    };
-    setRows(copyRows);
-  };
+  const handleChangeInput = (id, event) => {
+    const newInputFields = inputFields.map(i => {
+      if(id === i.id) {
+        i[event.target.name] = event.target.value
+      }
+      return i;
+    })
+    
+    setInputFields(newInputFields);
+  }
 
-  const handleOnAdd = () => {
-    setRows(rows.concat(defaultState));
-  };
+  const handleAddFields = () => {
+    setInputFields([...inputFields, { id: uuidv4(),  nombreCom: '', nombreGen: '', presentacion:'',dosis:'',tiempo:'' }])
+  }
 
-  const handleOnRemove = (index) => {
-    const copyRows = [...rows];
-    copyRows.splice(index, 1);
-    setRows(copyRows);
-  };
+  const handleRemoveFields = id => {
+    const values  = [...inputFields];
+    values.splice(values.findIndex(value => value.id === id), 1);
+    setInputFields(values);
+  }
+  
+ 
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -75,15 +100,22 @@ const RecetaFormulario = () => {
       genero: userObj.genero,
       fechaPr: new Date(),
       idDoc: currentUser.uid,
-      nombreCom: values.nombreCom,
-      nombreGen: values.nombreGen,
-      presentacion: values.presentacion,
-      dosis: values.dosis,
-      tiempo: values.tiempo,
+      medicamentos: [
+        {
+          nombreCom: medObj.nombreCom,
+          nombreGen: medObj.medObj,
+          presentacion:medObj.presentacion,
+          dosis: medObj.dosis,
+          tiempo: medObj.tiempo,
+        },
+      ], 
+      
     };
     try {
+      console.log("Hola");
+      console.log("InputFields", inputFields);
       await setReceta(receta);
-
+      
       message.success("Receta creada con éxito");
 
       //await GetRec(receta);
@@ -97,6 +129,12 @@ const RecetaFormulario = () => {
 
     //history.push('/home/vistaReceta');
   };
+  
+
+  
+  
+
+
 
   return (
     <Form
@@ -136,22 +174,77 @@ const RecetaFormulario = () => {
         <Input  />
       </Form.Item>
 
-      <label>Medicamentos</label>
-      <Form.Item label="Nombre" name="nombreCom" rules={inputsRules}>
-        <Input />
+      <Form.Item >
+      { inputFields.map(inputField => (
+          <div key={inputField.id}>
+            <Form.Item name="nombreCom" label="Nombre Comercial">
+            <Input 
+              variant="filled"
+              value={inputField.nombreCom}
+              onChange={event => handleChangeInput(inputField.id, event)}
+            />
+              
+            </Form.Item>
+            
+            <Form.Item name="nombreGen" label="Nombre Generico">
+            <Input 
+              variant="filled"
+              value={inputField.nombreGen}
+              onChange={event => handleChangeInput(inputField.id, event)}
+            />
+              
+            </Form.Item>
+
+            <Form.Item name="presentacion" label="Presentacion ">
+            <Input 
+              variant="filled"
+              value={inputField.presentacion}
+              onChange={event => handleChangeInput(inputField.id, event)}
+            />
+              
+            </Form.Item>
+
+            <Form.Item name="dosis" label="Dosis ">
+            <Input 
+              variant="filled"
+              value={inputField.dosis}
+              onChange={event => handleChangeInput(inputField.id, event)}
+            />
+              
+            </Form.Item>
+
+            <Form.Item name="tiempo" label="tiempo ">
+            <Input 
+              variant="filled"
+              value={inputField.tiempo}
+              onChange={event => handleChangeInput(inputField.id, event)}
+            />
+              
+            </Form.Item>
+
+            <Button type="primary" disabled={inputFields.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
+              Quitar Medicamento
+            </Button>
+
+            <Button
+            type="primary"
+              onClick={handleAddFields}
+            >
+              Agregar Medicamento
+            </Button>
+            
+          </div>
+        )) }
+
+
       </Form.Item>
-      <Form.Item label="Nombre Generico" name="nombreGen" rules={inputsRules}>
-        <Input />
-      </Form.Item>
-      <Form.Item label="Presentacion" name="presentacion" rules={inputsRules}>
-        <Input />
-      </Form.Item>
-      <Form.Item label="Dosis" name="dosis" rules={inputsRules}>
-        <Input />
-      </Form.Item>
-      <Form.Item label="Tiempo" name="tiempo" rules={inputsRules}>
-        <Input />
-      </Form.Item>
+
+
+
+
+     
+
+      
       <Form.Item>
         <Button
           type="primary"
@@ -166,58 +259,7 @@ const RecetaFormulario = () => {
   );
 };
 
-function Row({
-  onChange,
-  onRemove,
-  medicamento,
-  nombreCom,
-  nombreGen,
-  presentacion,
-  dosis,
-  tiempo,
-}) {
-  return (
-    <div>
-      <div>
-        <Form.Item name="this.nombreCom" label="Nombre del medicamento">
-          <Input
-            placeholder=" "
-            onChange={(e) => onChange("this.nombreCom", e.target.value)}
-          />
-        </Form.Item>
 
-        <Form.Item name={nombreGen} label="Nombre generico">
-          <Input
-            placeholder=" "
-            onChange={(e) => onChange("nombreGen", e.target.value)}
-          />
-        </Form.Item>
-
-        <Form.Item name={presentacion} label="Precentacion">
-          <Input
-            placeholder=" "
-            onChange={(e) => onChange("presentacion", e.target.value)}
-          />
-        </Form.Item>
-
-        <Form.Item name={dosis} label="Dosis del medicamento">
-          <Input
-            placeholder=" "
-            onChange={(e) => onChange("dosis", e.target.value)}
-          />
-        </Form.Item>
-        <Form.Item name={tiempo} label="Tiempo de prescripcion">
-          <Input
-            placeholder=" "
-            onChange={(e) => onChange("tiempo", e.target.value)}
-          />
-        </Form.Item>
-      </div>
-
-      <button onClick={onRemove}>Eliminar</button>
-    </div>
-  );
-}
 
 export default RecetaFormulario;
 
