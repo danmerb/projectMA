@@ -54,6 +54,25 @@ const ViewReceta = React.forwardRef((props,ref) => {
         return obj;
     });
 
+    function Mostrar(props){
+
+        const medicamentoMostrar = props.medicamentos?.map((medicamento) =>
+        <div key={medicamento.id}>
+          <h5 > Nombre comercial: {medicamento.nombreCom}</h5>
+          <h5> Nombre Generico: {medicamento.nombreGen}</h5>
+          <h5 > Presentacion: {medicamento.presentacion}</h5>
+          <h5 > Dosis: {medicamento.dosis}</h5>
+          <h5 > Tiempo de tratamiento: {medicamento.tiempo}</h5>
+        </div>
+      ); 
+      return (
+        <div>
+          {medicamentoMostrar}
+        </div>
+      );
+
+    }
+
     
     
     //const receta = useState({});
@@ -92,25 +111,22 @@ const ViewReceta = React.forwardRef((props,ref) => {
         }).format(receta.fechaPr)}</h5>     
         </Col>
                
-        
-        
-        <Col span={15} style={ {marginTop:"1cm"}}>
-        {receta.medicamentos.map(({ nombreCom,nombreGen,presentacion,dosis,tiempo }) => (
-            <Col >
-          <h4 style={ {marginLeft:"4.5cm"}}> Medicamentos</h4>
-          <h5 style={ {marginLeft:"4.5cm"}}> Nombre comercial: {nombreCom}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Nombre Generico: {nombreGen}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Presentacion: {presentacion}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Dosis: {dosis}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Tiempo de tratamiento: {tiempo}</h5>
-          </Col>
-          
-          ))}
-          
-        </Col>
-        
+                
       
+               
+        </Row>
+
+        <Row gutter={24}  >      
+
+       
+        <Col  style={ {marginTop:"1cm"} , {marginLeft:"4.5cm"}}>
+        <h4 > Medicamentos</h4>
+        <Mostrar medicamentos={receta.medicamentos} />,
         
+        </Col>
+
+
+
         </Row>
 
             
@@ -127,6 +143,22 @@ const ViewReceta = React.forwardRef((props,ref) => {
 
 
 export default ViewReceta;
+/*
+{receta.medicamentos.map((medicamento, index) => (
+            <Col  key={index}>
+          <h4 style={ {marginLeft:"4.5cm"}}> Medicamentos</h4>
+          <h5 style={ {marginLeft:"4.5cm"}}> Nombre comercial: {medicamento.nombreCom}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Nombre Generico: {medicamento.nombreGen}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Presentacion: {medicamento.presentacion}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Dosis: {medicamento.dosis}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Tiempo de tratamiento: {medicamento.tiempo}</h5>
+          </Col>
+          
+          ))}
+
+*/
+
+
  /* 
  <List
 

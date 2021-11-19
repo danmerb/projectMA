@@ -104,6 +104,8 @@ const RecetaFormulario = () => {
       await setReceta(receta);
        console.log(receta);
       message.success("Receta creada con éxito");
+      history.push(`vistaReceta`, receta);
+      form.resetFields();
 
       //await GetRec(receta);
    //   history.push(`vistaReceta`, receta);
