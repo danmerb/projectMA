@@ -20,13 +20,13 @@ const generosOpts = [{ value: "Masculino" }, { value: "Femenino" }];
 
 const ContactEdit = (props) => {
 
-  
+
   const history = useHistory();
   const [paciente, setPaciente] = useState({});
   const [form] = Form.useForm();
   const { currentUser } = useContext(AuthContext);
   const [imgPath, setImgId] = useState("");
-  
+
 
 
   const inputsRules = [
@@ -35,7 +35,7 @@ const ContactEdit = (props) => {
       message: "Campo requerido",
     },
   ];
-  
+
   const imgCallback = (id) => {
     setImgId(id);
   };
@@ -64,10 +64,10 @@ const ContactEdit = (props) => {
     };
     try {
       await updateExpediente(paciente.id, expediente);
-    
+
       message.success("Expendiente actualizado con éxito");
-      
-      
+
+
 
     } catch (e) {
       console.log(e);
@@ -91,102 +91,112 @@ const ContactEdit = (props) => {
 
   }, [history]);
   return (
-    <>
+    <div style={{ padding: "30px", background: "#ececec" }}>
+      <Row gutter={16} type="flex" justify="center" align="middle" >
+        <Col span={14}>
+          <Card title="EDITAR EXPEDIENTE" bordered={true}>
 
-      <div style={{
-        display: "flex",
-        width: "100%",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-        <Image.PreviewGroup>
-          <Image width={200} src={paciente.img} />
-        </Image.PreviewGroup>
-        <Row gutter={24} style={{ marginTop: "3rem" }} justify="space-between"></Row>
-      </div>
 
-      <Form
-        style={{ marginLeft: "30%" }}
-        form={form}
-        layout="vertical"
-        name="event"
-        wrapperCol={{
-          span: 14,
-        }}
-      >
-      
-        <Form.Item label="Nombre del paciente" name="nombre" rules={inputsRules}>
-          <Input value={paciente.nombre} placeholder= {paciente.nombre}/> 
-       </Form.Item>
+            <div style={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
+              <Image.PreviewGroup>
+                <Image width={200} src={paciente.img} />
+              </Image.PreviewGroup>
+              <Row gutter={24} style={{ marginTop: "3rem" }} justify="space-between"></Row>
+            </div>
 
-        <Form.Item label="Correo Electrónico" name="correo" rules={inputsRules}>
-          <Input type="email" value={paciente.correo} placeholder= {paciente.correo}
-          />
-        </Form.Item>
+            <Form
+              style={{ marginLeft: "18%" }}
+              form={form}
+              layout="vertical"
+              name="event"
+              initialValues={{}}
+              wrapperCol={{
+                span: 19,
+              }}
+            >
 
-        <Form.Item name="direccion" label="Dirección" rules={inputsRules}>
-          <Input.TextArea value={paciente.direccion}  placeholder= {paciente.direccion} />
-        </Form.Item>
+              <Form.Item label="Nombre del paciente" name="nombre" rules={inputsRules}>
+                <Input value={paciente.nombre} placeholder={paciente.nombre} />
+              </Form.Item>
 
-        <Form.Item label="Teléfono" name="telefono" rules={inputsRules}>
-          <Input value={paciente.telefono}  placeholder= {paciente.telefono} />
-        </Form.Item>
+              <Form.Item label="Correo Electrónico" name="correo" rules={inputsRules}>
+                <Input type="email" value={paciente.correo} placeholder={paciente.correo}
+                />
+              </Form.Item>
 
-        <Form.Item
-          name="fechaNac"
-          label="Fecha de Nacimiento"
-          rules={inputsRules}
-          value={paciente.fechaNac}
-        >
-          <DatePicker locale={locale} format="DD/MM/YYYY" />
-        </Form.Item>
+              <Form.Item name="direccion" label="Dirección" rules={inputsRules}>
+                <Input.TextArea value={paciente.direccion} placeholder={paciente.direccion} />
+              </Form.Item>
 
-        <Form.Item name="genero" label="Género" rules={inputsRules}>
-          <AutoComplete
-            options={generosOpts}
-            placeholder={paciente.genero}
-            filterOption={(inputValue, option) =>
-              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-            }
-          />
-        </Form.Item>
+              <Form.Item label="Teléfono" name="telefono" rules={inputsRules}>
+                <Input value={paciente.telefono} placeholder={paciente.telefono} />
+              </Form.Item>
 
-        <Form.Item
-          label="Teléfono de Emergencia"
-          name="telefonoEmergencia"
-          rules={inputsRules}
-        >
-          <Input  placeholder= {paciente.telEmerg} />
-        </Form.Item>
+              <Form.Item
+                name="fechaNac"
+                label="Fecha de Nacimiento"
+                rules={inputsRules}
+                value={paciente.fechaNac}
+              >
+                <DatePicker locale={locale} format="DD/MM/YYYY" />
+              </Form.Item>
 
-        <Form.Item>
-          <PictureWall imgCallback={imgCallback} />
-        </Form.Item>
+              <Form.Item name="genero" label="Género" rules={inputsRules}>
+                <AutoComplete
+                  options={generosOpts}
+                  placeholder={paciente.genero}
+                  filterOption={(inputValue, option) =>
+                    option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                  }
+                />
+              </Form.Item>
 
-        <Form.Item>
-          <Button
-            type="primary"
-            onClick={(e) => {
-              handleFormSubmit(e);
-            }}
-          >
-            ACUALIZAR
-          </Button>
-        </Form.Item>
+              <Form.Item
+                label="Teléfono de Emergencia"
+                name="telefonoEmergencia"
+                rules={inputsRules}
+              >
+                <Input placeholder={paciente.telEmerg} />
+              </Form.Item>
 
-        <Form.Item>
-          <Button
-            type="primary"
-            onClick={() => {
-              cancelEdit();
-            }}
-          >
-            CANCELAR
-          </Button>
-        </Form.Item>
-      </Form>
-    </>
+              <Form.Item>
+                <PictureWall imgCallback={imgCallback} />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  onClick={(e) => {
+                    handleFormSubmit(e);
+                  }}
+                >
+                  ACUALIZAR
+                </Button>
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    cancelEdit();
+                  }}
+                >
+                  CANCELAR
+                </Button>
+              </Form.Item>
+            </Form>
+
+          </Card>
+        </Col>
+      </Row>
+    </div>
+
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Form, Input, DatePicker, Button, message, AutoComplete } from "antd";
+import { Form, Input, DatePicker, Button, message, AutoComplete, Card, Row, Col } from "antd";
 import locale from "antd/es/date-picker/locale/es_ES";
 import PictureWall from "../../components/PictureWall";
 import { setExpediente } from "../../firebase/firebase";
@@ -49,72 +49,81 @@ const ContactForm = () => {
   };
 
   return (
-    <Form
-      style={{ marginLeft: "30%" }}
-      form={form}
-      layout="vertical"
-      name="event"
-      initialValues={{}}
-      wrapperCol={{
-        span: 14,
-      }}
-    >
-      <Form.Item label="Nombre del paciente" name="nombre" rules={inputsRules}>
-        <Input />
-      </Form.Item>
+      <div style={{ padding: "30px", background: "#ececec" }}>
+        <Row gutter={16} type="flex" justify="center" align="middle" >
+          <Col span={14}>
+            <Card title="CREAR EXPEDIENTE" bordered={true}>
 
-      <Form.Item label="Correo Electrónico" name="correo" rules={inputsRules}>
-        <Input type="email" />
-      </Form.Item>
+              <Form
+                style={{ marginLeft: "18%" }}
+                form={form}
+                layout="vertical"
+                name="event"
+                initialValues={{}}
+                wrapperCol={{
+                  span: 19,
+                }}
+              >
+                <Form.Item label="Nombre del paciente" name="nombre" rules={inputsRules}>
+                  <Input />
+                </Form.Item>
 
-      <Form.Item name="direccion" label="Dirección" rules={inputsRules}>
-        <Input.TextArea />
-      </Form.Item>
+                <Form.Item label="Correo Electrónico" name="correo" rules={inputsRules}>
+                  <Input type="email" />
+                </Form.Item>
 
-      <Form.Item label="Teléfono" name="telefono" rules={inputsRules}>
-        <Input />
-      </Form.Item>
+                <Form.Item name="direccion" label="Dirección" rules={inputsRules}>
+                  <Input.TextArea />
+                </Form.Item>
 
-      <Form.Item
-        name="fechaNac"
-        label="Fecha de Nacimiento"
-        rules={inputsRules}
-      >
-        <DatePicker locale={locale} format="DD/MM/YYYY" />
-      </Form.Item>
+                <Form.Item label="Teléfono" name="telefono" rules={inputsRules}>
+                  <Input />
+                </Form.Item>
 
-      <Form.Item name="genero" label="Género" rules={inputsRules}>
-        <AutoComplete
-          options={generosOpts}
-          filterOption={(inputValue, option) =>
-            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-          }
-        />
-      </Form.Item>
+                <Form.Item
+                  name="fechaNac"
+                  label="Fecha de Nacimiento"
+                  rules={inputsRules}
+                >
+                  <DatePicker locale={locale} format="DD/MM/YYYY" />
+                </Form.Item>
 
-      <Form.Item
-        label="Teléfono de Emergencia"
-        name="telefonoEmergencia"
-        rules={inputsRules}
-      >
-        <Input />
-      </Form.Item>
+                <Form.Item name="genero" label="Género" rules={inputsRules}>
+                  <AutoComplete
+                    options={generosOpts}
+                    filterOption={(inputValue, option) =>
+                      option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                    }
+                  />
+                </Form.Item>
 
-      <Form.Item>
-        <PictureWall imgCallback={imgCallback} />
-      </Form.Item>
+                <Form.Item
+                  label="Teléfono de Emergencia"
+                  name="telefonoEmergencia"
+                  rules={inputsRules}
+                >
+                  <Input />
+                </Form.Item>
 
-      <Form.Item>
-        <Button
-          type="primary"
-          onClick={(e) => {
-            handleFormSubmit(e);
-          }}
-        >
-          GUARDAR
-        </Button>
-      </Form.Item>
-    </Form>
+                <Form.Item>
+                  <PictureWall imgCallback={imgCallback} />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    onClick={(e) => {
+                      handleFormSubmit(e);
+                    }}
+                  >
+                    GUARDAR
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Card>
+          </Col>
+        </Row>
+      </div>
   );
 };
 
