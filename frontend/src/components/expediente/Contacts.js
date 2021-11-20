@@ -55,7 +55,14 @@ const Contacts = () => {
           >
 
             <Meta
-              avatar={< Avatar src={paciente.img} />}
+              avatar={< Avatar  size={{
+                xs: 40,
+                sm: 40,
+                md: 40,
+                lg: 40,
+                xl: 64,
+                xxl: 64,
+              }}  src={paciente.img} />}
               title={'Nombre: ' + paciente.nombre}
               description={'Teléfono: ' + paciente.telefono}
             />

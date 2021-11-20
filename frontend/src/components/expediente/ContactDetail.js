@@ -16,6 +16,12 @@ const ContactDetail = (props) => {
     history.goBack();
   };
 
+  const gridStyle = {
+    width: '100%',
+    textAlign: 'center',
+    alignItems: 'center'
+  };
+  
   useEffect(() => {
     console.log(recetas);
     if (history.location.state) {
@@ -98,46 +104,61 @@ const ContactDetail = (props) => {
           </Card>
         </Col>
       </Row>
-      <table className="table table-stripped">
-        <thead className="thead-light">
-          <tr>
-            <th>Fecha Receta</th>
-            <th>Medicamentos recetadas para esa consulta</th>
-          </tr>
-        </thead>
-        <tbody>
-          {recetasCurrentUser.map((receta) => {
-            return (
-              <tr key={receta.id}>
-                <td>{moment(receta.fechaPr).format("DD-MM-YYYY")}</td>
-                <table>
-                  <thead className="thead-light">
-                    <tr>
-                      <th>Nombre Comercial</th>
-                      <th>Nombre Generico</th>
-                      <th>Presentacion</th>
-                      <th>Dosis</th>
-                      <th>Tiempo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {receta.medicamentos.map((medicamento, index) => (
-                    <tr key={index}>
-                      <td>{medicamento.nombreCom}</td>
-                      <td>{medicamento.nombreGen}</td>
-                      <td>{medicamento.presentacion}</td>
-                      <td>{medicamento.dosis}</td>
-                      <td>{medicamento.tiempo}</td>
-                    </tr>
-                  ))}
-                  </tbody>
-                </table>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
 
+
+      <Card style={{ width: '100%' }} title="Historial de Recetas">
+
+
+        <table className="table table-stripped" style= {{ width: '100%', textAlign: 'center'}}>
+
+          <tbody>
+            {recetasCurrentUser.map((receta) => {
+              return (
+                <Card style={{ marginTop: 16 }} title={"Fecha: " + moment(receta.fechaPr).format("DD-MM-YYYY")} extra={<a href="#">Info</a>} >
+
+                  <tr key={receta.id}>
+
+                    {receta.medicamentos.map((medicamento, index) => (
+
+
+                      <Card.Grid style={gridStyle} type="inner" >
+                        <table style= {{  textAlign: 'center', width:'100%'}}>
+                          <thead className="thead-light" >
+                            <tr>
+                              <th>Nombre Comercial</th>
+                              <th>Nombre Generico</th>
+                              <th>Presentacion</th>
+                              <th>Dosis</th>
+                              <th>Tiempo</th>
+                            </tr>
+                          </thead>
+                          <tbody >
+                            <tr key={index}>
+                              <td>{medicamento.nombreCom}</td>
+                              <td>{medicamento.nombreGen}</td>
+                              <td>{medicamento.presentacion}</td>
+                              <td>{medicamento.dosis}</td>
+                              <td>{medicamento.tiempo}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </Card.Grid>
+
+                    ))}
+
+                  </tr>
+                </Card>
+              );
+            })}
+          </tbody>
+        </table>
+
+
+
+
+      </Card>
+
+      <br></br>
       <Button
         type="primary"
         onClick={() => {
