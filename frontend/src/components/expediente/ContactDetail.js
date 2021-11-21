@@ -118,7 +118,7 @@ const ContactDetail = (props) => {
 
                   <tr key={receta.id}>
 
-                    {receta.medicamentos.map((medicamento, index) => (
+                    {receta.medicamentos.map((medicamento) => (
 
 
                       <Card.Grid style={gridStyle} type="inner" >
@@ -128,12 +128,12 @@ const ContactDetail = (props) => {
                               <th>Nombre Comercial</th>
                               <th>Nombre Generico</th>
                               <th>Presentacion</th>
-                              <th>Dosis</th>
+                              <th>Dosis</th> 
                               <th>Tiempo</th>
                             </tr>
                           </thead>
                           <tbody >
-                            <tr key={index}>
+                            <tr key={medicamento.id}>
                               <td>{medicamento.nombreCom}</td>
                               <td>{medicamento.nombreGen}</td>
                               <td>{medicamento.presentacion}</td>
