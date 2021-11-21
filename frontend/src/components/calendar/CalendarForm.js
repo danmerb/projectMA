@@ -45,6 +45,7 @@ const CalendarForm = ({
 
   const onSubmitForm = (originalEvent) => {
     console.warn("Entro al onSubmitForm, es modo edicion?", isEdit)
+    console.log("Data original (OnClick): ", originalEvent);
     form
       .validateFields()
       .then(async (values) => {
@@ -55,8 +56,8 @@ const CalendarForm = ({
             titulo: values.eventTitle,
             startDate: values.eventTime[0].toDate(),
             endDate: values.eventTime[1].toDate(),
-            paciente: userObj.nombre,
-            pacienteCorreo: userObj.correo,
+            paciente: userObj.nombre || originalEvent.userObj.nombre,
+            pacienteCorreo: userObj.correo || originalEvent.userObj.correo,
             detalles: values.eventDetails || "",
             idDoc: AuthCTX.currentUser.uid,
           };
@@ -77,8 +78,8 @@ const CalendarForm = ({
         form.resetFields();
         onCreate({
           ...values,
-          correoPaciente: userObj.correo,
-          nombrePaciente: userObj.nombre,
+          correoPaciente: userObj.correo || originalEvent.userObj.correo,
+          nombrePaciente: userObj.nombre || originalEvent.userObj.nombre,
           nombreDoctor: AuthCTX.currentUser.displayName,
         });
       })
@@ -234,7 +235,7 @@ const CalendarForm = ({
           label="Inicio y fin esperado de la cita"
           required
           tooltip="Este campo es obligatorio"
-          rules={[...formRules.eventTimeRules, overlapRule]}
+          rules={(!isEdit) ? [...formRules.eventTimeRules, overlapRule] : formRules.eventTimeRules}
         >
           <RangePicker
             locale={locale}
