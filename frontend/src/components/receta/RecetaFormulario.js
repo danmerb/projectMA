@@ -91,7 +91,6 @@ const RecetaFormulario = () => {
     let receta = {
       nombrePa: userObj.nombre,
       idPa: userObj.id,
-      edad: values.edad,
       genero: userObj.genero,
       fechaPr: new Date(),
       idDoc: currentUser.uid,
@@ -164,9 +163,7 @@ const RecetaFormulario = () => {
                 />
               </Form.Item>
 
-              <Form.Item label="Edad" name="edad" rules={inputsRules}>
-                <Input />
-              </Form.Item>
+          
 
               <Form.Item >
                 {inputFields.map((inputField, index) => (
