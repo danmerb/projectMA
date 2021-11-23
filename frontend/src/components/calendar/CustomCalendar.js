@@ -97,6 +97,30 @@ const CustomCalendar = () => {
     setEnableEdit(checked);
   };
 
+  const handleColorChange = (event, start, end, isSelected) => {
+    const today = new Date();
+    today.setSeconds(0);
+    const day = today.toDateString();
+    const time = today.toTimeString();
+    const customStyle = {
+      backgroundColor: "#006FC1",
+      borderColor: "#006FC1"
+    }
+    if (end.toDateString() < day || (end.toDateString() == day && end.toTimeString() < time)) {
+      customStyle.backgroundColor = "#91A2AF";
+      customStyle.borderColor = "#91A2AF";
+    }
+    else if (end.toDateString() == day && start.toTimeString() <= time && end.toTimeString() >= time) {
+      customStyle.backgroundColor = "#7ED703";
+      customStyle.borderColor = "#7ED703";
+    }
+    else if (start.toDateString() > day || (end.toDateString() == day && start.toTimeString() > time)) {
+      customStyle.backgroundColor = "#006FC1";
+      customStyle.borderColor = "#006FC1";
+    }
+    return { style: customStyle }
+  };
+
   return (
     <>
       <Calendar
@@ -117,6 +141,7 @@ const CustomCalendar = () => {
         scrollToTime={new Date()}
         onSelectEvent={showEditModal}
         dayLayoutAlgorithm='no-overlap'
+        eventPropGetter={handleColorChange}
       />
       <CalendarForm
         visible={createVisible}
