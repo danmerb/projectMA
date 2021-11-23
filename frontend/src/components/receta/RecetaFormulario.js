@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Form, Input, DatePicker, Button, message, AutoComplete, Row, Col, Card } from "antd";
+import { Form, Input, DatePicker, Button, message, AutoComplete, Row, Col, Card , Space} from "antd";
 
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router";
@@ -217,8 +217,10 @@ const RecetaFormulario = () => {
 
                     </Form.Item>
                     
-                    <Button type="primary" disabled={inputFields.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
-                      Quitar Medicamento
+
+                    <Space className="BotonImpr" style = {{marginBottom: "2em"}}>
+                    <Button type="danger" disabled={inputFields.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
+                      Eliminar Medicamento
                     </Button>
 
                     <Button
@@ -227,6 +229,7 @@ const RecetaFormulario = () => {
                     >
                       Agregar Medicamento
                     </Button>
+                    </Space>
                     <br></br>
                     <br></br>
 

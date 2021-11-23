@@ -7,8 +7,8 @@ import '../../style/receta.css';
 import { useHistory } from "react-router";
 
 const ShowReceta = () => {
-    const [receta, setReceta] = useState({});
     const componentRef = useRef();
+    const [receta, setReceta] = useState({});
     const history2 = useHistory();
 
     useEffect(() => {
@@ -33,11 +33,10 @@ const ShowReceta = () => {
         <div>
 
             <ViewReceta  ref={componentRef}  />
-            <Space className="BotonImpr">
+            <Space className="BotonImpr" style = {{marginBottom: "2em"}}>
                 
                 <Button type="primary" onClick={handleNew}>Nueva receta</Button>
                 <Button type="primary" onClick={handlePrint}>Imprimir receta</Button>
-                
             </Space>
             
             
