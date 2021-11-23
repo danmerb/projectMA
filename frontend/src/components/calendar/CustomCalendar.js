@@ -111,8 +111,8 @@ const CustomCalendar = () => {
       customStyle.borderColor = "#91A2AF";
     }
     else if (end.toDateString() == day && start.toTimeString() <= time && end.toTimeString() >= time) {
-      customStyle.backgroundColor = "#7ED703";
-      customStyle.borderColor = "#7ED703";
+      customStyle.backgroundColor = "#06A7B9";
+      customStyle.borderColor = "#06A7B9";
     }
     else if (start.toDateString() > day || (end.toDateString() == day && start.toTimeString() > time)) {
       customStyle.backgroundColor = "#006FC1";
