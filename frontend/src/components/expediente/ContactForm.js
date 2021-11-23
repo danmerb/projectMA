@@ -38,6 +38,9 @@ const ContactForm = () => {
       idDoc: currentUser.uid,
       img: imgPath !== "" ? imgPath : "default/user.png",
     };
+
+    console.warn(expediente.fechaNac);
+
     try {
       await setExpediente(expediente);
       message.success("Expendiente creado con éxito");

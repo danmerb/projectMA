@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Form, Input, DatePicker, Button, AutoComplete, message, Row, Card, Col, Image } from "antd";
 import { getImage } from "../../firebase/firebase";
@@ -20,14 +20,10 @@ const generosOpts = [{ value: "Masculino" }, { value: "Femenino" }];
 
 const ContactEdit = (props) => {
 
-
-  const history = useHistory();
-  const [paciente, setPaciente] = useState({});
   const [form] = Form.useForm();
+  const history = useHistory();
   const { currentUser } = useContext(AuthContext);
   const [imgPath, setImgId] = useState("");
-
-
 
   const inputsRules = [
     {
@@ -44,52 +40,32 @@ const ContactEdit = (props) => {
     history.goBack();
   };
 
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const values = await form.validateFields();
 
-    console.log(paciente.id);
     console.log(history.location.state.nombre);
     let expediente = {
       nombre: values.nombre,
       correo: values.correo,
       direccion: values.direccion,
-      telefono: values.telefono,
+      telEmerg : values.telEmerg,
       fechaNac: values.fechaNac.toDate(),
       genero: values.genero,
-      telEmerg: values.telefonoEmergencia,
+      telefono: values.telefono,
       idDoc: currentUser.uid,
       img: imgPath !== "" ? imgPath : "default/user.png",
     };
     try {
-      await updateExpediente(paciente.id, expediente);
-
+      await updateExpediente(history.location.state.id, expediente);
       message.success("Expendiente actualizado con éxito");
-
-
-
     } catch (e) {
       console.log(e);
-
       message.error("Error al actualizar expediente");
     }
   };
 
 
-
-  useEffect(() => {
-    if (history.location.state) {
-      getImage(history.location.state.img).then((res) => {
-        history.location.state.img = res;
-        setPaciente(history.location.state);
-      });
-    } else {
-      history.push("/home");
-    }
-
-
-  }, [history]);
   return (
     <div style={{ padding: "30px", background: "#ececec" }}>
       <Row gutter={16} type="flex" justify="center" align="middle" >
@@ -105,7 +81,7 @@ const ContactEdit = (props) => {
               alignItems: "center",
             }}>
               <Image.PreviewGroup>
-                <Image width={200} src={paciente.img} />
+                <Image width={200} src={history.location.state.img} />
               </Image.PreviewGroup>
               <Row gutter={24} style={{ marginTop: "3rem" }} justify="space-between"></Row>
             </div>
@@ -115,34 +91,33 @@ const ContactEdit = (props) => {
               form={form}
               layout="vertical"
               name="event"
-              initialValues={{}}
+              initialValues={{ ...history.location.state, "fechaNac": moment(history.location.state.fechaNac.toDate()) }}
               wrapperCol={{
                 span: 19,
               }}
             >
 
               <Form.Item label="Nombre del paciente" name="nombre" rules={inputsRules}>
-                <Input value={paciente.nombre} placeholder={paciente.nombre} />
+                <Input />
               </Form.Item>
 
               <Form.Item label="Correo Electrónico" name="correo" rules={inputsRules}>
-                <Input type="email" value={paciente.correo} placeholder={paciente.correo}
+                <Input type="email"
                 />
               </Form.Item>
 
               <Form.Item name="direccion" label="Dirección" rules={inputsRules}>
-                <Input.TextArea value={paciente.direccion} placeholder={paciente.direccion} />
+                <Input.TextArea />
               </Form.Item>
 
               <Form.Item label="Teléfono" name="telefono" rules={inputsRules}>
-                <Input value={paciente.telefono} placeholder={paciente.telefono} />
+                <Input />
               </Form.Item>
 
               <Form.Item
                 name="fechaNac"
                 label="Fecha de Nacimiento"
                 rules={inputsRules}
-                value={paciente.fechaNac}
               >
                 <DatePicker locale={locale} format="DD/MM/YYYY" />
               </Form.Item>
@@ -150,7 +125,6 @@ const ContactEdit = (props) => {
               <Form.Item name="genero" label="Género" rules={inputsRules}>
                 <AutoComplete
                   options={generosOpts}
-                  placeholder={paciente.genero}
                   filterOption={(inputValue, option) =>
                     option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
                   }
@@ -159,10 +133,10 @@ const ContactEdit = (props) => {
 
               <Form.Item
                 label="Teléfono de Emergencia"
-                name="telefonoEmergencia"
+                name="telEmerg"
                 rules={inputsRules}
               >
-                <Input placeholder={paciente.telEmerg} />
+                <Input />
               </Form.Item>
 
               <Form.Item>
