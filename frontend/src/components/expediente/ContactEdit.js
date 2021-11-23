@@ -54,7 +54,7 @@ const ContactEdit = (props) => {
       genero: values.genero,
       telefono: values.telefono,
       idDoc: currentUser.uid,
-      img: imgPath !== "" ? imgPath : "default/user.png",
+      img: imgPath !== "" ? imgPath :history.location.state.img?history.location.state.img:"default/user.png",
     };
     try {
       await updateExpediente(history.location.state.id, expediente);
