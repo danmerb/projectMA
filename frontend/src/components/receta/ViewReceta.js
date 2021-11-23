@@ -1,5 +1,5 @@
-import React,{useRef,useState,useEffect} from 'react';
-import { Row, Card, Col } from "antd";
+import React,{useState,useEffect} from 'react';
+import { Row, Card, Col, Image } from "antd";
 import { MedicineBoxOutlined } from "@ant-design/icons";
 import 'antd/dist/antd.css';
 import PictureUp from "../../assets/receta.png"
@@ -19,7 +19,11 @@ const ViewReceta = React.forwardRef((props,ref) => {
     console.log(receta);
     
     
-
+    const gridStyle = {
+      width: '100%',
+      textAlign: 'center',
+      alignItems: 'center'
+    };
     
    /*
     const data = [
@@ -54,6 +58,41 @@ const ViewReceta = React.forwardRef((props,ref) => {
         return obj;
     });
 
+    function Mostrar(props){
+        const medicamentoMostrar = props.medicamentos?.map((medicamento) =>
+        <div key={medicamento.id}>
+           <Card.Grid style={gridStyle} type="inner" >
+                        <table style= {{  textAlign: 'center', width:'100%'}}>
+                          <thead className="thead-light" >
+                            <tr>
+                              <th>Nombre Comercial</th>
+                              <th>Nombre Generico</th>
+                              <th>Presentacion</th>
+                              <th>Dosis</th> 
+                              <th>Tiempo</th>
+                            </tr>
+                          </thead>
+                          <tbody >
+                            <tr key={medicamento.id}>
+                              <td>{medicamento.nombreCom}</td>
+                              <td>{medicamento.nombreGen}</td>
+                              <td>{medicamento.presentacion}</td>
+                              <td>{medicamento.dosis}</td>
+                              <td>{medicamento.tiempo}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </Card.Grid>
+        </div>
+      ); 
+      return (
+        <div>
+          {medicamentoMostrar}
+        </div>
+      );
+
+    }
+
     
     
     //const receta = useState({});
@@ -61,72 +100,78 @@ const ViewReceta = React.forwardRef((props,ref) => {
     //console.log(receta);
     
     return (
-        <div>
-           
-        <div style={{ overflow: "hidden"}} ref={ref}>
-        <img src={PictureUp} className="imagen"/>
-            
+        
+        <div style={{ justifyContent: "center", alignItems: "center",  textAlign: 'center' }} ref={ref}>
+      <Image.PreviewGroup>
+        <Image width={400} src={PictureUp} />
+      </Image.PreviewGroup>
 
-        <Row gutter={24}  >
-
-        
-        <Col span={10} style={ {marginLeft:"4cm"}}>
-        <h5 style={ {marginLeft:"0.5cm"}}> Paciente: {receta.nombrePa}</h5>         
-         </Col>
-        
-        
-        
-        <Col span={4}>
-        <h5 style={ {marginLeft:"0.4cm"}}> Edad: {receta.edad}</h5>  
+      <Row gutter={[16, 16]} style={{ marginTop: "3rem" }} justify="space-between">
+        <Col span={8}>
+          <Card
+            prefix={<MedicineBoxOutlined />}
+            title="Nombre del paciente"
+            bordered={false}
+          >
+            {receta.nombrePa}
+          </Card>
         </Col>
-
-        <Col span={4}>    
-        <h5 style={ {marginLeft:"0.3cm"}}> Genero: {receta.genero}</h5>     
+        <Col span={8}>
+          <Card title="Correo Electrónico" bordered={false}>
+            {receta.nombrePa}
+          </Card>
         </Col>
-
-        <Col span={6} style={ {marginLeft:"4.5cm"}}>    
-        <h5 > Fecha: {new Intl.DateTimeFormat("en-GB", {
-          year: "numeric",
-          month: "numeric",
-          day: "2-digit"
-        }).format(receta.fechaPr)}</h5>     
-        </Col>
-               
         
-        
-        <Col span={15} style={ {marginTop:"1cm"}}>
-        {receta.medicamentos.map(({ nombreCom,nombreGen,presentacion,dosis,tiempo }) => (
-            <Col >
-          <h4 style={ {marginLeft:"4.5cm"}}> Medicamentos</h4>
-          <h5 style={ {marginLeft:"4.5cm"}}> Nombre comercial: {nombreCom}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Nombre Generico: {nombreGen}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Presentacion: {presentacion}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Dosis: {dosis}</h5>
-          <h5 style={ {marginLeft:"4.5cm"}}> Tiempo de tratamiento: {tiempo}</h5>
+          <Col span={8}>
+            <Card title="Fecha" bordered={false}>
+              {  moment(receta.fechaPr).format("DD-MM-YYYY") }
+            </Card>
           </Col>
-          
-          ))}
-          
-        </Col>
         
       
         
+          
+               
         </Row>
 
-            
-        </div>
+     
+
+        <Card style={{ width: '100%' }} title="Historial de Recetas" bordered={false}>
+
+
+          <table className="table table-stripped" style= {{ width: '100%', textAlign: 'center'}}>
+
+            <tbody>
+              < Mostrar medicamentos={receta.medicamentos} />
+        
+              </tbody>
+        </table>
+
+
+      </Card>
         
         </div>
-        
     );
 });
 
 
-
-
-
-
 export default ViewReceta;
+/*
+{receta.medicamentos.map((medicamento, index) => (
+            <Col  key={index}>
+          <h4 style={ {marginLeft:"4.5cm"}}> Medicamentos</h4>
+          <h5 style={ {marginLeft:"4.5cm"}}> Nombre comercial: {medicamento.nombreCom}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Nombre Generico: {medicamento.nombreGen}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Presentacion: {medicamento.presentacion}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Dosis: {medicamento.dosis}</h5>
+          <h5 style={ {marginLeft:"4.5cm"}}> Tiempo de tratamiento: {medicamento.tiempo}</h5>
+          </Col>
+          
+          ))}
+
+*/
+
+
  /* 
  <List
 
