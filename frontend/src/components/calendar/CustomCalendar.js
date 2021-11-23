@@ -51,12 +51,17 @@ const CustomCalendar = () => {
   const showEditModal = (event) => {
     console.log("Evento recibido en show dit Modal: ", event);
     setEditVisible(true);
+    const userObjData = {
+      nombre: event.paciente,
+      correo: event.pacienteCorreo,
+    }
     const data = {
       id: event.id,
       eventTitle: event.title,
       eventTime: [moment(event.start), moment(event.end)],
       eventDetails: event.details,
-      pacienteDetails: event.paciente
+      pacienteDetails: event.paciente,
+      userObj: userObjData
     }
     setSelectedEvent(data);
     /*setSelectedEvent((state) => {
