@@ -12,7 +12,9 @@
   <p align="center">
     Aplicativo web para medicos
     <br />    
-    <br />    
+    <br />   
+   <a href="https://00030717.gitbook.io/med-aid/">Documentación</a>
+   .
     <a href="https://github.com/danmerb/Med-Aid/issues">Report Bug</a>
    .
     <a href="https://github.com/danmerb/Med-Aid/issues">Request Feature</a>
@@ -47,11 +49,11 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Instalación</a></li>
-        <li><a href="#variables">Variables</a></li>
+        <li><a href="#variables">Variables</a></li>        
       </ul>
     </li>    
     <li><a href="#utilidad">Utilidad</a></li>
-   
+    <li><a href="#documentación">Documentación</a></li>
     
   </ol>
 </details>
@@ -146,6 +148,16 @@ En un principio está destinado para  dentistas, pero tendrá la capacidad de po
 
    
 <p align="right"><a href="#top">⬆️</a></p>
+  
+  <!-- DOCUMENTACION -->
+## Documentación
+   La documentacion de la aplicacion se encuentra en https://00030717.gitbook.io/med-aid/
+  
+
+
+   
+<p align="right"><a href="#top">⬆️</a></p>
+   
    
 
 
