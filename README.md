@@ -3,7 +3,7 @@
 
 <div align="center">
  <a 
-    href="https://www.med-aid.software/login" target="_blank"><img src="https://github.com/danmerb/Med-Aid/blob/master/frontend/src/assets/logoMed.png" width="500" alt="Med-Aid />
+    href="https://www.med-aid.software/login" target="_blank"><img src="https://github.com/danmerb/projectMA/blob/master/frontend/src/assets/logoMed.png" width="500" alt="Med-Aid />
  </a>
   <br />
   <br/>
@@ -15,9 +15,9 @@
     <br />   
    <a href="https://00030717.gitbook.io/med-aid/">Documentación</a>
    .
-    <a href="https://github.com/danmerb/Med-Aid/issues">Report Bug</a>
+    <a href="https://github.com/danmerb/projectMA/issues">Report Bug</a>
    .
-    <a href="https://github.com/danmerb/Med-Aid/issues">Request Feature</a>
+    <a href="https://github.com/danmerb/projectMA/issues">Request Feature</a>
    <br/>
    <br/>
    <span>
@@ -98,7 +98,7 @@ En un principio está destinado para  dentistas, pero tendrá la capacidad de po
 
 1. Clonar el repo
    ```sh
-   git clone https://github.com/danmerb/Med-Aid.git
+   git clone https://github.com/danmerb/projectMA.git
    ```
 2. Moverse a la carpeta frontend
    ```sh
@@ -131,19 +131,19 @@ En un principio está destinado para  dentistas, pero tendrá la capacidad de po
    1. Login
     <br/>
    El  medico podra crear su propio perfil
-   <img alt="" src="https://github.com/danmerb/Med-Aid/blob/master/frontend/src/assets/p1.png">
+   <img alt="" src="https://github.com/danmerb/projectMA/blob/master/frontend/src/assets/p1.png">
    2. Creación de cita
     <br/>
    El  medico podra crear citas
-   <img alt="" src="https://github.com/danmerb/Med-Aid/blob/master/frontend/src/assets/p2.png">
+   <img alt="" src="https://github.com/danmerb/projectMA/blob/master/frontend/src/assets/p2.png">
    3. Creación de expediente
     <br/>
    El  medico podra crear expedientes para cada paciente
-   <img alt="" src="https://github.com/danmerb/Med-Aid/blob/master/frontend/src/assets/p3.png">
+   <img alt="" src="https://github.com/danmerb/projectMA/blob/master/frontend/src/assets/p3.png">
    4. Creacion de receta
     <br/>
    El  medico podra crear recetas asociadas a cada uno de sus pacientes
-   <img alt="" src="https://github.com/danmerb/Med-Aid/blob/master/frontend/src/assets/p4.png">
+   <img alt="" src="https://github.com/danmerb/projectMA/blob/master/frontend/src/assets/p4.png">
 
 
    
