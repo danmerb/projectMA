@@ -51,7 +51,7 @@
       </ul>
     </li>    
     <li><a href="#utilidad">Utilidad</a></li>
-    <li><a href="#contribuidores">Contribuidores</a></li>
+   
     
   </ol>
 </details>
@@ -147,31 +147,8 @@ En un principio está destinado para  dentistas, pero tendrá la capacidad de po
    
 <p align="right"><a href="#top">⬆️</a></p>
    
-<!-- CONTRIBUIDORES -->
-   
-## Contribuidores
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table align="center">
-  <tr>
-    <td align="center"><a href="https://github.com/danmerb"><img src="https://avatars.githubusercontent.com/u/37198208?v=4" width="100px;" alt=""/><br /><sub><b> Jeniffer Merino </b></sub></a><br /> <a href="#" title="Diseño">🎨</a> <a href="#" title="Documentación">📑</a> <a href="#" title="Código">💻</a> </td>
-    <td align="center"><a href="https://github.com/alejandroolmed59"><img src="https://avatars.githubusercontent.com/u/37201675?v=4" width="100px;" alt=""/><br /><sub><b>Alejandro Olmedo</b></sub></a><br /><a href="#" title="Código">💻</a> <a href="#" title="Diseño">🎨</a> <a href="#" title="Infrastructura (Hosting, Build-Tools, etc)">☁️</a> </td>
-    <td align="center"><a href="https://github.com/dannielarenderos"><img src="https://avatars.githubusercontent.com/u/37196864?v=4" width="100px;" alt=""/><br /><sub><b> Danniela Renderos</b></sub></a><br /><a href="#" title="Código">💻</a> <a href="#" title="Documentación">📑</a> <a href="#" title="Diseño">🎨</a>  </td>
-    <td align="center"><a href="https://github.com/CesarRosales16"><img src="https://avatars.githubusercontent.com/u/37197605?v=4" width="100px;" alt=""/><br /><sub><b> César Rosales </b></sub></a><br /><a href="#" title="Documentación">📑</a> <a href="#" title="Código">💻</a>   <a href="#" title="Pull Requests">🔍</a> </td>    
-    <td align="center"><a href="https://github.com/karinamina3"><img src="https://avatars.githubusercontent.com/u/37252764?v=4" width="100px;" alt=""/><br /><sub><b>Karina Mina </b></sub></a><br /><a href="#" title="Código">💻</a> <a href="#" title="Diseño">🎨</a>  <a href="#" title="Infrastructura (Hosting, Build-Tools, etc)">☁️</a> </td>
-    
-      
-  </tr>
-</table>
 
 
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-<p align="right"><a href="#top">⬆️</a></p>
 
 
    
