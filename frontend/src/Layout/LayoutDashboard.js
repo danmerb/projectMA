@@ -8,7 +8,6 @@ import PictureWall from '../components/PictureWall'
 import Contacts from '../components/expediente/Contacts'
 import ContactForm from '../components/expediente/ContactForm'
 import CustomCalendar from '../components/calendar/CustomCalendar'
-import Receta from '../components/receta/Receta'
 import ContactDetail from '../components/expediente/ContactDetail'
 import DataProvider from "../context/DataProvider"
 import RecetaFormulario from '../components/receta/RecetaFormulario'
@@ -36,7 +35,6 @@ const LayoutDashboard = ({ exact, path }) => {
                             <Route exact path={`${routeProps.match.path}/expedientes/detail`} component={ContactDetail} />
                             <Route exact path={`${routeProps.match.path}/expedientes/edit`} component={ContactEdit} />
                             <Route exact path={`${routeProps.match.path}/`} component={CustomCalendar} />
-                            <Route exact path={`${routeProps.match.path}/imprimir`} component={Receta} />
                             <Route exact path={`${routeProps.match.path}/receta`} component={RecetaFormulario} />
                             <Route exact path={`${routeProps.match.path}/vistaReceta`} component={ShowReceta} />
                         </Switch>

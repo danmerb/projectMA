@@ -10,6 +10,8 @@ import { RecaptchaVerifier } from '@firebase/auth';
 import AuthContext from "../../context/auth-context";
 
 const ViewReceta = React.forwardRef((props,ref) => {
+  //funcion del contenido de la receta , esta es llamada en el componente ShowRecta.js
+    // llamada de el estado de receta creada
     const [receta, setReceta] = useState({});    
     const history2 = useHistory();
     useEffect(() => {
@@ -36,6 +38,7 @@ const ViewReceta = React.forwardRef((props,ref) => {
         obj[name] = data[name];
         return obj;
     });
+    //funcion que recorre el objeto medicamentos en receta y renderiza sus datos en una tabla en la receta
 
     function Mostrar(props){
         const medicamentoMostrar = props.medicamentos?.map((medicamento) =>

@@ -7,6 +7,7 @@ import DataContext from "../../context/data-context";
 import moment from "moment";
 
 const ContactDetail = (props) => {
+  //Detalle de un solo expediente 
   const history = useHistory();
   const [paciente, setPaciente] = useState({});
   const [recetasCurrentUser, setRecetas] = useState([]);

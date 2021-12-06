@@ -105,7 +105,7 @@ async function updateCita(cita, id) {
   let docRef = id ? doc(citaCol, id) : doc(citaCol);
   await updateDoc(docRef, cita, { merge: true });
 }
-
+//agregando funciones de conexion con firebase para receta
 async function getReceta(idDoc, setState) {
   if (!idDoc) return [];
   const q = query(recetaCol, where("idDoc", "==", idDoc));

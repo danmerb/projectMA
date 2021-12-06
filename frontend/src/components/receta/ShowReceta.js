@@ -17,6 +17,7 @@ const ShowReceta = () => {
     },[]);
     
     console.log(receta);
+    //funcion para imprimir la receta manda a llamar al componente viewReceta.js con su referencia
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
@@ -45,20 +46,9 @@ const ShowReceta = () => {
     );
 }
 
-const GetRec =(re)=> {
-    
-    const [receta, setReceta] = useState(re);
-    function setEstado(){
-        console.log(receta);
-        
-    };
-    
-
-    return receta;
-
-};
 
 
-export {GetRec};
+
+
 
 export default ShowReceta;

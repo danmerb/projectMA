@@ -11,6 +11,7 @@ import '../../app.css';
 
 const { Meta } = Card;
 const Contacts = () => {
+  //Componente con todos los expedientes 
   const { expedientes } = useContext(DataContext);
   const history = useHistory();
   const expedienteDetail = (paciente) => {

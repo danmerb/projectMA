@@ -72,15 +72,21 @@ const RecetaFormulario = () => {
     setInputFields(newInputFields);
   }
 
+  //funcion para agregar en el formulario espacio para un nuevo medicamento con todos sus campos
+
   const handleAddFields = () => {
     setInputFields([...inputFields, { id: uuidv4(), nombreCom: '', nombreGen: '', presentacion: '', dosis: '', tiempo: '' }])
   }
+
+  //funcion para eliminar de el formulario un medicamento
 
   const handleRemoveFields = id => {
     const values = [...inputFields];
     values.splice(values.findIndex(value => value.id === id), 1);
     setInputFields(values);
   }
+
+  //funcion para enviar una receta
 
 
 
@@ -99,16 +105,16 @@ const RecetaFormulario = () => {
     };
     try {
 
-
+      //funcion para setear la receta creada 
       await setReceta(receta);
       console.log(receta);
+      //mensaje de receta creada con exito en la vista
       message.success("Receta creada con éxito");
+      // redireccionamiento a la  vista de la receta que se acaba de crear
       history.push(`vistaReceta`, receta);
       form.resetFields();
 
-      //await GetRec(receta);
-      //   history.push(`vistaReceta`, receta);
-      // form.resetFields();
+      
     } catch (e) {
       console.log(e);
       message.error("Error al crear la receta");
@@ -259,22 +265,3 @@ const RecetaFormulario = () => {
 
 export default RecetaFormulario;
 
-/*<Form.Item name="medicamentos" label="Medicamentos" >
-
-
-      <div className="formMedicina">
-      {rows.map((row, index) => (
-        <Row
-
-          {...row}
-          onChange={(name, value) => handleOnChange(index, name, value)}
-          onRemove={() => handleOnRemove(index)}
-          key={index}
-
-        />
-      ))}
-
-      <button  onClick={handleOnAdd}>+</button>
-    </div>
-      </Form.Item>
-      */
