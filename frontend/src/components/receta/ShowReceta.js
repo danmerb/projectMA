@@ -21,7 +21,7 @@ const ShowReceta = () => {
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
-
+    // handle new function 
     const handleNew= () => {    
         history2.push('/home/receta');
       };
